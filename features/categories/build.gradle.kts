@@ -1,3 +1,4 @@
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.everest.android.library)
     alias(libs.plugins.everest.compose.library)
@@ -5,5 +6,5 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.navigation"
+    namespace = "com.everest.categories"
 }

@@ -19,11 +19,15 @@ rootProject.name = "Meowipedia"
 include(":app")
 include(
     ":cores:theme",
-    ":cores:navigation"
+    ":cores:navigation",
+    ":cores:model"
 )
 include(
     ":data:network",
     ":data:database",
     ":data:datastore"
+)
+include(
+    ":features:categories"
 )
 
