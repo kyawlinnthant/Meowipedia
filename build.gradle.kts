@@ -5,4 +5,5 @@ plugins {
     alias(libs.plugins.kotlin.serialization).apply(false)
     alias(libs.plugins.google.hilt).apply(false)
     alias(libs.plugins.google.ksp).apply(false)
+    alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
 }

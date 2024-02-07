@@ -1,4 +1,4 @@
-package model
+package com.everest.categories.data.model
 
 import kotlinx.serialization.Serializable
 

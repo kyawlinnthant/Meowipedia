@@ -47,7 +47,7 @@ object NetworkModule {
         client: OkHttpClient,
         factory: Converter.Factory
     ): Retrofit = Retrofit.Builder()
-        .baseUrl("BuildConfig.BASE_URL")
+        .baseUrl("https://api.thecatapi.com/")
         .client(client)
         .addConverterFactory(factory)
         .build()

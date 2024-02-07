@@ -1,12 +1,12 @@
-package model.categories
+package com.everest.categories.data.model.categories
 
-import model.Weight
-import model.search.CategoryImage
+import com.everest.categories.data.model.Weight
+import com.everest.categories.data.model.search.CategoryImageDTO
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CategoriesItem(
+data class CategoryDTO(
     val adaptability: Int?,
     @SerialName("affection_level")
     val affectionLevel: Int?,
@@ -36,7 +36,7 @@ data class CategoriesItem(
     val healthIssues: Int?,
     val hypoallergenic: Int?,
     val id: String?,
-    val image: CategoryImage,
+    val image: CategoryImageDTO,
     val indoor: Int?,
     val intelligence: Int?,
     val lap: Int?,

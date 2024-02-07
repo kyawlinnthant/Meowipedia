@@ -5,6 +5,7 @@ compose-compiler = "1.5.8"
 # google
 google-ksp = "1.9.22-1.0.17"
 google-hilt = "2.48.1"
+org-jetbrains-kotlin-jvm = "1.9.22"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
@@ -104,3 +105,4 @@ everest-hilt = { id = "com.everest.dagger.hilt", version = "unspecified"}
 everest-network = { id = "com.everest.retrofit.network", version = "unspecified"}
 everest-database = { id = "com.everest.room.database", version = "unspecified"}
 everest-datastore = { id = "com.everest.preferences.datastore", version = "unspecified"}
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }

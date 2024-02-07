@@ -16,8 +16,8 @@ class NetworkPlugin : Plugin<Project> {
             val network = libs.findBundle("network").get()
             val serializedJson = libs.findLibrary("serialization-json").get()
             dependencies {
-                add("implementation", network)
-                add("implementation", serializedJson)
+                add("api", network)
+                add("api", serializedJson)
             }
         }
     }

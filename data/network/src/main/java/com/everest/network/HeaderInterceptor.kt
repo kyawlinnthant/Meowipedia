@@ -7,7 +7,7 @@ class HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder().addHeader(
             "X-API-KEY",
-            "TOKEN from local.gradle"
+            "live_Io23GcqdrbaIOcBboiB2ZvKGkoMAPSqEm3sq8FkhQfK5c3aP2Njy5zXNf7AzF3NO"
         )
         return chain.proceed(builder.build())
     }

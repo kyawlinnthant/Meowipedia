@@ -1,9 +1,11 @@
-package model.search
+package com.everest.categories.data.model.search
 
-import model.Weight
+import com.everest.categories.data.model.Weight
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-data class Breed(
+@Serializable
+data class BreedDTO(
     val adaptability: Int?,
     @SerialName("affection_level")
     val affectionLevel: Int?,
