@@ -8,6 +8,7 @@ google-hilt = "2.48.1"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
+serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.0"}
 
 # androidx
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }

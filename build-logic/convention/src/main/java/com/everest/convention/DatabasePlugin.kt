@@ -17,9 +17,11 @@ class DatabasePlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val room = libs.findBundle("room").get()
             val roomCompiler = libs.findLibrary("room-compiler").get()
+            val serializedJson = libs.findLibrary("serialization-json").get()
             dependencies {
                 add("implementation", room)
                 add("ksp", roomCompiler)
+                add("implementation", serializedJson)
             }
         }
     }

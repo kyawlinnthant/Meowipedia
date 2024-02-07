@@ -20,7 +20,8 @@ include(":app")
 include(
     ":cores:theme",
     ":cores:navigation",
-    ":cores:model"
+    ":cores:model",
+    ":cores:ui"
 )
 include(
     ":data:network",

@@ -14,8 +14,10 @@ class NetworkPlugin : Plugin<Project> {
             }
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val network = libs.findBundle("network").get()
+            val serializedJson = libs.findLibrary("serialization-json").get()
             dependencies {
                 add("implementation", network)
+                add("implementation", serializedJson)
             }
         }
     }
