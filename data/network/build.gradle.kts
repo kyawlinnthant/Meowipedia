@@ -7,3 +7,6 @@ plugins {
 android {
     namespace = "com.everest.network"
 }
+dependencies {
+    implementation(project(":cores:util"))
+}

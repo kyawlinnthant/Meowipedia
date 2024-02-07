@@ -6,5 +6,5 @@ android {
     namespace = "com.everest.ui"
 }
 dependencies {
-    implementation(project(":data:network"))
+    implementation(project(":cores:util"))
 }
