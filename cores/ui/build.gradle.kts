@@ -1,11 +1,9 @@
 plugins {
     alias(libs.plugins.everest.android.library)
-    alias(libs.plugins.everest.network)
-    alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.everest.compose.library)
 }
-
 android {
-    namespace = "com.everest.network"
+    namespace = "com.everest.ui"
 }
 dependencies {
     implementation(project(":cores:util"))
