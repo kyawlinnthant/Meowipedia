@@ -1,11 +1,11 @@
-package data
+package com.everest.categories.data
 
+import com.everest.categories.data.repository.CategoriesRepo
+import com.everest.categories.data.repository.CategoriesRepoImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import data.repository.CategoriesRepo
-import data.repository.CategoriesRepoImpl
 import javax.inject.Singleton
 
 

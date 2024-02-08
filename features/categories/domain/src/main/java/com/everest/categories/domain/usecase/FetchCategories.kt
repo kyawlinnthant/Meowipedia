@@ -11,7 +11,7 @@ class FetchCategories @Inject constructor(
     private val categoriesRepo: CategoriesRepo,
 ) {
 
-    suspend fun invoke(): DataResult<List<CategoryVO>> {
+    suspend operator fun invoke(): DataResult<List<CategoryVO>> {
         return when (val response = categoriesRepo.fetchCategories()) {
             is DataResult.Failed -> DataResult.Failed(response.error)
             is DataResult.Success -> DataResult.Success(response.data.map {

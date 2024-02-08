@@ -1,4 +1,4 @@
-package data
+package com.everest.categories.data
 
 import CategoriesService
 import dagger.Module

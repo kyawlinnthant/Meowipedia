@@ -11,5 +11,5 @@ data class CategoryVO(
 fun CategoryDTO.toVo() = CategoryVO(
     id = this.id ?: "",
     name = this.name ?: "",
-    image = this.image ?: ""
+    image = this.image.url ?: ""
 )

@@ -7,3 +7,8 @@ plugins {
 android {
     namespace = "com.everest.categories.presentation"
 }
+dependencies {
+    implementation(project(":features:categories:domain"))
+    implementation(project(":cores:util"))
+    implementation(project(":cores:ui"))
+}
