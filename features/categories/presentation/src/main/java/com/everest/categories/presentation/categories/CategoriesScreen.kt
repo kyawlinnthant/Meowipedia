@@ -58,8 +58,9 @@ fun CategoriesLoadingView(
     paddingValues: PaddingValues,
 ) {
     Box(modifier = modifier.padding(paddingValues), contentAlignment = Alignment.Center) {
-
+        Text("... Loading")
         CircularProgressIndicator()
+
     }
 }
 
@@ -72,7 +73,7 @@ fun CategoriesListView(
     LazyColumn(modifier = modifier.padding(paddingValues)) {
         items(count = categories.size, key = { index -> categories[index].id }) { index ->
             val currentVo = categories[index]
-            Text(text = "$currentVo", modifier = modifier.padding(8.dp))
+            Text(text = currentVo.name, modifier = modifier.padding(8.dp))
         }
     }
 }

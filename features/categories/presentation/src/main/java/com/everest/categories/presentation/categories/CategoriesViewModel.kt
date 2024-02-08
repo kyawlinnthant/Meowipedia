@@ -26,6 +26,10 @@ class CategoriesViewModel @Inject constructor(
             initialValue = vmState.value.asUiState(),
         )
 
+
+    init {
+        fetch()
+    }
     fun fetch() {
         viewModelScope.launch {
             vmState.update { state ->

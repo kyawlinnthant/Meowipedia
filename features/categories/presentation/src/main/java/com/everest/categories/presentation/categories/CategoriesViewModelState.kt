@@ -5,7 +5,7 @@ import com.everest.util.result.NetworkError
 
 data class CategoriesViewModelState(
     val categories: List<CategoryVO> = emptyList(),
-    val isError: NetworkError? = NetworkError.SomethingWrong,
+    val isError: NetworkError? = null,
     val isLoading: Boolean = false
 
 ) {

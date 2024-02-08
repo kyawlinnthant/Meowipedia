@@ -12,12 +12,8 @@ data class CategoryDTO(
     val affectionLevel: Int?,
     @SerialName("alt_names")
     val altNames: String?,
-    @SerialName("bidability")
-    val bidAbility: Int?,
-    @SerialName("cat_friendly")
-    val catFriendly: Int?,
-    @SerialName("cfa_url")
-    val cfaUrl: String?,
+//    @SerialName("cfa_url")
+//    val cfaUrl: String?,
     @SerialName("child_friendly")
     val childFriendly: Int?,
     @SerialName("country_code")
@@ -39,7 +35,7 @@ data class CategoryDTO(
     val image: CategoryImageDTO,
     val indoor: Int?,
     val intelligence: Int?,
-    val lap: Int?,
+//    val lap: Int?,
     @SerialName("life_span")
     val lifeSpan: String?,
     val name: String?,
@@ -60,13 +56,13 @@ data class CategoryDTO(
     @SerialName("suppressed_tail")
     val suppressedTail: Int?,
     val temperament: String?,
-    @SerialName("vcahospitals_url")
-    val vcahoSpitalsUrl: String?,
-    @SerialName("vetstreet_url")
-    val vetStreetUrl: String?,
+//    @SerialName("vcahospitals_url")
+//    val vcahoSpitalsUrl: String?,
+//    @SerialName("vetstreet_url")
+//    val vetStreetUrl: String?,
     val vocalisation: Int?,
     val weight: Weight?,
-    @SerialName("wikipedia_url")
-    val wikipediaUrl: String?
+//    @SerialName("wikipedia_url")
+//    val wikipediaUrl: String?
 )
 

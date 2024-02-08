@@ -15,14 +15,17 @@ inline fun <reified T> safeApiCall(
         if (response.isSuccessful) {
             val body = response.body()
             DataResult.Success(data = body!!)
+        } else {
+            // 4x,5x
+            val errorBody = response.errorBody()
+            //todo : Does server response error in errorBody?
+            //  decode error response with Json
+            DataResult.Failed(error = NetworkError.Dynamic(message = errorBody.toString()))
         }
-        // 4x,5x
-        val errorBody = response.errorBody()
-        //todo : Does server response error in errorBody?
-        //  decode error response with Json
-        DataResult.Failed(error = NetworkError.Dynamic(message = errorBody.toString()))
+
 
     } catch (e: Exception) {
+        println(">>>> ${e.message}")
         // we have to catch the exact exception for better code quality.
         if (e is SocketTimeoutException)
             DataResult.Failed(error = NetworkError.NoInternet)
