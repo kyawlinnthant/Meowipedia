@@ -1,6 +1,6 @@
 package com.everest.categories.data.repository
 
-import CategoriesService
+import com.everest.categories.data.service.CategoriesService
 import com.everest.categories.data.model.categories.CategoryDTO
 import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall

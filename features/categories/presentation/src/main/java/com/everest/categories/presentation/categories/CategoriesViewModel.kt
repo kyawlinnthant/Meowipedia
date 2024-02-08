@@ -27,12 +27,12 @@ class CategoriesViewModel @Inject constructor(
         )
 
     fun fetch() {
-        vmState.update { state ->
-            state.copy(
-                isLoading = true
-            )
-        }
         viewModelScope.launch {
+            vmState.update { state ->
+                state.copy(
+                    isLoading = true
+                )
+            }
             when (val response = fetchCategories()) {
                 is DataResult.Failed -> vmState.update { state ->
                     state.copy(

@@ -1,4 +1,4 @@
-package com.everest.categories.data
+package com.everest.categories.data.module
 
 import com.everest.categories.data.repository.CategoriesRepo
 import com.everest.categories.data.repository.CategoriesRepoImpl

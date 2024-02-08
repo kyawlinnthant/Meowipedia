@@ -2,6 +2,7 @@ package com.everest.categories.presentation.categories
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
@@ -20,7 +21,7 @@ fun CategoriesScreen(
     state: CategoriesUiState
 ) {
 
-    Scaffold {
+    Scaffold(modifier = Modifier.fillMaxSize()) {
         when (state) {
             is CategoriesUiState.Error -> CategoriesErrorView(
                 paddingValues = it,

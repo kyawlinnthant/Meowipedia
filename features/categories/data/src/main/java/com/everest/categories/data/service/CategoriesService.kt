@@ -1,3 +1,5 @@
+package com.everest.categories.data.service
+
 import com.everest.categories.data.model.categories.CategoryDTO
 import retrofit2.Response
 import retrofit2.http.GET

@@ -1,6 +1,6 @@
-package com.everest.categories.data
+package com.everest.categories.data.module
 
-import CategoriesService
+import com.everest.categories.data.service.CategoriesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
