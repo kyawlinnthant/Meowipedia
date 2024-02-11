@@ -2,12 +2,12 @@ package com.everest.network
 
 import com.everest.util.result.DataResult
 import com.everest.util.result.NetworkError
+import kotlinx.serialization.json.Json
 import retrofit2.Response
 import java.net.SocketTimeoutException
-
 inline fun <reified T> safeApiCall(
     apiCall: () -> Response<T>,
-//    json : Json // todo : if we have to catch server 4x,5x error response
+    json: Json
 ): DataResult<T> {
     return try {
         val response = apiCall()
@@ -18,15 +18,12 @@ inline fun <reified T> safeApiCall(
         } else {
             // 4x,5x
             val errorBody = response.errorBody()
-            //todo : Does server response error in errorBody?
-            //  decode error response with Json
-            DataResult.Failed(error = NetworkError.Dynamic(message = errorBody.toString()))
+            val errorResponse =
+                json.decodeFromString<ServerError>(errorBody!!.string()) // you can use localized message for server error response
+            DataResult.Failed(error = NetworkError.Dynamic(message = errorResponse.message))
         }
 
-
     } catch (e: Exception) {
-        println(">>>> ${e.message}")
-        // we have to catch the exact exception for better code quality.
         if (e is SocketTimeoutException)
             DataResult.Failed(error = NetworkError.NoInternet)
         else
