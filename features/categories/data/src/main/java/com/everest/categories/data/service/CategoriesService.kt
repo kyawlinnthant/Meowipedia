@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface CategoriesService {
     companion object {
         const val CATEGORY = "breeds"
-        private const val SEARCH_CATEGORY = "breeds/search"
+        const val SEARCH_CATEGORY = "breeds/search"
     }
 
     @GET(CATEGORY)

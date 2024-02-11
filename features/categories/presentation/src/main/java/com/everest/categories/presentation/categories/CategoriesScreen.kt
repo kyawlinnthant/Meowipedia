@@ -59,8 +59,6 @@ fun CategoriesLoadingView(
 ) {
     Box(modifier = modifier.padding(paddingValues), contentAlignment = Alignment.Center) {
         Text("... Loading")
-        CircularProgressIndicator()
-
     }
 }
 

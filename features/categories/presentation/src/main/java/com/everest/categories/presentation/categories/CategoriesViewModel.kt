@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.everest.categories.domain.usecase.FetchCategories
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -27,9 +29,6 @@ class CategoriesViewModel @Inject constructor(
         )
 
 
-    init {
-        fetch()
-    }
     fun fetch() {
         viewModelScope.launch {
             vmState.update { state ->
@@ -52,6 +51,22 @@ class CategoriesViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    private var searchJob: Job? = null
+    private fun search(query: String) {
+        if (query.isEmpty()) return
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(500L)
+            // todo : call search use case
+        }
+    }
+
+    fun onAction(action: CategoriesAction) {
+        when (action) {
+            is CategoriesAction.ChangeSearchKey -> search(action.query)
         }
     }
 }

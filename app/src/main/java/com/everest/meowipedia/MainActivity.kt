@@ -18,9 +18,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val vm: CategoriesViewModel = hiltViewModel()
             val state = vm.uiState.collectAsState()
-//            LaunchedEffect(key1 = true){
-//                vm.fetch()
-//            }
+            LaunchedEffect(key1 = true) {
+                vm.fetch()
+            }
             MeowipediaTheme {
                 // A surface container using the 'background' color from the theme
                 CategoriesScreen(state = state.value)

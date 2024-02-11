@@ -8,7 +8,7 @@ google-hilt = "2.48.1"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.0"}
+serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.0" }
 
 # androidx
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
@@ -32,9 +32,9 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 # google
-google-hilt-android = { group = "com.google.dagger", name = "hilt-android",version.ref = "google-hilt"}
-google-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler",version.ref = "google-hilt"}
-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version= "1.1.0" }
+google-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "google-hilt" }
+google-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "google-hilt" }
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.1.0" }
 # network
 network-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version = "4.12.0" }
 network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0" }
@@ -49,6 +49,12 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version = "2.
 # gradle plugin
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
+# test
+truth = { group = "com.google.truth", name = "truth", version = "1.4.0" }
+mockk = { group = "io.mockk", name = "mockk", version = "1.13.9" }
+mock-web-server = { group = "com.squareup.okhttp3", name = "mockwebserver", version = "4.11.0" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version = "1.7.3" }
 
 [bundles]
 androidx-cores = [
@@ -97,11 +103,11 @@ google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "google-hilt" }
 
 # Plugins defined by this project
-everest-android-application = { id = "com.everest.android.application", version = "unspecified"}
-everest-compose-application = { id = "com.everest.compose.application", version = "unspecified"}
-everest-android-library = { id = "com.everest.android.library", version = "unspecified"}
-everest-compose-library = { id = "com.everest.compose.library", version = "unspecified"}
-everest-hilt = { id = "com.everest.dagger.hilt", version = "unspecified"}
-everest-network = { id = "com.everest.retrofit.network", version = "unspecified"}
-everest-database = { id = "com.everest.room.database", version = "unspecified"}
-everest-datastore = { id = "com.everest.preferences.datastore", version = "unspecified"}
+everest-android-application = { id = "com.everest.android.application", version = "unspecified" }
+everest-compose-application = { id = "com.everest.compose.application", version = "unspecified" }
+everest-android-library = { id = "com.everest.android.library", version = "unspecified" }
+everest-compose-library = { id = "com.everest.compose.library", version = "unspecified" }
+everest-hilt = { id = "com.everest.dagger.hilt", version = "unspecified" }
+everest-network = { id = "com.everest.retrofit.network", version = "unspecified" }
+everest-database = { id = "com.everest.room.database", version = "unspecified" }
+everest-datastore = { id = "com.everest.preferences.datastore", version = "unspecified" }

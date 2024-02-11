@@ -11,6 +11,8 @@ dependencies {
     api(project(":data:network"))
     api(project(":cores:util"))
     implementation(project(":cores:dispatcher"))
-    testImplementation("io.mockk:mockk:1.13.9")
-    androidTestImplementation("io.mockk:mockk:1.13.9")
+    testImplementation(libs.mockk)
+    testImplementation(libs.truth)
+    testImplementation(libs.mock.web.server)
+    testImplementation(libs.coroutines.test)
 }
