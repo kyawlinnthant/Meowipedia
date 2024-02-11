@@ -24,6 +24,7 @@ android {
 }
 dependencies {
     implementation(project(":cores:util"))
+    testImplementation("com.google.truth:truth:1.4.0")
 }
 
 

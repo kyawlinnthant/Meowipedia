@@ -5,6 +5,7 @@ import com.everest.util.result.NetworkError
 import kotlinx.serialization.json.Json
 import retrofit2.Response
 import java.net.SocketTimeoutException
+
 inline fun <reified T> safeApiCall(
     apiCall: () -> Response<T>,
     json: Json
@@ -23,10 +24,9 @@ inline fun <reified T> safeApiCall(
             DataResult.Failed(error = NetworkError.Dynamic(message = errorResponse.message))
         }
 
+    } catch (e: SocketTimeoutException) {
+        DataResult.Failed(error = NetworkError.NoInternet) // you can use correct exception you want to catch
     } catch (e: Exception) {
-        if (e is SocketTimeoutException)
-            DataResult.Failed(error = NetworkError.NoInternet)
-        else
-            DataResult.Failed(error = NetworkError.SomethingWrong)
+        DataResult.Failed(error = NetworkError.SomethingWrong)
     }
 }

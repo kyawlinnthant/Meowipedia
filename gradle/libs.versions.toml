@@ -46,7 +46,6 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version = "2.6.1" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version = "2.6.1" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version = "2.6.1" }
 
-
 # gradle plugin
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
