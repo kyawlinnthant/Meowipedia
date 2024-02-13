@@ -2,6 +2,7 @@ package com.everest.database
 
 import android.content.Context
 import androidx.room.Room
+import com.everest.database.dao.MeowDao
 import com.everest.database.db.MeowDatabase
 import dagger.Module
 import dagger.Provides
@@ -25,4 +26,11 @@ object DatabaseModule {
     )
         .fallbackToDestructiveMigration()
         .build()
+
+
+    @Provides
+    @Singleton
+    fun provideMeowDao(
+        db: MeowDatabase
+    ): MeowDao = db.provideMeowDao()
 }

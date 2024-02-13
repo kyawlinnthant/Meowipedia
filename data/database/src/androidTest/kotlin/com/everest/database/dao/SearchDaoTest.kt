@@ -31,7 +31,7 @@ class SearchDaoTest {
     @Before
     fun setup() {
         testRule.inject()
-        dao = db.searchDao()
+        dao = db.provideSearchDao()
     }
 
     @After

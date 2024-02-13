@@ -11,5 +11,6 @@ android {
 dependencies {
     api(project(":data:network"))
     api(project(":cores:util"))
+    api(project(":data:database"))
     implementation(project(":cores:dispatcher"))
 }

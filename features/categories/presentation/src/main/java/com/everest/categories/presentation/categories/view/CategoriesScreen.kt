@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import com.everest.categories.domain.vo.CategoryVO
 import com.everest.categories.presentation.R
 import com.everest.categories.presentation.categories.CategoriesAction
 import com.everest.categories.presentation.categories.state.CategoriesViewModelUiState
@@ -23,7 +24,7 @@ import com.everest.categories.presentation.categories.view.search.CategoriesSear
 @Composable
 fun CategoriesScreen(
     state: CategoriesViewModelUiState,
-    onAction: (CategoriesAction) -> Unit
+    onAction: (CategoriesAction) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -76,7 +77,8 @@ fun CategoriesScreen(
         when (state) {
             is CategoriesViewModelUiState.ListState -> CategoriesListView(
                 state = state.state,
-                paddingValues = it
+                paddingValues = it,
+                onAction = onAction
             )
 
             is CategoriesViewModelUiState.SearchState -> CategoriesSearchView(

@@ -3,12 +3,12 @@ package com.everest.categories.presentation.categories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.everest.categories.domain.usecase.FetchCategories
+import com.everest.categories.domain.usecase.SaveMeow
 import com.everest.categories.domain.usecase.SearchCategories
 import com.everest.categories.domain.vo.CategoryVO
 import com.everest.categories.presentation.categories.state.CategoriesViewModelState
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,11 +17,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val fetchCategories: FetchCategories,
-    private val searchCategories: SearchCategories
+    private val searchCategories: SearchCategories,
+    private val saveMeow: SaveMeow
 ) : ViewModel() {
     private val vmState = MutableStateFlow(CategoriesViewModelState())
     val uiState = vmState
@@ -31,6 +33,12 @@ class CategoriesViewModel @Inject constructor(
             started = SharingStarted.Eagerly,
             initialValue = vmState.value.asUiState()
         )
+
+    fun save(categoryVO: CategoryVO) {
+        viewModelScope.launch {
+            saveMeow(categoryVO)
+        }
+    }
 
     fun fetch() {
         viewModelScope.launch {
@@ -68,6 +76,7 @@ class CategoriesViewModel @Inject constructor(
             is CategoriesAction.UpdateSearchKey -> updateSearchQuery(action.query)
             is CategoriesAction.ClickItem -> operateItemClick(action.item)
             is CategoriesAction.UpdateSearchView -> updateShouldShowSearch(action.shouldShow)
+            is CategoriesAction.SaveItem -> save(action.item)
         }
     }
 
