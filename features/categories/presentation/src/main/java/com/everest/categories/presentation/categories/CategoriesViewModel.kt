@@ -3,6 +3,7 @@ package com.everest.categories.presentation.categories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.everest.categories.domain.usecase.FetchCategories
+import com.everest.categories.domain.usecase.SearchCategories
 import com.everest.categories.domain.vo.CategoryVO
 import com.everest.categories.presentation.categories.state.CategoriesViewModelState
 import com.everest.util.result.DataResult
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
-    private val fetchCategories: FetchCategories
+    private val fetchCategories: FetchCategories,
+    private val searchCategories: SearchCategories
 ) : ViewModel() {
     private val vmState = MutableStateFlow(CategoriesViewModelState())
     val uiState = vmState
@@ -74,7 +76,32 @@ class CategoriesViewModel @Inject constructor(
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500L)
-            // todo : call search use case
+            vmState.update { state ->
+                state.copy(
+                    listState = state.listState.copy(
+                        isLoading = true
+                    )
+                )
+            }
+            when (val response = searchCategories(keyword = query)) {
+                is DataResult.Failed -> vmState.update { state ->
+                    state.copy(
+                        listState = state.listState.copy(
+                            isError = response.error,
+                            isLoading = false
+                        )
+                    )
+                }
+
+                is DataResult.Success -> vmState.update { state ->
+                    state.copy(
+                        listState = state.listState.copy(
+                            categories = response.data,
+                            isLoading = false
+                        )
+                    )
+                }
+            }
         }
     }
 
