@@ -1,5 +1,9 @@
 package com.everest.categories.presentation.categories
 
-sealed interface CategoriesAction{
-    data class ChangeSearchKey(val query : String) : CategoriesAction
+import com.everest.categories.domain.vo.CategoryVO
+
+sealed interface CategoriesAction {
+    data class UpdateSearchKey(val query: String) : CategoriesAction
+    data class UpdateSearchView(val shouldShow: Boolean) : CategoriesAction
+    data class ClickItem(val item: CategoryVO) : CategoriesAction
 }
