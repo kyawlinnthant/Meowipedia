@@ -47,5 +47,13 @@ gradlePlugin {
             id = "com.everest.preferences.datastore"
             implementationClass = "DatastorePrefPlugin"
         }
+        register("test.unit") {
+            id = "com.everest.test.unit"
+            implementationClass = "TestUnitPlugin"
+        }
+        register("test.android") {
+            id = "com.everest.test.android"
+            implementationClass = "TestAndroidPlugin"
+        }
     }
 }

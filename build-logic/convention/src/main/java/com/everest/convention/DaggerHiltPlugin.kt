@@ -17,9 +17,11 @@ class DaggerHiltPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val hiltAndroid = libs.findLibrary("google-hilt-android").get()
             val hiltCompiler = libs.findLibrary("google-hilt-compiler").get()
+            val hiltTest = libs.findLibrary("google-hilt-test").get()
             dependencies {
                 add("implementation", hiltAndroid)
                 add("ksp", hiltCompiler)
+                add("androidTestApi", hiltTest)
             }
         }
     }

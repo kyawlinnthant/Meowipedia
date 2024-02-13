@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.everest.android.library)
     alias(libs.plugins.everest.network)
     alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.everest.unit.test)
 }
 
 android {
@@ -24,7 +25,6 @@ android {
 }
 dependencies {
     implementation(project(":cores:util"))
-    testImplementation("com.google.truth:truth:1.4.0")
 }
 
 
