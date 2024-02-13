@@ -14,7 +14,7 @@ interface CategoriesService {
     @GET(CATEGORY)
     suspend fun categories(
         @Query("limit") limit: Int = 10,
-        @Query("page") page: Int = 0,
+        @Query("page") page: Int = 0
     ): Response<List<CategoryDTO>>
 
     @GET(SEARCH_CATEGORY)
