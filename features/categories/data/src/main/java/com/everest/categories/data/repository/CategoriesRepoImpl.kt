@@ -16,10 +16,16 @@ class CategoriesRepoImpl @Inject constructor(
     @DispatcherModule.IoDispatcher private val io: CoroutineDispatcher
 ) :
     CategoriesRepo {
-    override suspend fun fetchCategories(): DataResult<List<CategoryDTO>> {
-        return withContext(io) {
+    override suspend fun fetchCategories(): DataResult<List<CategoryDTO>> =
+        withContext(io) {
             safeApiCall(json = json, apiCall = { categoriesService.categories() })
         }
-    }
+
+    override suspend fun searchCategories(keyword: String): DataResult<List<CategoryDTO>> =
+        withContext(io) {
+            safeApiCall(
+                json = json,
+                apiCall = { categoriesService.searchCategories(keyword = keyword) })
+        }
 
 }
