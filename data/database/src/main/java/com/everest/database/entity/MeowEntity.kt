@@ -3,8 +3,6 @@ package com.everest.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.everest.database.entity.MeowEntity.Companion.TABLE_NAME
-
-
 @Entity(
     tableName = TABLE_NAME
 )

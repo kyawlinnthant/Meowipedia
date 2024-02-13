@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.everest.android.library)
     alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.everest.unit.test)
 }
 
 android {
@@ -11,8 +12,4 @@ dependencies {
     api(project(":data:network"))
     api(project(":cores:util"))
     implementation(project(":cores:dispatcher"))
-    testImplementation(libs.mockk)
-    testImplementation(libs.truth)
-    testImplementation(libs.mock.web.server)
-    testImplementation(libs.coroutines.test)
 }

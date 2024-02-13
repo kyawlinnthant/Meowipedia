@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.everest.android.library)
     alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.everest.unit.test)
 }
 
 android {
@@ -9,7 +10,4 @@ android {
 
 dependencies {
     implementation(project(":features:categories:data"))
-    testImplementation(libs.mockk)
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.truth)
 }
