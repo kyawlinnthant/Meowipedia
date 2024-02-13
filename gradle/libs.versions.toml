@@ -60,6 +60,7 @@ mockk = { group = "io.mockk", name = "mockk", version = "1.13.9" }
 mock-web-server = { group = "com.squareup.okhttp3", name = "mockwebserver", version = "4.11.0" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version = "1.7.3" }
 androidx-runner = { group = "androidx.test", name = "runner", version = "1.5.2" }
+junit = { group = "junit", name = "junit", version = "4.13.2" }
 
 [bundles]
 unit-test = [

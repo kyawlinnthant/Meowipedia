@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everest.categories.presentation.categories.CategoriesViewModel
 import com.everest.categories.presentation.categories.view.CategoriesScreen
-import com.everest.meowipedia.ui.theme.MeowipediaTheme
+import com.everest.theme.MeowipediaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -78,7 +78,7 @@ class CategoriesViewModel @Inject constructor(
             delay(500L)
             vmState.update { state ->
                 state.copy(
-                    listState = state.listState.copy(
+                    searchState = state.searchState.copy(
                         isLoading = true
                     )
                 )
@@ -86,7 +86,7 @@ class CategoriesViewModel @Inject constructor(
             when (val response = searchCategories(keyword = query)) {
                 is DataResult.Failed -> vmState.update { state ->
                     state.copy(
-                        listState = state.listState.copy(
+                        searchState = state.searchState.copy(
                             isError = response.error,
                             isLoading = false
                         )
@@ -95,7 +95,7 @@ class CategoriesViewModel @Inject constructor(
 
                 is DataResult.Success -> vmState.update { state ->
                     state.copy(
-                        listState = state.listState.copy(
+                        searchState = state.searchState.copy(
                             categories = response.data,
                             isLoading = false
                         )

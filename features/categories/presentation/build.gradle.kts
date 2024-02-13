@@ -11,4 +11,5 @@ dependencies {
     implementation(project(":features:categories:domain"))
     implementation(project(":cores:util"))
     implementation(project(":cores:ui"))
+    api(project(":cores:theme"))
 }

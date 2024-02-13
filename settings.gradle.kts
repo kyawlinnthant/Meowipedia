@@ -24,7 +24,8 @@ include(
     ":cores:model",
     ":cores:ui",
     ":cores:util",
-    ":cores:dispatcher"
+    ":cores:dispatcher",
+    ":cores:test-rule"
 )
 include(
     ":data:network",
