@@ -61,8 +61,7 @@ data class CategoryDTO(
 //    @SerialName("vetstreet_url")
 //    val vetStreetUrl: String? = "",
     val vocalisation: Int? = -1,
-    val weight: Weight? = null,
+    val weight: Weight? = null
 //    @SerialName("wikipedia_url")
 //    val wikipediaUrl: String? = ""
 )
-

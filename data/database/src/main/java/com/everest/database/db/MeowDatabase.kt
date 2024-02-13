@@ -17,7 +17,7 @@ import com.everest.database.typeconverter.LocalDateTimeConverter
 @TypeConverters(value = [LocalDateTimeConverter::class])
 abstract class MeowDatabase : RoomDatabase() {
     abstract fun provideMeowDao(): MeowDao
-    abstract  fun searchDao(): SearchDao
+    abstract fun searchDao(): SearchDao
 
     companion object {
         const val DB_NAME = "meow_database"

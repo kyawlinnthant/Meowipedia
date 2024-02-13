@@ -26,5 +26,3 @@ android {
 dependencies {
     implementation(project(":cores:util"))
 }
-
-

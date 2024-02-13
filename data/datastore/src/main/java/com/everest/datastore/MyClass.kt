@@ -1,4 +1,3 @@
 package com.everest.datastore
 
-class MyClass {
-}
+class MyClass

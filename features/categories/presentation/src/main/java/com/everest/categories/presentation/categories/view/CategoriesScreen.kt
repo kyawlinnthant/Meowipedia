@@ -24,7 +24,6 @@ fun CategoriesScreen(
     state: CategoriesViewModelUiState,
     onAction: (CategoriesAction) -> Unit
 ) {
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -32,28 +31,41 @@ fun CategoriesScreen(
                 is CategoriesViewModelUiState.ListState -> TopAppBar(title = {
                     Text(text = stringResource(id = R.string.categories))
                 }, actions = {
-                    IconButton(onClick = { onAction(CategoriesAction.UpdateSearchView(shouldShow = true)) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_search_24),
-                            contentDescription = null
-                        )
-                    }
-                })
+                        IconButton(
+                            onClick = {
+                                onAction(
+                                    CategoriesAction.UpdateSearchView(shouldShow = true)
+                                )
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_search_24),
+                                contentDescription = null
+                            )
+                        }
+                    })
 
                 is CategoriesViewModelUiState.SearchState -> TopAppBar(title = {
                     BasicTextField(
                         value = state.query,
                         onValueChange = {
                             onAction(CategoriesAction.UpdateSearchKey(query = it))
-                        })
+                        }
+                    )
                 }, navigationIcon = {
-                    IconButton(onClick = { onAction(CategoriesAction.UpdateSearchView(shouldShow = false)) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_arrow_back_24),
-                            contentDescription = null
-                        )
-                    }
-                })
+                        IconButton(
+                            onClick = {
+                                onAction(
+                                    CategoriesAction.UpdateSearchView(shouldShow = false)
+                                )
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_arrow_back_24),
+                                contentDescription = null
+                            )
+                        }
+                    })
             }
         }
     ) {
@@ -70,4 +82,3 @@ fun CategoriesScreen(
         }
     }
 }
-

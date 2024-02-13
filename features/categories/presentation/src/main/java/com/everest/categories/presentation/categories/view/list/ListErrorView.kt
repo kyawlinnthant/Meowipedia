@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import com.everest.ui.text.asErrorMessage
 import com.everest.util.result.NetworkError
 
-
 @Composable
 fun ListErrorView(
     modifier: Modifier = Modifier,

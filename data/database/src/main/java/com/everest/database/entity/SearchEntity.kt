@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.everest.database.entity.SearchEntity.Companion.TABLE_NAME
-import kotlinx.datetime.LocalDateTime
 import kotlin.random.Random
+import kotlinx.datetime.LocalDateTime
 
 @Entity(
     tableName = TABLE_NAME

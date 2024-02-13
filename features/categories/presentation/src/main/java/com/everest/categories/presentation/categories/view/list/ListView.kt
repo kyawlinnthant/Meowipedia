@@ -12,7 +12,7 @@ import com.everest.categories.presentation.categories.state.CategoriesListUiStat
 fun CategoriesListView(
     state: CategoriesListUiState,
     modifier: Modifier = Modifier,
-    paddingValues: PaddingValues,
+    paddingValues: PaddingValues
 ) {
     Box(
         modifier = modifier

@@ -22,4 +22,3 @@ class LocalDateTimeConverter {
         return dateTime?.toInstant(TimeZone.currentSystemDefault())?.toEpochMilliseconds()
     }
 }
-

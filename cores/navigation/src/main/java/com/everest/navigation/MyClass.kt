@@ -1,4 +1,3 @@
 package com.everest.navigation
 
-class MyClass {
-}
+class MyClass

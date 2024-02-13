@@ -7,6 +7,7 @@ import com.everest.categories.domain.vo.CategoryVO
 import com.everest.categories.presentation.categories.state.CategoriesViewModelState
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
@@ -27,9 +27,8 @@ class CategoriesViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = vmState.value.asUiState(),
+            initialValue = vmState.value.asUiState()
         )
-
 
     fun fetch() {
         viewModelScope.launch {
@@ -100,6 +99,5 @@ class CategoriesViewModel @Inject constructor(
     }
 
     private fun operateItemClick(category: CategoryVO) {
-
     }
 }

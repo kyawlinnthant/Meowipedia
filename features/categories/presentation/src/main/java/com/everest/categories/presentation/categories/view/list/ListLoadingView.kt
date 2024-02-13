@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun ListLoadingView(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Text("... Loading")

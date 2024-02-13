@@ -12,7 +12,7 @@ import com.everest.categories.presentation.categories.state.CategoriesSearchUiSt
 fun CategoriesSearchView(
     state: CategoriesSearchUiState,
     modifier: Modifier = Modifier,
-    paddingValues: PaddingValues,
+    paddingValues: PaddingValues
 ) {
     Box(
         modifier = modifier

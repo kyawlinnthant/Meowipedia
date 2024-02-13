@@ -1,4 +1,3 @@
 package com.everest.theme
 
-class MyClass {
-}
+class MyClass

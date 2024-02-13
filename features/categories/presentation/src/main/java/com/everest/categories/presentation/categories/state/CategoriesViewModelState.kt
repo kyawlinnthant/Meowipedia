@@ -6,14 +6,20 @@ data class CategoriesViewModelState(
     val searchState: CategoriesSearchState = CategoriesSearchState()
 ) {
     fun asUiState() =
-        if (shouldShowSearch) CategoriesViewModelUiState.SearchState(state = asSearchState(), query = searchState.searchQuery)
-        else CategoriesViewModelUiState.ListState(state = asListState())
+        if (shouldShowSearch) {
+            CategoriesViewModelUiState.SearchState(
+                state = asSearchState(),
+                query = searchState.searchQuery
+            )
+        } else {
+            CategoriesViewModelUiState.ListState(state = asListState())
+        }
 
     private fun asSearchState() = searchState.asSearchState()
     private fun asListState() = listState.asListState()
 }
 
 sealed interface CategoriesViewModelUiState {
-    data class SearchState(val state: CategoriesSearchUiState,val query: String) : CategoriesViewModelUiState
+    data class SearchState(val state: CategoriesSearchUiState, val query: String) : CategoriesViewModelUiState
     data class ListState(val state: CategoriesListUiState) : CategoriesViewModelUiState
 }

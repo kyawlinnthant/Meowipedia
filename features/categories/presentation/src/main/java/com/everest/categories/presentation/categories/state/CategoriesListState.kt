@@ -15,7 +15,6 @@ data class CategoriesListState(
     }
 }
 
-
 sealed interface CategoriesListUiState {
     data object Loading : CategoriesListUiState
     data class Error(val error: NetworkError) : CategoriesListUiState
