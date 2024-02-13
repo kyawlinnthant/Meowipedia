@@ -2,6 +2,7 @@ package com.everest.database.dao
 
 import androidx.test.filters.SmallTest
 import com.everest.database.db.MeowDatabase
+import com.everest.database.entity.MeowEntity
 import com.everest.database.entity.SearchEntity
 import com.google.common.truth.Truth
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -20,12 +21,12 @@ import javax.inject.Inject
 
 @SmallTest
 @HiltAndroidTest
-class SearchDaoTest {
+class MeowDaoTest {
 
     @get:Rule
     val testRule = HiltAndroidRule(this)
 
-    private lateinit var dao: SearchDao
+    private lateinit var dao: MeowDao
 
     @Inject
     lateinit var db: MeowDatabase
@@ -33,7 +34,7 @@ class SearchDaoTest {
     @Before
     fun setup() {
         testRule.inject()
-        dao = db.provideSearchDao()
+        dao = db.provideMeowDao()
     }
 
     @After
@@ -44,23 +45,16 @@ class SearchDaoTest {
 
     @Test
     fun successfully_insert_individual_search() = runTest {
-        val search = SearchEntity(
-            query = "kyawlinnthant",
-            createdAt = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+        val search = MeowEntity(
+            name = "Rio",
+            createdAt = "${Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())}",
+            activeAt = "${ Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())}",
+            description = "teting",
+            image = "Testing URL",
+            id = "ass"
         )
-        dao.insertSearch(search)
-        val actual = dao.getSearchHistories()
-        Truth.assertThat(actual.size).isEqualTo(1)
-    }
-
-    @Test
-    fun get_search_dao_list() = runTest {
-        val search = SearchEntity(
-            query = "kyawlinnthant",
-            createdAt = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-        )
-        dao.insertSearch(search)
-        val actual = dao.listenSearchHistories().first()
+        dao.insertMeow(search)
+        val actual = dao.getMeowList()
         Truth.assertThat(actual.size).isEqualTo(1)
     }
 }
