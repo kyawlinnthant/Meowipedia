@@ -3,6 +3,8 @@ package com.everest.categories.presentation.categories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.everest.categories.domain.usecase.FetchCategories
+import com.everest.categories.domain.vo.CategoryVO
+import com.everest.categories.presentation.categories.state.CategoriesViewModelState
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -33,30 +35,43 @@ class CategoriesViewModel @Inject constructor(
         viewModelScope.launch {
             vmState.update { state ->
                 state.copy(
-                    isLoading = true
+                    listState = state.listState.copy(
+                        isLoading = true
+                    )
                 )
             }
             when (val response = fetchCategories()) {
                 is DataResult.Failed -> vmState.update { state ->
                     state.copy(
-                        isError = response.error,
-                        isLoading = false
+                        listState = state.listState.copy(
+                            isError = response.error,
+                            isLoading = false
+                        )
                     )
                 }
 
                 is DataResult.Success -> vmState.update { state ->
                     state.copy(
-                        categories = response.data,
-                        isLoading = false
+                        listState = state.listState.copy(
+                            categories = response.data,
+                            isLoading = false
+                        )
                     )
                 }
             }
         }
     }
 
+    fun onAction(action: CategoriesAction) {
+        when (action) {
+            is CategoriesAction.UpdateSearchKey -> updateSearchQuery(action.query)
+            is CategoriesAction.ClickItem -> operateItemClick(action.item)
+            is CategoriesAction.UpdateSearchView -> updateShouldShowSearch(action.shouldShow)
+        }
+    }
+
     private var searchJob: Job? = null
     private fun search(query: String) {
-        if (query.isEmpty()) return
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500L)
@@ -64,9 +79,27 @@ class CategoriesViewModel @Inject constructor(
         }
     }
 
-    fun onAction(action: CategoriesAction) {
-        when (action) {
-            is CategoriesAction.ChangeSearchKey -> search(action.query)
+    private fun updateSearchQuery(query: String) {
+        vmState.update { state ->
+            state.copy(
+                searchState = state.searchState.copy(
+                    searchQuery = query
+                )
+            )
         }
+        if (query.isEmpty()) return
+        search(query)
+    }
+
+    private fun updateShouldShowSearch(shouldShow: Boolean) {
+        vmState.update { state ->
+            state.copy(
+                shouldShowSearch = shouldShow
+            )
+        }
+    }
+
+    private fun operateItemClick(category: CategoryVO) {
+
     }
 }

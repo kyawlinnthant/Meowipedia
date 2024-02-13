@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.everest.categories.presentation.categories.CategoriesScreen
+import com.everest.categories.presentation.categories.view.CategoriesScreen
 import com.everest.categories.presentation.categories.CategoriesViewModel
 import com.everest.meowipedia.ui.theme.MeowipediaTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             }
             MeowipediaTheme {
                 // A surface container using the 'background' color from the theme
-                CategoriesScreen(state = state.value)
+                CategoriesScreen(state = state.value, onAction = vm::onAction)
             }
         }
     }
