@@ -1,9 +1,9 @@
 package com.everest.datastore
 
 sealed interface DayNightTheme {
-    data class Day(val status: Int = DayNightThemeValue.DAY) : DayNightTheme
-    data class Night(val status: Int = DayNightThemeValue.NIGHT) : DayNightTheme
-    data class System(val status: Int = DayNightThemeValue.SYSTEM) : DayNightTheme
+    data object Day : DayNightTheme
+    data object Night : DayNightTheme
+    data object System : DayNightTheme
 }
 
 private object DayNightThemeValue {
@@ -12,11 +12,19 @@ private object DayNightThemeValue {
     const val SYSTEM = 2
 }
 
+fun DayNightTheme.value(): Int {
+    return when (this) {
+        DayNightTheme.Day -> DayNightThemeValue.DAY
+        DayNightTheme.Night -> DayNightThemeValue.NIGHT
+        DayNightTheme.System -> DayNightThemeValue.SYSTEM
+    }
+}
+
 fun Int.toDayNightTheme(): DayNightTheme {
     return when (this) {
-        DayNightThemeValue.DAY -> DayNightTheme.Day()
-        DayNightThemeValue.NIGHT -> DayNightTheme.Night()
-        DayNightThemeValue.SYSTEM -> DayNightTheme.System()
-        else -> DayNightTheme.System()
+        DayNightThemeValue.DAY -> DayNightTheme.Day
+        DayNightThemeValue.NIGHT -> DayNightTheme.Night
+        DayNightThemeValue.SYSTEM -> DayNightTheme.System
+        else -> DayNightTheme.System
     }
 }

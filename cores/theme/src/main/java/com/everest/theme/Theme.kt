@@ -13,6 +13,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.everest.datastore.DayNightTheme
 
 private val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -80,18 +81,28 @@ private val darkColors = darkColorScheme(
 
 @Composable
 fun MeowipediaTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    appTheme: DayNightTheme,
+    dynamicColor: Boolean,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    val supportDark = when (appTheme) {
+        DayNightTheme.Day -> false
+        DayNightTheme.Night -> true
+        DayNightTheme.System -> isSystemInDarkTheme()
+    }
+    val colorScheme = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val context = LocalContext.current
+        when (appTheme) {
+            DayNightTheme.Day -> dynamicLightColorScheme(context)
+            DayNightTheme.Night -> dynamicDarkColorScheme(context)
+            DayNightTheme.System -> if (isSystemInDarkTheme()) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> darkColors
-        else -> lightColors
+    } else {
+        when (appTheme) {
+            DayNightTheme.Day -> lightColors
+            DayNightTheme.Night -> darkColors
+            DayNightTheme.System -> if (isSystemInDarkTheme()) darkColors else lightColors
+        }
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -99,8 +110,8 @@ fun MeowipediaTheme(
             val window = (view.context as Activity).window
             WindowCompat.setDecorFitsSystemWindows(window, false)
             WindowCompat.getInsetsController(window, view).apply {
-                isAppearanceLightNavigationBars = darkTheme
-                isAppearanceLightStatusBars = !darkTheme
+                isAppearanceLightNavigationBars = supportDark
+                isAppearanceLightStatusBars = !supportDark
             }
         }
     }

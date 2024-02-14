@@ -7,14 +7,14 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import com.everest.dispatcher.DispatcherModule
-import java.io.IOException
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.io.IOException
+import javax.inject.Inject
 
 class AppDataStoreImpl @Inject constructor(
     private val ds: DataStore<Preferences>,
@@ -30,11 +30,7 @@ class AppDataStoreImpl @Inject constructor(
     override suspend fun putTheme(theme: DayNightTheme) {
         withContext(io) {
             ds.edit {
-                it[THEME] = when (theme) {
-                    is DayNightTheme.Day -> theme.status
-                    is DayNightTheme.Night -> theme.status
-                    is DayNightTheme.System -> theme.status
-                }
+                it[THEME] = theme.value()
             }
         }
     }
@@ -51,7 +47,7 @@ class AppDataStoreImpl @Inject constructor(
         return ds.data.catch { e ->
             if (e is IOException) emit(emptyPreferences()) else throw e
         }.map { pref ->
-            pref[THEME]?.toDayNightTheme() ?: DayNightTheme.System()
+            pref[THEME]?.toDayNightTheme() ?: DayNightTheme.System
         }.flowOn(io)
     }
 
