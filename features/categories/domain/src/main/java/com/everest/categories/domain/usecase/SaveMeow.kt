@@ -3,10 +3,10 @@ package com.everest.categories.domain.usecase
 import com.everest.categories.data.repository.MeowRepo
 import com.everest.categories.domain.vo.CategoryVO
 import com.everest.database.entity.MeowEntity
+import javax.inject.Inject
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import javax.inject.Inject
 
 class SaveMeow @Inject constructor(
     private val meowRepo: MeowRepo
@@ -23,6 +23,4 @@ class SaveMeow @Inject constructor(
             )
         )
     }
-
-
 }

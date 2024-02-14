@@ -17,7 +17,6 @@ fun SettingsScreen(
 ) {
     Scaffold {
         LazyColumn(modifier = Modifier.padding(it)) {
-
             item {
                 ThemeSection(
                     text = "Light Mode",

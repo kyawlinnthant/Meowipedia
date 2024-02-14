@@ -27,7 +27,6 @@ object DatabaseModule {
         .fallbackToDestructiveMigration()
         .build()
 
-
     @Provides
     @Singleton
     fun provideMeowDao(

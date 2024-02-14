@@ -10,6 +10,7 @@ import com.everest.categories.presentation.categories.state.CategoriesViewModelS
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,14 +19,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val fetchCategories: FetchCategories,
     private val searchCategories: SearchCategories,
-    private val saveMeow: SaveMeow
-    private val navigator: AppNavigator,
+    private val saveMeow: SaveMeow,
+    private val navigator: AppNavigator
 ) : ViewModel() {
     private val vmState = MutableStateFlow(CategoriesViewModelState())
     val uiState = vmState

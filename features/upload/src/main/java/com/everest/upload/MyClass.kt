@@ -1,4 +1,3 @@
 package com.everest.upload
 
-class MyClass {
-}
+class MyClass

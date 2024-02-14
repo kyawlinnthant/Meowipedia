@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.everest.categories.domain.vo.CategoryVO
 import com.everest.categories.presentation.categories.CategoriesAction
 import com.everest.categories.presentation.categories.state.CategoriesListUiState
 
@@ -15,7 +14,7 @@ fun CategoriesListView(
     state: CategoriesListUiState,
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues,
-    onAction: (CategoriesAction) -> Unit,
+    onAction: (CategoriesAction) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -24,7 +23,7 @@ fun CategoriesListView(
     ) {
         when (state) {
             is CategoriesListUiState.Error -> ListErrorView(error = state.error)
-            is CategoriesListUiState.HasData -> ListHasDataView(categories = state.categories,onAction= onAction)
+            is CategoriesListUiState.HasData -> ListHasDataView(categories = state.categories, onAction = onAction)
             CategoriesListUiState.Loading -> ListLoadingView()
         }
     }

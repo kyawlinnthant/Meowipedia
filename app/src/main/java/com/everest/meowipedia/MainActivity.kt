@@ -31,7 +31,6 @@ class MainActivity : ComponentActivity() {
             ) {
                 MeowGraph(controller = navHostController)
             }
-
         }
     }
 }

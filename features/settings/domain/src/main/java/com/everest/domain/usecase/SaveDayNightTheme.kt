@@ -5,9 +5,9 @@ import com.everest.datastore.DayNightTheme
 import javax.inject.Inject
 
 class SaveDayNightTheme @Inject constructor(
-    private val repo : SettingDsRepo
+    private val repo: SettingDsRepo
 ) {
-    suspend operator fun invoke(theme: DayNightTheme){
+    suspend operator fun invoke(theme: DayNightTheme) {
         repo.saveThemeStatus(theme)
     }
 }

@@ -7,14 +7,14 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import com.everest.dispatcher.DispatcherModule
+import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import java.io.IOException
-import javax.inject.Inject
 
 class AppDataStoreImpl @Inject constructor(
     private val ds: DataStore<Preferences>,

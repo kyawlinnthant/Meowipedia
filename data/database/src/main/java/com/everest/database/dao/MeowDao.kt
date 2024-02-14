@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.everest.database.entity.MeowEntity
-import com.everest.database.entity.SearchEntity
 
 @Dao
 interface MeowDao {
@@ -13,5 +12,5 @@ interface MeowDao {
     suspend fun insertMeow(survey: MeowEntity)
 
     @Query("SELECT * FROM ${MeowEntity.TABLE_NAME} ORDER BY createdAt  DESC")
-    fun getMeowList(): List<SearchEntity>
+    fun getMeowList(): List<MeowEntity>
 }

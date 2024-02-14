@@ -18,15 +18,18 @@ import com.everest.categories.presentation.categories.CategoriesAction
 fun ListHasDataView(
     modifier: Modifier = Modifier,
     categories: List<CategoryVO>,
-    onAction: (CategoriesAction) -> Unit,
+    onAction: (CategoriesAction) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         items(count = categories.size, key = { index -> categories[index].id }) { index ->
             val currentVo = categories[index]
             Row {
-                Text(text = currentVo.name, modifier = modifier
-                    .padding(8.dp)
-                    .weight(1F))
+                Text(
+                    text = currentVo.name,
+                    modifier = modifier
+                        .padding(8.dp)
+                        .weight(1F)
+                )
                 IconButton(onClick = { onAction(CategoriesAction.SaveItem(item = currentVo)) }) {
                     Icon(Icons.Filled.Favorite, contentDescription = "Favorite")
                 }

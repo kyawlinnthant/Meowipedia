@@ -2,12 +2,12 @@ package com.everest.data.repository
 
 import com.everest.datastore.AppDataStore
 import com.everest.datastore.DayNightTheme
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class SettingDsRepoImpl @Inject constructor(
-    private val ds : AppDataStore
-) : SettingDsRepo{
+    private val ds: AppDataStore
+) : SettingDsRepo {
     override suspend fun saveThemeStatus(theme: DayNightTheme) {
         ds.putTheme(theme)
     }
