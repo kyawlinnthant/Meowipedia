@@ -19,6 +19,7 @@ import com.everest.categories.presentation.categories.CategoriesAction
 import com.everest.categories.presentation.categories.state.CategoriesViewModelUiState
 import com.everest.categories.presentation.categories.view.list.CategoriesListView
 import com.everest.categories.presentation.categories.view.search.CategoriesSearchView
+import com.everest.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,19 +34,32 @@ fun CategoriesScreen(
                 is CategoriesViewModelUiState.ListState -> TopAppBar(title = {
                     Text(text = stringResource(id = R.string.categories))
                 }, actions = {
-                        IconButton(
-                            onClick = {
-                                onAction(
-                                    CategoriesAction.UpdateSearchView(shouldShow = true)
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_search_24),
-                                contentDescription = null
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                CategoriesAction.UpdateSearchView(shouldShow = true)
                             )
                         }
-                    })
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_search_24),
+                            contentDescription = null
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                CategoriesAction.Navigate(route = Screens.Settings.route)
+                            )
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_ac_unit_24),
+                            contentDescription = null
+                        )
+                    }
+
+                })
 
                 is CategoriesViewModelUiState.SearchState -> TopAppBar(title = {
                     BasicTextField(
@@ -58,19 +72,20 @@ fun CategoriesScreen(
                         )
                     )
                 }, navigationIcon = {
-                        IconButton(
-                            onClick = {
-                                onAction(
-                                    CategoriesAction.UpdateSearchView(shouldShow = false)
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_arrow_back_24),
-                                contentDescription = null
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                CategoriesAction.UpdateSearchView(shouldShow = false)
                             )
                         }
-                    })
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_arrow_back_24),
+                            contentDescription = null
+                        )
+                    }
+                }
+                )
             }
         }
     ) {

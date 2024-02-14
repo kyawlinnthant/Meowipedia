@@ -7,6 +7,7 @@ import com.everest.categories.domain.usecase.SaveMeow
 import com.everest.categories.domain.usecase.SearchCategories
 import com.everest.categories.domain.vo.CategoryVO
 import com.everest.categories.presentation.categories.state.CategoriesViewModelState
+import com.everest.navigation.navigator.AppNavigator
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -24,6 +25,7 @@ class CategoriesViewModel @Inject constructor(
     private val fetchCategories: FetchCategories,
     private val searchCategories: SearchCategories,
     private val saveMeow: SaveMeow
+    private val navigator: AppNavigator,
 ) : ViewModel() {
     private val vmState = MutableStateFlow(CategoriesViewModelState())
     val uiState = vmState
@@ -77,6 +79,7 @@ class CategoriesViewModel @Inject constructor(
             is CategoriesAction.ClickItem -> operateItemClick(action.item)
             is CategoriesAction.UpdateSearchView -> updateShouldShowSearch(action.shouldShow)
             is CategoriesAction.SaveItem -> save(action.item)
+            is CategoriesAction.Navigate -> navigator.to(route = action.route)
         }
     }
 

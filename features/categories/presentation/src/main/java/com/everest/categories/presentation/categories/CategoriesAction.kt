@@ -7,4 +7,5 @@ sealed interface CategoriesAction {
     data class UpdateSearchView(val shouldShow: Boolean) : CategoriesAction
     data class ClickItem(val item: CategoryVO) : CategoriesAction
     data class SaveItem(val item: CategoryVO) : CategoriesAction
+    data class Navigate(val route: String) : CategoriesAction
 }

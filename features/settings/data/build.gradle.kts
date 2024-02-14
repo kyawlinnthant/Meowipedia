@@ -1,10 +1,13 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("java-library")
-    alias(libs.plugins.org.jetbrains.kotlin.jvm)
+    alias(libs.plugins.everest.android.library)
+    alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.everest.unit.test)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+android {
+    namespace = "com.everest.settings.data"
+}
+
+dependencies {
+    api(project(":data:datastore"))
 }

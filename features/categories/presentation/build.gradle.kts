@@ -12,4 +12,5 @@ dependencies {
     implementation(project(":cores:util"))
     implementation(project(":cores:ui"))
     api(project(":cores:theme"))
+    api(project(":cores:navigation"))
 }
