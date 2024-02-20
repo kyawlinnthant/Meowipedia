@@ -1,5 +1,17 @@
 @file:Suppress("UnstableApiUsage")
 
+
+
+include(":features:auth")
+
+
+include(":features:upload")
+
+
+include(":features:favourite")
+
+
+
 pluginManagement {
     repositories {
         includeBuild("build-logic")
@@ -24,6 +36,8 @@ include(
     ":cores:model",
     ":cores:ui",
     ":cores:util",
+    ":cores:dispatcher",
+    ":cores:test-rule"
 )
 include(
     ":data:network",
@@ -31,6 +45,13 @@ include(
     ":data:datastore",
 )
 include(
-    ":features:categories",
+    ":features:categories:data",
+    ":features:categories:domain",
+    ":features:categories:presentation",
+)
+include(
+    ":features:settings:data",
+    ":features:settings:domain",
+    ":features:settings:presentation",
 )
 

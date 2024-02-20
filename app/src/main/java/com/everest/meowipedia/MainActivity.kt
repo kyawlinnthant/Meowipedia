@@ -3,44 +3,34 @@ package com.everest.meowipedia
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.everest.meowipedia.ui.theme.MeowipediaTheme
+import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
+import com.everest.meowipedia.navigation.MeowGraph
+import com.everest.meowipedia.view.MainViewModel
+import com.everest.navigation.NavigationInstructor
+import com.everest.theme.MeowipediaTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MeowipediaTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+            val navHostController = rememberNavController()
+            val vm: MainViewModel = hiltViewModel()
+            val theme = vm.uiTheme.collectAsState()
+            val dynamic = vm.uiDynamic.collectAsState()
+            NavigationInstructor(
+                instructor = vm.navigator.instructor,
+                controller = navHostController
+            )
+            MeowipediaTheme(
+                appTheme = theme.value,
+                dynamicColor = dynamic.value
+            ) {
+                MeowGraph(controller = navHostController)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MeowipediaTheme {
-        Greeting("Android")
     }
 }

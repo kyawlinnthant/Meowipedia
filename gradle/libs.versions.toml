@@ -4,12 +4,16 @@ gradle = "8.2.2"
 compose-compiler = "1.5.8"
 # google
 google-ksp = "1.9.22-1.0.17"
-google-hilt = "2.48.1"
+google-hilt = "2.50"
+# optimizer
+detekt = "1.23.4"
+ktlint = "11.6.1"
+org-jetbrains-kotlin-jvm = "1.9.22"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.0"}
-
+serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.0" }
+date-time = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.5.0" }
 # androidx
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
 androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.7.0" }
@@ -20,10 +24,10 @@ androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }
 
 # compose
-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.01.00" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.02.00" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version = "1.8.2" }
-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.6" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.1.2" }
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.0" }
 compose-coil = { group = "io.coil-kt", name = "coil-compose", version = "2.5.0" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -32,8 +36,10 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 # google
-google-hilt-android = { group = "com.google.dagger", name = "hilt-android",version.ref = "google-hilt"}
-google-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler",version.ref = "google-hilt"}
+google-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "google-hilt" }
+google-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "google-hilt" }
+google-hilt-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "google-hilt"}
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.1.0" }
 # network
 network-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version = "4.12.0" }
 network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0" }
@@ -45,12 +51,25 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version = "2.6.1" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version = "2.6.1" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version = "2.6.1" }
 
-
 # gradle plugin
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
+# test
+truth = { group = "com.google.truth", name = "truth", version = "1.4.0" }
+mockk = { group = "io.mockk", name = "mockk", version = "1.13.9" }
+mock-web-server = { group = "com.squareup.okhttp3", name = "mockwebserver", version = "4.11.0" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version = "1.7.3" }
+androidx-runner = { group = "androidx.test", name = "runner", version = "1.5.2" }
+junit = { group = "junit", name = "junit", version = "4.13.2" }
+
 [bundles]
+unit-test = [
+    "truth",
+    "mockk",
+    "mock-web-server",
+    "coroutines-test"
+]
 androidx-cores = [
     "androidx-core",
     "androidx-lifecycle",
@@ -65,6 +84,7 @@ androidx-compose = [
     "compose-ui",
     "compose-ui-graphics",
     "compose-ui-preview",
+    "hilt-navigation"
 ]
 androidx-compose-debug = [
     "compose-ui-tooling",
@@ -94,13 +114,18 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "google-hilt" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 # Plugins defined by this project
-everest-android-application = { id = "com.everest.android.application", version = "unspecified"}
-everest-compose-application = { id = "com.everest.compose.application", version = "unspecified"}
-everest-android-library = { id = "com.everest.android.library", version = "unspecified"}
-everest-compose-library = { id = "com.everest.compose.library", version = "unspecified"}
-everest-hilt = { id = "com.everest.dagger.hilt", version = "unspecified"}
-everest-network = { id = "com.everest.retrofit.network", version = "unspecified"}
-everest-database = { id = "com.everest.room.database", version = "unspecified"}
-everest-datastore = { id = "com.everest.preferences.datastore", version = "unspecified"}
+everest-android-application = { id = "com.everest.android.application", version = "unspecified" }
+everest-compose-application = { id = "com.everest.compose.application", version = "unspecified" }
+everest-android-library = { id = "com.everest.android.library", version = "unspecified" }
+everest-compose-library = { id = "com.everest.compose.library", version = "unspecified" }
+everest-hilt = { id = "com.everest.dagger.hilt", version = "unspecified" }
+everest-network = { id = "com.everest.retrofit.network", version = "unspecified" }
+everest-database = { id = "com.everest.room.database", version = "unspecified" }
+everest-datastore = { id = "com.everest.preferences.datastore", version = "unspecified" }
+everest-unit-test = { id = "com.everest.test.unit", version = "unspecified" }
+everest-android-test = { id = "com.everest.test.android", version = "unspecified" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }

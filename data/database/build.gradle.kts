@@ -6,4 +6,13 @@ plugins {
 
 android {
     namespace = "com.everest.database"
+    defaultConfig {
+        testInstrumentationRunner = "com.everest.database.DatabaseTestRunner"
+    }
+}
+dependencies {
+    implementation(libs.date.time)
+    implementation(libs.androidx.runner)
+    androidTestImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.truth)
 }

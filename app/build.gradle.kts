@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.everest.android.application)
     alias(libs.plugins.everest.compose.application)
+    alias(libs.plugins.everest.hilt)
 }
 
 android {
@@ -23,4 +24,9 @@ android {
             )
         }
     }
+}
+dependencies {
+    implementation(project(":cores:navigation"))
+    implementation(project(":features:categories:presentation"))
+    implementation(project(":features:settings:presentation"))
 }
