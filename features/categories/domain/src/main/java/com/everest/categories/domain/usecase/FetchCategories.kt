@@ -9,7 +9,6 @@ import javax.inject.Inject
 class FetchCategories @Inject constructor(
     private val categoriesRepo: CategoriesRepo
 ) {
-
     suspend operator fun invoke(): DataResult<List<CategoryVO>> {
         return when (val response = categoriesRepo.fetchCategories()) {
             is DataResult.Failed -> DataResult.Failed(response.error)
