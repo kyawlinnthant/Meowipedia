@@ -8,7 +8,6 @@ import com.everest.database.dao.SearchDao
 import com.everest.database.entity.MeowEntity
 import com.everest.database.entity.SearchEntity
 import com.everest.database.typeconverter.LocalDateTimeConverter
-
 @Database(
     entities = [MeowEntity::class, SearchEntity::class],
     version = 1,
@@ -17,7 +16,7 @@ import com.everest.database.typeconverter.LocalDateTimeConverter
 @TypeConverters(value = [LocalDateTimeConverter::class])
 abstract class MeowDatabase : RoomDatabase() {
     abstract fun provideMeowDao(): MeowDao
-    abstract fun searchDao(): SearchDao
+    abstract fun provideSearchDao(): SearchDao
 
     companion object {
         const val DB_NAME = "meow_database"

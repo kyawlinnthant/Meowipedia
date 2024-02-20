@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.receiveAsFlow
 @Composable
 fun NavigationInstructor(
     instructor: Channel<NavigationIntent>,
-    controller: NavHostController,
+    controller: NavHostController
 ) {
     val activity = LocalContext.current as? Activity
     LaunchedEffect(
         key1 = activity,
         key2 = instructor,
-        key3 = controller,
+        key3 = controller
     ) {
         instructor.receiveAsFlow().collect {
             if (activity?.isFinishing == true) return@collect
@@ -26,7 +26,7 @@ fun NavigationInstructor(
                     it.route?.let { route ->
                         controller.popBackStack(
                             route = route,
-                            inclusive = it.inclusive,
+                            inclusive = it.inclusive
                         )
                     } ?: kotlin.run {
                         controller.popBackStack()

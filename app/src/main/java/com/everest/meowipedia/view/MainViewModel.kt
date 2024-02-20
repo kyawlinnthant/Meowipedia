@@ -7,19 +7,19 @@ import com.everest.domain.usecase.ListenDynamicStatus
 import com.everest.domain.usecase.ListenThemeStatus
 import com.everest.navigation.navigator.AppNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getTheme: ListenThemeStatus,
     private val getDynamic: ListenDynamicStatus,
-    val navigator : AppNavigator
+    val navigator: AppNavigator
 ) : ViewModel() {
 
     private val vmState = MutableStateFlow(MainViewModelState())
@@ -28,14 +28,14 @@ class MainViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = vmState.value.asTheme(),
+            initialValue = vmState.value.asTheme()
         )
     val uiDynamic = vmState
         .map(MainViewModelState::asDynamic)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = vmState.value.asDynamic(),
+            initialValue = vmState.value.asDynamic()
         )
 
     init {
@@ -74,5 +74,4 @@ class MainViewModel @Inject constructor(
             )
         }
     }
-
 }

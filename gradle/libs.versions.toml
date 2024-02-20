@@ -4,9 +4,9 @@ gradle = "8.2.2"
 compose-compiler = "1.5.8"
 # google
 google-ksp = "1.9.22-1.0.17"
-google-hilt = "2.48.1"
+google-hilt = "2.50"
 # optimizer
-detekt = "1.23.1"
+detekt = "1.23.4"
 ktlint = "11.6.1"
 org-jetbrains-kotlin-jvm = "1.9.22"
 

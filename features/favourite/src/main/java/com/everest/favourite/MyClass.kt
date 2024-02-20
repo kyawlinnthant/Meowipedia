@@ -1,4 +1,3 @@
 package com.everest.favourite
 
-class MyClass {
-}
+class MyClass

@@ -11,5 +11,5 @@ import javax.inject.Singleton
 interface AppDataStoreModule {
     @Binds
     @Singleton
-    fun bindAppDataStoreRepo(repo : AppDataStoreImpl) : AppDataStore
+    fun bindAppDataStoreRepo(repo: AppDataStoreImpl): AppDataStore
 }

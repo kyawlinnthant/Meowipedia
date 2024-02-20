@@ -22,4 +22,3 @@ sealed class Screens(val route: String) {
         fun getAbsolutePath() = this.route + "/{$DETAIL_ID}"
     }
 }
-

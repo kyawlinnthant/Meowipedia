@@ -1,9 +1,7 @@
 package com.everest.meowipedia.navigation
 
 import android.os.Build
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -26,7 +24,7 @@ fun MeowGraph(
     NavHost(
         navController = controller,
         startDestination = Screens.Categories.route,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
     ) {
         composable(route = Screens.Categories.route) {
             val vm: CategoriesViewModel = hiltViewModel()

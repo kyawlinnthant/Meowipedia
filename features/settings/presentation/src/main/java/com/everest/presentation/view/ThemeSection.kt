@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.everest.datastore.DayNightTheme
 
-
 @Composable
 fun ThemeSection(
     modifier: Modifier = Modifier,
