@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val useCase: SettingsViewModelUseCase,
-    private val appNavigator : AppNavigator
+    private val appNavigator: AppNavigator
 ) : ViewModel() {
 
     private val vmState = MutableStateFlow(SettingsViewModelState())
@@ -44,7 +44,7 @@ class SettingsViewModel @Inject constructor(
                 saveTheme(action.theme)
                 appNavigator.back()
                 appNavigator.to(
-                    route = Screens.Upload.route,
+                    route = Screens.Upload.route
 
                 )
             }

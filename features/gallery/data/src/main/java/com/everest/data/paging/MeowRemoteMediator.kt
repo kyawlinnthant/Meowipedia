@@ -9,17 +9,16 @@ import com.everest.data.service.GalleryApi
 import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.MeowEntity
 import com.everest.database.entity.MeowKeyEntity
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import okio.IOException
 import retrofit2.HttpException
-import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class MeowRemoteMediator @Inject constructor(
     private val api: GalleryApi,
-    private val db: MeowDatabase,
+    private val db: MeowDatabase
 ) : RemoteMediator<Int, MeowEntity>() {
 
     private val startPage = 1
@@ -28,9 +27,9 @@ class MeowRemoteMediator @Inject constructor(
     }
 
     override suspend fun load(
-        loadType: LoadType, state: PagingState<Int, MeowEntity>
+        loadType: LoadType,
+        state: PagingState<Int, MeowEntity>
     ): MediatorResult {
-
         val currentPage = getPage(loadType, state) ?: return MediatorResult.Success(
             endOfPaginationReached = false
         )
@@ -72,9 +71,7 @@ class MeowRemoteMediator @Inject constructor(
         loadType: LoadType,
         state: PagingState<Int, MeowEntity>
     ): Int? {
-
         return when (loadType) {
-
             // loading
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -119,6 +116,5 @@ class MeowRemoteMediator @Inject constructor(
             ?.let { cat ->
                 db.meowKeyDao().getMeowKey(cat.id)
             }
-
     }
 }

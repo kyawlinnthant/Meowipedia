@@ -10,10 +10,9 @@ data class MeowEntity(
     val id: String,
     val height: Int,
     val width: Int,
-    val url: String,
+    val url: String
 ) {
     companion object {
         const val TABLE_NAME = "meow_table"
     }
 }
-

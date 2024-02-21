@@ -8,7 +8,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.everest.database.entity.MeowEntity
 
-
 @Dao
 interface MeowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -1,4 +1,3 @@
 package com.everest.domain
 
-class MyClass {
-}
+class MyClass

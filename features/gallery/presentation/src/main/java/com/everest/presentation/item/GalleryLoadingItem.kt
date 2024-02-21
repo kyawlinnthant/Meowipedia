@@ -17,7 +17,8 @@ fun GalleryLoadingItem(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp), contentAlignment = Alignment.Center
+            .padding(8.dp),
+        contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }

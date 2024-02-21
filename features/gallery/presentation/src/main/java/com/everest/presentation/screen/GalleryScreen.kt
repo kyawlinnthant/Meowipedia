@@ -28,7 +28,6 @@ fun GalleryScreen(
     galleries: LazyPagingItems<Gallery>,
     onAction: (GalleryAction) -> Unit
 ) {
-
     val lazyGridState = rememberLazyStaggeredGridState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -50,12 +49,12 @@ fun GalleryScreen(
                             contentDescription = null
                         )
                     }
-                }, scrollBehavior = scrollBehavior
+                },
+                scrollBehavior = scrollBehavior
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) {
-
         galleries.apply {
             when (loadState.refresh) {
                 is LoadState.Error -> {

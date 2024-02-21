@@ -16,7 +16,6 @@ import coil.compose.AsyncImage
 import com.everest.domain.model.Gallery
 import com.everest.gallery.presentation.R
 
-
 @Composable
 fun GalleryItem(
     index: Int,
@@ -29,7 +28,6 @@ fun GalleryItem(
             .wrapContentHeight(),
         contentAlignment = Alignment.BottomCenter
     ) {
-
         AsyncImage(
             model = gallery.photo,
             contentScale = ContentScale.Crop,
@@ -46,6 +44,5 @@ fun GalleryItem(
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-
     }
 }

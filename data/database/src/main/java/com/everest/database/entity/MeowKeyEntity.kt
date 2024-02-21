@@ -10,7 +10,7 @@ data class MeowKeyEntity(
     val id: String,
     val nextPage: Int?,
     val prevPage: Int?,
-    val currentPage: Int,
+    val currentPage: Int
 ) {
     companion object {
         const val TABLE_NAME = "meow_key"

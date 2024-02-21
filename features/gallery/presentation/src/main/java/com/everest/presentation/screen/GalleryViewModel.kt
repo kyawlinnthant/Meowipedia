@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     getGalleries: GetGalleries,
-    private val appNavigator : AppNavigator
+    private val appNavigator: AppNavigator
 ) : ViewModel() {
     val galleries = getGalleries().cachedIn(viewModelScope)
 

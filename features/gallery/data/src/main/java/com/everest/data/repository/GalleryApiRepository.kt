@@ -4,5 +4,5 @@ import androidx.paging.Pager
 import com.everest.database.entity.MeowEntity
 
 interface GalleryApiRepository {
-    fun getGalleries() : Pager<Int, MeowEntity>
+    fun getGalleries(): Pager<Int, MeowEntity>
 }

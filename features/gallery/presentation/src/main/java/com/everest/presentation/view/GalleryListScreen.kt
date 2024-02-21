@@ -26,13 +26,10 @@ fun GalleryListScreen(
     paddingValue: PaddingValues,
     lazyGridState: LazyStaggeredGridState
 ) {
-
     galleries.apply {
-
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize()
         ) {
-
             LazyVerticalStaggeredGrid(
                 state = lazyGridState,
                 columns = StaggeredGridCells.Fixed(2),
@@ -71,5 +68,4 @@ fun GalleryListScreen(
             )
         }
     }
-
 }

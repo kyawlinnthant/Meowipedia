@@ -1,4 +1,3 @@
 package com.everest.data
 
-class MyClass {
-}
+class MyClass

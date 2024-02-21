@@ -15,7 +15,7 @@ fun SettingsScreen(
     onAction: (SettingsAction) -> Unit,
     isSupportDynamic: Boolean
 ) {
-    Scaffold{
+    Scaffold {
         LazyColumn(modifier = Modifier.padding(it)) {
             item {
                 ThemeSection(

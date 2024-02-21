@@ -1,4 +1,3 @@
 package com.everest.presentation
 
-class MyClass {
-}
+class MyClass

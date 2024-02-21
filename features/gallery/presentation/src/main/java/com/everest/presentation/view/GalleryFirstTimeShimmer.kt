@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 @Composable
 fun GalleryFirstTimeShimmer(
     modifier: Modifier = Modifier,
-    paddingValue: PaddingValues,
-    ) {
+    paddingValue: PaddingValues
+) {
     Box(
         modifier = modifier.fillMaxSize().padding(paddingValue),
         contentAlignment = Alignment.Center

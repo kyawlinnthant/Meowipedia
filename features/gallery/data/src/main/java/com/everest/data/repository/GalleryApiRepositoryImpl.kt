@@ -16,7 +16,6 @@ class GalleryApiRepositoryImpl @Inject constructor(
 ) : GalleryApiRepository {
     @OptIn(ExperimentalPagingApi::class)
     override fun getGalleries(): Pager<Int, MeowEntity> {
-
         val dbSource = { db.meowDao().pagingSource() }
         val config = PagingConfig(
             initialLoadSize = Constant.INITIAL_LOAD_SIZE,
@@ -24,7 +23,7 @@ class GalleryApiRepositoryImpl @Inject constructor(
             maxSize = Constant.MAX_LOAD_SIZE,
             jumpThreshold = 1,
             enablePlaceholders = true,
-            prefetchDistance = Constant.PREFETCH_DISTANCE,
+            prefetchDistance = Constant.PREFETCH_DISTANCE
         )
         val remoteMediator = MeowRemoteMediator(
             api = api,
@@ -34,7 +33,7 @@ class GalleryApiRepositoryImpl @Inject constructor(
             config = config,
             initialKey = Constant.START_PAGE,
             remoteMediator = remoteMediator,
-            pagingSourceFactory = dbSource,
+            pagingSourceFactory = dbSource
         )
     }
 }

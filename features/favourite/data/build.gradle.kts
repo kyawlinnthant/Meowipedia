@@ -7,4 +7,3 @@ plugins {
 android {
     namespace = "com.everest.favourite.data"
 }
-
