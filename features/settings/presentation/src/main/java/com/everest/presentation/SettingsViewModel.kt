@@ -3,6 +3,8 @@ package com.everest.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.everest.datastore.DayNightTheme
+import com.everest.navigation.Screens
+import com.everest.navigation.navigator.AppNavigator
 import com.everest.presentation.state.SettingsViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,7 +17,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val useCase: SettingsViewModelUseCase
+    private val useCase: SettingsViewModelUseCase,
+    private val appNavigator : AppNavigator
 ) : ViewModel() {
 
     private val vmState = MutableStateFlow(SettingsViewModelState())
@@ -37,7 +40,14 @@ class SettingsViewModel @Inject constructor(
     fun onAction(action: SettingsAction) {
         when (action) {
             is SettingsAction.UpdateDynamic -> saveDynamic(action.enabled)
-            is SettingsAction.UpdateTheme -> saveTheme(action.theme)
+            is SettingsAction.UpdateTheme -> {
+                saveTheme(action.theme)
+                appNavigator.back()
+                appNavigator.to(
+                    route = Screens.Upload.route,
+
+                )
+            }
         }
     }
 

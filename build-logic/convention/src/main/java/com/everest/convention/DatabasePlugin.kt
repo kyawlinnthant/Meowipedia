@@ -19,7 +19,7 @@ class DatabasePlugin : Plugin<Project> {
             val roomCompiler = libs.findLibrary("room-compiler").get()
             val serializedJson = libs.findLibrary("serialization-json").get()
             dependencies {
-                add("implementation", room)
+                add("api", room)
                 add("ksp", roomCompiler)
                 add("implementation", serializedJson)
             }

@@ -10,10 +10,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.everest.categories.presentation.categories.CategoriesViewModel
 import com.everest.categories.presentation.categories.view.CategoriesScreen
 import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
+import com.everest.presentation.screen.GalleryScreen
+import com.everest.presentation.screen.GalleryViewModel
 import com.everest.presentation.view.SettingsScreen
 
 @Composable
@@ -23,7 +26,7 @@ fun MeowGraph(
 ) {
     NavHost(
         navController = controller,
-        startDestination = Screens.Categories.route,
+        startDestination = Screens.Galleries.route,
         modifier = modifier.fillMaxSize()
     ) {
         composable(route = Screens.Categories.route) {
@@ -52,6 +55,14 @@ fun MeowGraph(
                 dynamicEnabled = dynamic.value,
                 onAction = vm::onAction,
                 isSupportDynamic = isSupportDynamicColor
+            )
+        }
+        composable(route = Screens.Galleries.route) {
+            val vm: GalleryViewModel = hiltViewModel()
+            val galleries = vm.galleries.collectAsLazyPagingItems()
+            GalleryScreen(
+                galleries = galleries,
+                onAction = vm::onAction
             )
         }
     }

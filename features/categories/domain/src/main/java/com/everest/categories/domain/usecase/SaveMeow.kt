@@ -2,7 +2,7 @@ package com.everest.categories.domain.usecase
 
 import com.everest.categories.data.repository.MeowRepo
 import com.everest.categories.domain.vo.CategoryVO
-import com.everest.database.entity.MeowEntity
+import com.everest.database.entity.CategoryEntity
 import javax.inject.Inject
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -13,7 +13,7 @@ class SaveMeow @Inject constructor(
 ) {
     suspend operator fun invoke(categoryVO: CategoryVO) {
         meowRepo.saveMeow(
-            meowEntity = MeowEntity(
+            categoryEntity = CategoryEntity(
                 id = categoryVO.id,
                 image = categoryVO.image,
                 name = categoryVO.name,
