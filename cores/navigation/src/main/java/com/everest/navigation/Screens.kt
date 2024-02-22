@@ -13,6 +13,7 @@ sealed class Screens(val route: String) {
     }
 
     data object Categories : Screens("categories")
+    data object Galleries : Screens("galleries")
     data object Settings : Screens("settings")
     data object Meows : Screens("meows")
     data object Favourites : Screens("favourites")

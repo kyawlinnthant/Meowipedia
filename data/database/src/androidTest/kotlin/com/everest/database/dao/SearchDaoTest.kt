@@ -7,7 +7,6 @@ import com.google.common.truth.Truth
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -33,7 +32,7 @@ class SearchDaoTest {
     @Before
     fun setup() {
         testRule.inject()
-        dao = db.provideSearchDao()
+        dao = db.searchDao()
     }
 
     @After

@@ -5,10 +5,11 @@ compose-compiler = "1.5.8"
 # google
 google-ksp = "1.9.22-1.0.17"
 google-hilt = "2.50"
+# room
+room = "2.6.1"
 # optimizer
 detekt = "1.23.4"
 ktlint = "11.6.1"
-org-jetbrains-kotlin-jvm = "1.9.22"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
@@ -29,6 +30,7 @@ compose-activity = { group = "androidx.activity", name = "activity-compose", ver
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.0" }
 compose-coil = { group = "io.coil-kt", name = "coil-compose", version = "2.5.0" }
+compose-paging = { group = "androidx.paging", name = "paging-compose", version = "3.2.1" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
@@ -47,9 +49,10 @@ network-retrofit-serialization = { group = "com.jakewharton.retrofit", name = "r
 network-retrofit-coroutines = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlin-coroutines-adapter", version = "0.9.2" }
 network-profiler = { group = "com.localebro", name = "okhttpprofiler", version = "1.0.8" }
 # database
-room-ktx = { group = "androidx.room", name = "room-ktx", version = "2.6.1" }
-room-runtime = { group = "androidx.room", name = "room-runtime", version = "2.6.1" }
-room-compiler = { group = "androidx.room", name = "room-compiler", version = "2.6.1" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room"  }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room"  }
+room-compiler = { module = "androidx.room:room-compiler",  version.ref = "room"  }
 
 # gradle plugin
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
@@ -81,6 +84,7 @@ androidx-compose = [
     "compose-navigation",
     "compose-material3",
     "compose-coil",
+    "compose-paging",
     "compose-ui",
     "compose-ui-graphics",
     "compose-ui-preview",
@@ -92,7 +96,8 @@ androidx-compose-debug = [
 ]
 room = [
     "room-ktx",
-    "room-runtime"
+    "room-runtime",
+    "room-paging"
 ]
 network = [
     "network-okhttp",
@@ -128,4 +133,3 @@ everest-database = { id = "com.everest.room.database", version = "unspecified" }
 everest-datastore = { id = "com.everest.preferences.datastore", version = "unspecified" }
 everest-unit-test = { id = "com.everest.test.unit", version = "unspecified" }
 everest-android-test = { id = "com.everest.test.android", version = "unspecified" }
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
