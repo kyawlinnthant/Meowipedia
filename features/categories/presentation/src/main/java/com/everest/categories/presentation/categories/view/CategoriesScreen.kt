@@ -13,6 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import com.everest.categories.domain.vo.CategoryVO
 import com.everest.categories.presentation.R
 import com.everest.categories.presentation.categories.CategoriesAction
 import com.everest.categories.presentation.categories.state.CategoriesViewModelUiState
@@ -23,6 +26,7 @@ import com.everest.navigation.Screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoriesScreen(
+    categories: LazyPagingItems<CategoryVO>,
     state: CategoriesViewModelUiState,
     onAction: (CategoriesAction) -> Unit
 ) {
@@ -33,31 +37,31 @@ fun CategoriesScreen(
                 is CategoriesViewModelUiState.ListState -> TopAppBar(title = {
                     Text(text = stringResource(id = R.string.categories))
                 }, actions = {
-                        IconButton(
-                            onClick = {
-                                onAction(
-                                    CategoriesAction.UpdateSearchView(shouldShow = true)
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_search_24),
-                                contentDescription = null
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                CategoriesAction.UpdateSearchView(shouldShow = true)
                             )
                         }
-                        IconButton(
-                            onClick = {
-                                onAction(
-                                    CategoriesAction.Navigate(route = Screens.Settings.route)
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_ac_unit_24),
-                                contentDescription = null
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_search_24),
+                            contentDescription = null
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                CategoriesAction.Navigate(route = Screens.Settings.route)
                             )
                         }
-                    })
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_ac_unit_24),
+                            contentDescription = null
+                        )
+                    }
+                })
 
                 is CategoriesViewModelUiState.SearchState -> TopAppBar(
                     title = {
@@ -90,12 +94,30 @@ fun CategoriesScreen(
         }
     ) {
         when (state) {
-            is CategoriesViewModelUiState.ListState -> CategoriesListView(
-                state = state.state,
-                paddingValues = it,
-                onAction = onAction
-            )
 
+            is CategoriesViewModelUiState.ListState ->
+
+                categories.apply {
+                    when (loadState.refresh) {
+                        is LoadState.Error -> {
+                            if (loadState.mediator?.refresh is LoadState.Error) {
+                                Text("Category Error")
+                            }
+                        }
+
+                        LoadState.Loading -> {
+                            if (loadState.mediator?.refresh is LoadState.Loading) {
+                                Text("Category Loading")
+                            }
+                        }
+
+                        is LoadState.NotLoading -> CategoriesListView(
+                            state = state.state,
+                            paddingValues = it,
+                            onAction = onAction,
+                        )
+                    }
+                }
             is CategoriesViewModelUiState.SearchState -> CategoriesSearchView(
                 state = state.state,
                 paddingValues = it

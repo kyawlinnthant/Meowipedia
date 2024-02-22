@@ -14,4 +14,6 @@ dependencies {
     api(project(":data:database"))
     implementation(project(":cores:dispatcher"))
     implementation(libs.date.time)
+    implementation(libs.compose.paging)
+
 }

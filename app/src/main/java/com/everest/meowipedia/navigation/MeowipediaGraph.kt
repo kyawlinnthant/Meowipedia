@@ -32,10 +32,9 @@ fun MeowGraph(
         composable(route = Screens.Categories.route) {
             val vm: CategoriesViewModel = hiltViewModel()
             val state = vm.uiState.collectAsState()
-            LaunchedEffect(key1 = true) {
-                vm.fetch()
-            }
+            val categories = vm.categories.collectAsLazyPagingItems()
             CategoriesScreen(
+                categories = categories,
                 state = state.value,
                 onAction = vm::onAction
             )

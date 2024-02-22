@@ -5,14 +5,10 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.everest.categories.data.model.categories.toCategoriesRemoteKey
-import com.everest.categories.data.model.categories.toEntity
 import com.everest.categories.data.service.CategoriesService
 import com.everest.database.db.MeowDatabase
-import com.everest.database.entity.MeowEntity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import com.everest.database.entity.CategoryEntity
+import com.everest.database.entity.CategoryKeyEntity
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -21,18 +17,18 @@ import javax.inject.Inject
 class CatRemoteMediator @Inject constructor(
     private val categoriesService: CategoriesService,
     private val meowDatabase: MeowDatabase
-) : RemoteMediator<Int, MeowEntity>() {
+) : RemoteMediator<Int, CategoryEntity>() {
 
     override suspend fun initialize(): InitializeAction {
         return if (shouldFetchInitialPage()) InitializeAction.LAUNCH_INITIAL_REFRESH else InitializeAction.SKIP_INITIAL_REFRESH
     }
 
-    private fun shouldFetchInitialPage(): Boolean {
-        return meowDatabase.provideMeowDao().getMeowList().isEmpty()
+    private suspend fun shouldFetchInitialPage(): Boolean {
+        return meowDatabase.meowDao().getMeows().isEmpty()
     }
 
     override suspend fun load(
-        loadType: LoadType, state: PagingState<Int, MeowEntity>
+        loadType: LoadType, state: PagingState<Int, CategoryEntity>
     ): MediatorResult {
 
         val currentPage = getPage(loadType, state) ?: return MediatorResult.Success(
@@ -40,30 +36,27 @@ class CatRemoteMediator @Inject constructor(
         )
 
         return try {
-            delay(1000L)
             val response = categoriesService.categories(
                 page = currentPage,
                 limit = state.config.pageSize
             )
             val isEndOfList = response.isEmpty()
-            withContext(Dispatchers.IO) {
-                meowDatabase.withTransaction {
-                    if (loadType == LoadType.REFRESH) {
-                        meowDatabase.provideMeowDao().deleteAll()
-                        meowDatabase.provideCategoriesRemoteKeyDao().deleteAll()
-                    }
-                    val prevKey = if (currentPage == 1) null else currentPage - 1
-                    val nextKey = if (isEndOfList) null else currentPage + 1
-                    val keys = response.map {
-                        it.toCategoriesRemoteKey(
-                            nextPage = nextKey,
-                            prevPage = prevKey,
-                            currentPage = currentPage
-                        )
-                    }
-                    meowDatabase.provideCategoriesRemoteKeyDao().addRemoteKeys(keys)
-                    meowDatabase.provideMeowDao().insertMeow(response.map { it.toEntity() })
+            meowDatabase.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    meowDatabase.meowDao().deleteAll()
+                    meowDatabase.meowKeyDao().deleteAll()
                 }
+                val prevKey = if (currentPage == 1) null else currentPage - 1
+                val nextKey = if (isEndOfList) null else currentPage + 1
+                val keys = response.map {
+                    it.toKeyEntity(
+                        next = nextKey,
+                        prev = prevKey,
+                        current = currentPage
+                    )
+                }
+                meowDatabase.categoryKeyDao().addMeowKeys(keys)
+                meowDatabase.categoryDao().insertCategories(response.map { it.toCategoryEntity() })
             }
             MediatorResult.Success(endOfPaginationReached = isEndOfList)
         } catch (e: IOException) {
@@ -77,7 +70,7 @@ class CatRemoteMediator @Inject constructor(
 
     private suspend fun getPage(
         loadType: LoadType,
-        state: PagingState<Int, MeowEntity>
+        state: PagingState<Int, CategoryEntity>
     ): Int? {
 
         return when (loadType) {
@@ -102,29 +95,29 @@ class CatRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, MeowEntity>): RemoteKeyEntity? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, CategoryEntity>): CategoryKeyEntity? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { catId ->
-                meowDatabase.provideCategoriesRemoteKeyDao().getRemoteKey(catId)
+            state.closestItemToPosition(position)?.id?.let { id ->
+                meowDatabase.categoryKeyDao().getCategoryKey(id)
             }
         }
     }
 
-    private suspend fun getLastRemoteKey(state: PagingState<Int, MeowEntity>): RemoteKeyEntity? {
+    private suspend fun getLastRemoteKey(state: PagingState<Int, CategoryEntity>): CategoryKeyEntity? {
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()
             ?.let { cat ->
-                meowDatabase.provideCategoriesRemoteKeyDao().getRemoteKey(cat.id)
+                meowDatabase.categoryKeyDao().getCategoryKey(cat.id)
             }
     }
 
-    private suspend fun getFirstRemoteKey(state: PagingState<Int, MeowEntity>): RemoteKeyEntity? {
+    private suspend fun getFirstRemoteKey(state: PagingState<Int, CategoryEntity>): CategoryKeyEntity? {
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()
             ?.let { cat ->
-                meowDatabase.provideCategoriesRemoteKeyDao().getRemoteKey(cat.id)
+                meowDatabase.categoryKeyDao().getCategoryKey(cat.id)
             }
 
     }

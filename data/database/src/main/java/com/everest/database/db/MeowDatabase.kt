@@ -4,10 +4,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.everest.database.dao.CategoryDao
+import com.everest.database.dao.CategoryKeyDao
 import com.everest.database.dao.MeowDao
 import com.everest.database.dao.MeowKeyDao
 import com.everest.database.dao.SearchDao
 import com.everest.database.entity.CategoryEntity
+import com.everest.database.entity.CategoryKeyEntity
 import com.everest.database.entity.MeowEntity
 import com.everest.database.entity.MeowKeyEntity
 import com.everest.database.entity.SearchEntity
@@ -16,6 +18,7 @@ import com.everest.database.typeconverter.LocalDateTimeConverter
 @Database(
     entities = [
         CategoryEntity::class,
+        CategoryKeyEntity::class,
         SearchEntity::class,
         MeowEntity::class,
         MeowKeyEntity::class
@@ -30,6 +33,7 @@ abstract class MeowDatabase : RoomDatabase() {
 
     abstract fun meowDao(): MeowDao
     abstract fun meowKeyDao(): MeowKeyDao
+    abstract fun categoryKeyDao(): CategoryKeyDao
 
     companion object {
         const val DB_NAME = "meow_database"

@@ -2,18 +2,17 @@ package com.everest.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.everest.database.entity.CategoriesRemoteKeyEntity.Companion.TABLE_NAME
-
+import com.everest.database.entity.CategoryKeyEntity.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
-data class CategoriesRemoteKeyEntity(
+data class CategoryKeyEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: String,
+    val categoryId: String,
     val nextPage: Int?,
     val prevPage: Int?,
-    val currentPage : Int,
+    val currentPage: Int
 ) {
     companion object {
-        const val TABLE_NAME = "categories_remote_key"
+        const val TABLE_NAME = "category_meow_key"
     }
 }

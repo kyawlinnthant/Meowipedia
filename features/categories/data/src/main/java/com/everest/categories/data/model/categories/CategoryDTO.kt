@@ -2,6 +2,11 @@ package com.everest.categories.data.model.categories
 
 import com.everest.categories.data.model.Weight
 import com.everest.categories.data.model.search.CategoryImageDTO
+import com.everest.database.entity.CategoryEntity
+import com.everest.database.entity.CategoryKeyEntity
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -64,4 +69,25 @@ data class CategoryDTO(
     val weight: Weight? = null
 //    @SerialName("wikipedia_url")
 //    val wikipediaUrl: String? = ""
-)
+) {
+
+    fun toCategoryEntity() = CategoryEntity(
+        id = id ?: "",
+        name = name ?: "",
+        description = description ?: "",
+        image = image?.url ?: "",
+        createdAt = "${Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())}",
+        activeAt = "${Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())}"
+    )
+
+    fun toKeyEntity(
+        next: Int?,
+        prev: Int?,
+        current: Int
+    ) = CategoryKeyEntity(
+        categoryId = id ?: "",
+        nextPage = next,
+        prevPage = prev,
+        currentPage = current
+    )
+}
