@@ -13,4 +13,7 @@ interface MeowDao {
 
     @Query("SELECT * FROM ${MeowEntity.TABLE_NAME} ORDER BY createdAt  DESC")
     fun getMeowList(): List<MeowEntity>
+
+    @Query("DELETE FROM ${MeowEntity.TABLE_NAME}")
+    suspend fun deleteAll()
 }
