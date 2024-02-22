@@ -3,7 +3,6 @@ package com.everest.database
 import android.content.Context
 import androidx.room.Room
 import com.everest.database.dao.CategoryDao
-import com.everest.database.dao.CategoryKeyDao
 import com.everest.database.dao.MeowDao
 import com.everest.database.dao.MeowKeyDao
 import com.everest.database.db.MeowDatabase

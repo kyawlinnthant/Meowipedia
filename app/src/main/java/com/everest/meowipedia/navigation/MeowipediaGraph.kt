@@ -11,12 +11,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.everest.categories.presentation.categories.CategoriesViewModel
-import com.everest.categories.presentation.categories.view.CategoriesScreen
 import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
-import com.everest.presentation.screen.GalleryScreen
-import com.everest.presentation.screen.GalleryViewModel
+import com.everest.presentation.categories.CategoriesViewModel
+import com.everest.presentation.categories.view.CategoriesScreen
+import com.everest.presentation.gallery.screen.GalleryScreen
+import com.everest.presentation.gallery.screen.GalleryViewModel
 import com.everest.presentation.view.SettingsScreen
 
 @Composable
@@ -30,10 +30,10 @@ fun MeowGraph(
         modifier = modifier.fillMaxSize()
     ) {
         composable(route = Screens.Categories.route) {
-            val vm: CategoriesViewModel = hiltViewModel()
+            val vm: com.everest.presentation.categories.CategoriesViewModel = hiltViewModel()
             val state = vm.uiState.collectAsState()
             val categories = vm.categories.collectAsLazyPagingItems()
-            CategoriesScreen(
+            com.everest.presentation.categories.view.CategoriesScreen(
                 categories = categories,
                 state = state.value,
                 onAction = vm::onAction
@@ -57,9 +57,9 @@ fun MeowGraph(
             )
         }
         composable(route = Screens.Galleries.route) {
-            val vm: GalleryViewModel = hiltViewModel()
+            val vm: com.everest.presentation.gallery.screen.GalleryViewModel = hiltViewModel()
             val galleries = vm.galleries.collectAsLazyPagingItems()
-            GalleryScreen(
+            com.everest.presentation.gallery.screen.GalleryScreen(
                 galleries = galleries,
                 onAction = vm::onAction
             )

@@ -10,6 +10,7 @@ room = "2.6.1"
 # optimizer
 detekt = "1.23.4"
 ktlint = "11.6.1"
+org-jetbrains-kotlin-jvm = "1.9.22"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
@@ -133,3 +134,4 @@ everest-database = { id = "com.everest.room.database", version = "unspecified" }
 everest-datastore = { id = "com.everest.preferences.datastore", version = "unspecified" }
 everest-unit-test = { id = "com.everest.test.unit", version = "unspecified" }
 everest-android-test = { id = "com.everest.test.android", version = "unspecified" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }

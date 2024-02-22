@@ -27,7 +27,6 @@ android {
 }
 dependencies {
     implementation(project(":cores:navigation"))
-    implementation(project(":features:categories:presentation"))
     implementation(project(":features:settings:presentation"))
-    api(project(":features:gallery:presentation"))
+    api(project(":features:home:presentation"))
 }
