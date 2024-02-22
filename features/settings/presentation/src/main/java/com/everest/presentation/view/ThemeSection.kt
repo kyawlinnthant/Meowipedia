@@ -19,7 +19,7 @@ fun ThemeSection(
     val isSelected = type == selected
 
     Row(modifier = modifier.fillMaxWidth()) {
-        Text(text = text)
+        Text(text = text, modifier.weight(1f))
         RadioButton(selected = isSelected, onClick = { onUpdate(type) })
     }
 }

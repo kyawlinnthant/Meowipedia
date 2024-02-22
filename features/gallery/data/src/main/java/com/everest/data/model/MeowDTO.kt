@@ -17,6 +17,7 @@ data class MeowDTO(
         width = width,
         url = url
     )
+
     fun toKeyEntity(
         next: Int?,
         prev: Int?,
@@ -24,7 +25,7 @@ data class MeowDTO(
     ) = MeowKeyEntity(
         id = id,
         nextPage = next,
-        prevPage = next,
+        prevPage = prev,
         currentPage = current
     )
 }

@@ -3,17 +3,17 @@ package com.everest.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.everest.datastore.DayNightTheme
-import com.everest.navigation.Screens
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.presentation.state.SettingsViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -40,20 +40,16 @@ class SettingsViewModel @Inject constructor(
     fun onAction(action: SettingsAction) {
         when (action) {
             is SettingsAction.UpdateDynamic -> saveDynamic(action.enabled)
-            is SettingsAction.UpdateTheme -> {
-                saveTheme(action.theme)
+            is SettingsAction.UpdateTheme -> saveTheme(action.theme)
+            SettingsAction.OnBackPress -> {
                 appNavigator.back()
-                appNavigator.to(
-                    route = Screens.Upload.route
-
-                )
             }
         }
     }
 
     fun listenTheme() {
         viewModelScope.launch {
-            useCase.listenTheme().collect {
+            useCase.listenTheme().collectLatest {
                 setTheme(it)
             }
         }
@@ -61,7 +57,7 @@ class SettingsViewModel @Inject constructor(
 
     fun listenDynamic() {
         viewModelScope.launch {
-            useCase.listenDynamic().collect {
+            useCase.listenDynamic().collectLatest {
                 setDynamic(it)
             }
         }

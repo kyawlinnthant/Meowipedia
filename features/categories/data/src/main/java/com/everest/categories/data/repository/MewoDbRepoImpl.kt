@@ -1,16 +1,15 @@
 package com.everest.categories.data.repository
 
-import com.everest.database.dao.CategoryDao
-import com.everest.database.entity.CategoryEntity
+import com.everest.database.dao.MeowDao
+import com.everest.database.entity.MeowEntity
 import com.everest.dispatcher.DispatcherModule
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
 class MewoDbRepoImpl @Inject constructor(
-    private val mewoDao: CategoryDao,
-    @DispatcherModule.IoDispatcher private val io: CoroutineDispatcher
+    private val meowDao: MeowDao,
 ) : MeowRepo {
-    override suspend fun saveMeow(categoryEntity: CategoryEntity) {
-        mewoDao.insertMeow(categoryEntity)
+    override suspend fun saveMeow(meowEntity: MeowEntity) {
+        meowDao.insertMeow(meowEntity)
     }
 }
