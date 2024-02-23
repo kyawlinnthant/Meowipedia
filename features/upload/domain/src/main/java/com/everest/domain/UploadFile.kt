@@ -9,8 +9,13 @@ class UploadFile @Inject constructor(
     private val uploadFileRepo: UploadFileRepo
 ) {
     suspend operator fun invoke(file: File): DataResult<Boolean> {
-        return when (val response = uploadFileRepo.uploadFile(file = file)) {
-            is DataResult.Failed -> DataResult.Failed(response.error)
+        val response = uploadFileRepo.uploadFile(file = file)
+        return when (response) {
+            is DataResult.Failed -> {
+                println("FUCK ${response.error}")
+                DataResult.Failed(response.error)
+            }
+
             is DataResult.Success -> DataResult.Success(true)
         }
     }

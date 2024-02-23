@@ -16,6 +16,5 @@ interface UploadService {
     @POST(UPLOAD)
     suspend fun uploadFile(
         @Part file: MultipartBody.Part,
-        @Part("sub_id") subId: String
     ): Response<UploadFileDTO>
 }
