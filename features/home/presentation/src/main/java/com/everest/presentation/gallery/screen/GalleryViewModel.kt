@@ -19,6 +19,7 @@ class GalleryViewModel @Inject constructor(
     fun onAction(action: GalleryAction) {
         when (action) {
             GalleryAction.GoToCategories -> appNavigator.to(Screens.Categories.route)
+            GalleryAction.GoToUpload -> appNavigator.to(Screens.Upload.route)
         }
     }
 }

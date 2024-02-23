@@ -9,6 +9,7 @@ import retrofit2.Response
 inline fun <reified T> safeApiCall(
     apiCall: () -> Response<T>,
     json: Json
+//    json: () -> Response<Any>
 ): DataResult<T> {
     return try {
         val response = apiCall()

@@ -29,4 +29,5 @@ dependencies {
     implementation(project(":cores:navigation"))
     implementation(project(":features:settings:presentation"))
     api(project(":features:home:presentation"))
+    implementation(project(":features:upload:presentation"))
 }

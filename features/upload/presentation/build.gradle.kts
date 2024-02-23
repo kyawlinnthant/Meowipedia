@@ -9,4 +9,5 @@ android {
 }
 dependencies {
     implementation(project(":features:upload:domain"))
+    implementation(project(":cores:navigation"))
 }

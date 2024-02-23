@@ -1,0 +1,4 @@
+int drawable baseline_ac_unit_24 0x0
+int drawable baseline_arrow_back_24 0x0
+int drawable baseline_search_24 0x0
+int string categories 0x0

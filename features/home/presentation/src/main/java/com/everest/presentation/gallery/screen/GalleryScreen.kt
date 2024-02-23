@@ -40,6 +40,18 @@ fun GalleryScreen(
                     IconButton(
                         onClick = {
                             onAction(
+                                GalleryAction.GoToUpload
+                            )
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_apps_24),
+                            contentDescription = null
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+                            onAction(
                                 GalleryAction.GoToCategories
                             )
                         }

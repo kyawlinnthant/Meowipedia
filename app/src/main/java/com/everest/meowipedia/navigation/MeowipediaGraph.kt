@@ -13,6 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
+import com.everest.presentation.UploadScreen
+import com.everest.presentation.UploadViewModel
 import com.everest.presentation.categories.CategoriesViewModel
 import com.everest.presentation.categories.view.CategoriesScreen
 import com.everest.presentation.gallery.screen.GalleryScreen
@@ -30,10 +32,10 @@ fun MeowGraph(
         modifier = modifier.fillMaxSize()
     ) {
         composable(route = Screens.Categories.route) {
-            val vm: com.everest.presentation.categories.CategoriesViewModel = hiltViewModel()
+            val vm: CategoriesViewModel = hiltViewModel()
             val state = vm.uiState.collectAsState()
             val categories = vm.categories.collectAsLazyPagingItems()
-            com.everest.presentation.categories.view.CategoriesScreen(
+            CategoriesScreen(
                 categories = categories,
                 state = state.value,
                 onAction = vm::onAction
@@ -57,10 +59,19 @@ fun MeowGraph(
             )
         }
         composable(route = Screens.Galleries.route) {
-            val vm: com.everest.presentation.gallery.screen.GalleryViewModel = hiltViewModel()
+            val vm: GalleryViewModel = hiltViewModel()
             val galleries = vm.galleries.collectAsLazyPagingItems()
-            com.everest.presentation.gallery.screen.GalleryScreen(
+            GalleryScreen(
                 galleries = galleries,
+                onAction = vm::onAction
+            )
+        }
+
+        composable(route = Screens.Upload.route) {
+            val vm: UploadViewModel = hiltViewModel()
+            val uiState = vm.uiState.collectAsState()
+            UploadScreen(
+                state = uiState.value,
                 onAction = vm::onAction
             )
         }
