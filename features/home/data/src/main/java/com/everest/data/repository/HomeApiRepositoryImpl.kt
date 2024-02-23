@@ -3,13 +3,13 @@ package com.everest.data.repository
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.everest.data.model.categories.CategoryDTO
-import com.everest.data.paging.CatRemoteMediator
+import com.everest.data.model.breed.BreedDTO
+import com.everest.data.paging.BreedRemoteMediator
 import com.everest.data.paging.MeowRemoteMediator
 import com.everest.data.service.HomeApi
 import com.everest.database.db.MeowDatabase
-import com.everest.database.entity.CategoryEntity
-import com.everest.database.entity.MeowEntity
+import com.everest.database.entity.breed.BreedEntity
+import com.everest.database.entity.meow.MeowEntity
 import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall
 import com.everest.util.constant.Constant
@@ -27,8 +27,8 @@ class HomeApiRepositoryImpl @Inject constructor(
 ) : HomeApiRepository {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getCategories(): Pager<Int, CategoryEntity> {
-        val dbSource = { db.categoryDao().pagingSource() }
+    override fun getBreeds(): Pager<Int, BreedEntity> {
+        val dbSource = { db.breedDao().pagingSource(isForPaging = true) }
         val config = PagingConfig(
             initialLoadSize = Constant.INITIAL_LOAD_SIZE,
             pageSize = Constant.PAGE_SIZE,
@@ -37,7 +37,7 @@ class HomeApiRepositoryImpl @Inject constructor(
             enablePlaceholders = true,
             prefetchDistance = Constant.PREFETCH_DISTANCE
         )
-        val remoteMediator = CatRemoteMediator(
+        val remoteMediator = BreedRemoteMediator(
             api = api,
             db = db
         )
@@ -49,17 +49,17 @@ class HomeApiRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun searchCategories(keyword: String): DataResult<List<CategoryDTO>> =
+    override suspend fun searchBreeds(keyword: String): DataResult<List<BreedDTO>> =
         withContext(io) {
             safeApiCall(
                 json = json,
-                apiCall = { api.searchCategories(keyword = keyword) }
+                apiCall = { api.searchBreeds(keyword = keyword) }
             )
         }
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getGalleries(): Pager<Int, MeowEntity> {
-        val dbSource = { db.meowDao().pagingSource() }
+    override fun getMeows(): Pager<Int, MeowEntity> {
+        val dbSource = { db.meowDao().pagingSource(isForPaging = true) }
         val config = PagingConfig(
             initialLoadSize = Constant.INITIAL_LOAD_SIZE,
             pageSize = Constant.PAGE_SIZE,
