@@ -12,7 +12,6 @@ class UploadFile @Inject constructor(
         val response = uploadFileRepo.uploadFile(file = file)
         return when (response) {
             is DataResult.Failed -> {
-                println("FUCK ${response.error}")
                 DataResult.Failed(response.error)
             }
 

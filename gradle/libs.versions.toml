@@ -43,12 +43,14 @@ google-hilt-android = { group = "com.google.dagger", name = "hilt-android", vers
 google-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "google-hilt" }
 google-hilt-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "google-hilt"}
 hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.1.0" }
+
 # network
 network-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version = "4.12.0" }
 network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0" }
 network-retrofit-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version = "1.0.0" }
 network-retrofit-coroutines = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlin-coroutines-adapter", version = "0.9.2" }
 network-profiler = { group = "com.localebro", name = "okhttpprofiler", version = "1.0.8" }
+
 # database
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room"  }

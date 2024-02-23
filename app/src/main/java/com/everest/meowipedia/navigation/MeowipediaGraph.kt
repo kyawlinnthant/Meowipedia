@@ -70,8 +70,12 @@ fun MeowGraph(
         composable(route = Screens.Upload.route) {
             val vm: UploadViewModel = hiltViewModel()
             val uiState = vm.uiState.collectAsState()
+            val error = vm.errorFlow.collectAsState(null)
+            val selectedFile = vm.selectedFile.collectAsState()
             UploadScreen(
                 state = uiState.value,
+                selectedFile = selectedFile.value,
+                filePickStatus = error.value,
                 onAction = vm::onAction
             )
         }

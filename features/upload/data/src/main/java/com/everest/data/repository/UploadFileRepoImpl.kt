@@ -22,17 +22,19 @@ class UploadFileRepoImpl @Inject constructor(
     @DispatcherModule.IoDispatcher private val io: CoroutineDispatcher
 ) : UploadFileRepo {
     override suspend fun uploadFile(file: File): DataResult<UploadFileDTO> {
-        val filePart = MultipartBody.Part.createFormData(
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val body = MultipartBody.Part.createFormData(
             "file",
             file.name,
-            file.asRequestBody("image/*".toMediaTypeOrNull())
+            requestFile
         )
+
         return withContext(io) {
             delay(5000L)
             safeApiCall(
                 apiCall = {
                     uploadService.uploadFile(
-                        file = filePart,
+                        file = body,
                     )
                 },
                 json = json
