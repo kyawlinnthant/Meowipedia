@@ -1,16 +1,11 @@
 package com.everest.presentation
 
-import android.app.Application
-import android.content.Context
 import android.net.Uri
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.everest.domain.UploadFile
 import com.everest.file.utils.FileResource
-import com.everest.file.utils.SafUtils
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,16 +22,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UploadViewModel @Inject constructor(
-    private val application: Application,
     private val uploadFile: UploadFile,
     private val appNavigator: AppNavigator,
     private val savedStateHandle: SavedStateHandle
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
 
     /**
      * We keep the current media [Uri] in the savedStateHandle to re-render it if there is a
-     * configuration change and we expose it as a [LiveData] to the UI
+     * configuration change
      */
     val selectedFile: StateFlow<FileResource?> =
         savedStateHandle.getStateFlow(SELECTED_FILE_KEY, null)
@@ -44,8 +38,6 @@ class UploadViewModel @Inject constructor(
 
     private val _errorFlow = MutableSharedFlow<String>()
     val errorFlow: SharedFlow<String> = _errorFlow
-    private val context: Context
-        get() = getApplication()
 
     companion object {
         private val TAG = this::class.java.simpleName
@@ -76,7 +68,6 @@ class UploadViewModel @Inject constructor(
             }
 
             is UploadAction.Upload -> {
-
                 viewModelScope.launch {
                     vmState.update { state ->
                         state.copy(
@@ -111,21 +102,17 @@ class UploadViewModel @Inject constructor(
             }
 
             is UploadAction.FileSelect -> {
-                viewModelScope.launch {
-                    savedStateHandle[SELECTED_FILE_KEY] = SafUtils.getResourceByUri(context, action.uri)
-
-                    try {
-                        savedStateHandle[SELECTED_FILE_KEY] = SafUtils.getResourceByUri(context, action.uri)
-                    } catch (e: Exception) {
-                        Log.e(TAG, e.printStackTrace().toString())
-                        _errorFlow.emit("Couldn't load ${action.uri}")
-                    }
-                }
+//                viewModelScope.launch {
+//                    savedStateHandle[SELECTED_FILE_KEY] = SafUtils.getResourceByUri(context, action.uri)
+//
+//                    try {
+//                        savedStateHandle[SELECTED_FILE_KEY] = SafUtils.getResourceByUri(context, action.uri)
+//                    } catch (e: Exception) {
+//                        Log.e(TAG, e.printStackTrace().toString())
+//                        _errorFlow.emit("Couldn't load ${action.uri}")
+//                    }
+//                }
             }
         }
-    }
-
-    fun onFileSelect(uri: Uri) {
-
     }
 }
