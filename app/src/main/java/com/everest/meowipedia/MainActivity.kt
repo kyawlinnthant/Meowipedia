@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
             val vm: MainViewModel = hiltViewModel()
             val theme = vm.uiTheme.collectAsState()
             val dynamic = vm.uiDynamic.collectAsState()
+
             NavigationInstructor(
                 instructor = vm.navigator.instructor,
                 controller = navHostController

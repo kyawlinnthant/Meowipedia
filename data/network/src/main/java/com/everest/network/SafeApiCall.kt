@@ -29,7 +29,7 @@ inline fun <reified T> safeApiCall(
         DataResult.Failed(error = NetworkError.NoInternet)
         // you can use correct exception you want to catch
     } catch (e: Exception) {
-        println(">>>> ${e.message}")
+        println("SAFE API ERROR ${e.message}")
         DataResult.Failed(error = NetworkError.SomethingWrong)
     }
 }

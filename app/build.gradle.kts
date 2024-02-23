@@ -27,6 +27,7 @@ android {
 }
 dependencies {
     implementation(project(":cores:navigation"))
+    implementation(project(":cores:file-utils"))
     implementation(project(":features:settings:presentation"))
     api(project(":features:home:presentation"))
     implementation(project(":features:upload:presentation"))

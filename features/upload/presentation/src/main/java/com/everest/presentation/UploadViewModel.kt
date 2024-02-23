@@ -1,24 +1,56 @@
 package com.everest.presentation
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.content.Context
+import android.net.Uri
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.everest.domain.UploadFile
+import com.everest.file.utils.FileResource
+import com.everest.file.utils.SafUtils
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class UploadViewModel @Inject constructor(
+    private val application: Application,
     private val uploadFile: UploadFile,
-    private val appNavigator: AppNavigator
-) : ViewModel() {
+    private val appNavigator: AppNavigator,
+    private val savedStateHandle: SavedStateHandle
+) : AndroidViewModel(application) {
+
+
+    /**
+     * We keep the current media [Uri] in the savedStateHandle to re-render it if there is a
+     * configuration change and we expose it as a [LiveData] to the UI
+     */
+    val selectedFile: StateFlow<FileResource?> =
+        savedStateHandle.getStateFlow(SELECTED_FILE_KEY, null)
+//        savedStateHandle.getLiveData(SELECTED_FILE_KEY)
+
+    private val _errorFlow = MutableSharedFlow<String>()
+    val errorFlow: SharedFlow<String> = _errorFlow
+    private val context: Context
+        get() = getApplication()
+
+    companion object {
+        private val TAG = this::class.java.simpleName
+        const val SELECTED_FILE_KEY = "selectedFile"
+    }
 
     private val vmState = MutableStateFlow(UploadViewModelState())
     val uiState = vmState
@@ -44,6 +76,7 @@ class UploadViewModel @Inject constructor(
             }
 
             is UploadAction.Upload -> {
+
                 viewModelScope.launch {
                     vmState.update { state ->
                         state.copy(
@@ -76,6 +109,23 @@ class UploadViewModel @Inject constructor(
                     }
                 }
             }
+
+            is UploadAction.FileSelect -> {
+                viewModelScope.launch {
+                    savedStateHandle[SELECTED_FILE_KEY] = SafUtils.getResourceByUri(context, action.uri)
+
+                    try {
+                        savedStateHandle[SELECTED_FILE_KEY] = SafUtils.getResourceByUri(context, action.uri)
+                    } catch (e: Exception) {
+                        Log.e(TAG, e.printStackTrace().toString())
+                        _errorFlow.emit("Couldn't load ${action.uri}")
+                    }
+                }
+            }
         }
+    }
+
+    fun onFileSelect(uri: Uri) {
+
     }
 }

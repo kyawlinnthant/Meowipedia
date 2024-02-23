@@ -22,16 +22,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.everest.file.utils.FileResource
+import com.everest.file.utils.SafUtils
 import com.everest.upload.presentation.R
 import java.io.File
 
@@ -39,8 +44,16 @@ import java.io.File
 @Composable
 fun UploadScreen(
     state: UploadUiState,
+    selectedFile: FileResource?,
+    filePickStatus: String?,
     onAction: (UploadAction) -> Unit
 ) {
+
+    LaunchedEffect(filePickStatus) {
+        filePickStatus?.let {
+            println("FILE PICK ERROR")
+        }
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -71,7 +84,7 @@ fun UploadScreen(
             when (state) {
                 is UploadUiState.Error -> Text("Error")
                 UploadUiState.Loading -> CircularProgressIndicator()
-                UploadUiState.Normal -> NormalState(onAction)
+                UploadUiState.Normal -> NormalState(onAction, selectedFile)
                 UploadUiState.Success -> SuccessState(onAction)
             }
         }
@@ -85,7 +98,7 @@ fun SuccessState(onAction: (UploadAction) -> Unit) {
     ) {
         Text(text = "Success")
         Button(onClick = { onAction(UploadAction.Reset) }) {
-            Text(text = "Select File")
+            Text(text = "Pick Another File")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -94,19 +107,22 @@ fun SuccessState(onAction: (UploadAction) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NormalState(onAction: (UploadAction) -> Unit) {
-    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
+fun NormalState(onAction: (UploadAction) -> Unit, resource: FileResource?) {
+    val context = LocalContext.current
+    val selectedFileUri by remember { mutableStateOf<Uri?>(null) }
     var uriPath by remember { mutableStateOf<String?>(null) }
-    var tempFile by remember { mutableStateOf<File?>(null) }
+    val tempFile by remember { mutableStateOf<File?>(null) }
 
 
-    val chooseFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        selectedFileUri = uri
-        selectedFileUri?.path?.let {
-            uriPath = it
-            tempFile = File(it)
+    val fileResource by produceState<FileResource?>(null, resource?.uri) {
+        resource?.let {
+            value = SafUtils.getResourceByUri(context, resource.uri)
         }
-
+    }
+    val chooseFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            onAction(UploadAction.FileSelect(it))
+        }
     }
 
     Column(
@@ -116,6 +132,14 @@ fun NormalState(onAction: (UploadAction) -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        fileResource?.let {
+            Image(
+                painter = rememberAsyncImagePainter(model = it.uri),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(36.dp)
+            )
+        }
 
         Image(
             painter = rememberAsyncImagePainter(model = selectedFileUri),
@@ -140,10 +164,12 @@ fun NormalState(onAction: (UploadAction) -> Unit) {
         }
 
         Button(onClick = {
-            uriPath?.let { path ->
-                println(">>>> $path")
-                onAction(UploadAction.Upload(File(path)))
+            fileResource?.let {
+                it.uri.path?.let {path->
+                    onAction(UploadAction.Upload(File(path)))
+                }
             }
+
         }) {
             Text(text = "Upload File")
         }
