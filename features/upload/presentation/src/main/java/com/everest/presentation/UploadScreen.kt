@@ -1,7 +1,6 @@
 package com.everest.presentation
 
 import android.net.Uri
-import android.provider.OpenableColumns
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,22 +33,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.database.getStringOrNull
 import coil.compose.rememberAsyncImagePainter
 import com.everest.file.utils.FileResource
+import com.everest.file.utils.FileUtils.getFileFromUri
 import com.everest.upload.presentation.R
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UploadScreen(
-    state: UploadUiState, selectedFile: FileResource?, filePickStatus: String?, onAction: (UploadAction) -> Unit
+    state: UploadUiState,
+    selectedFile: FileResource?,
+    filePickStatus: String?,
+    onAction: (UploadAction) -> Unit
 ) {
-
     LaunchedEffect(filePickStatus) {
         filePickStatus?.let {
             println("FILE PICK ERROR")
@@ -63,13 +60,13 @@ fun UploadScreen(
                     IconButton(onClick = {
                     }) {
                         Icon(
-                            painter = painterResource(id = android.R.drawable.ic_input_add), contentDescription = null
+                            painter = painterResource(id = android.R.drawable.ic_input_add),
+                            contentDescription = null
                         )
                     }
-
-                },
+                }
             )
-        },
+        }
     ) {
         Box(
             modifier = Modifier
@@ -114,61 +111,22 @@ fun NormalState(onAction: (UploadAction) -> Unit, resource: FileResource?) {
         }
     }
 
-
-    fun writeFile(inputStream: InputStream, file: File) {
-        val outputStream = FileOutputStream(file)
-        val buffer = ByteArray(4028) // Adjust the buffer size as per your requirements
-        var bytesRead: Int
-        try {
-            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                outputStream.write(buffer, 0, bytesRead)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        } finally {
-            inputStream.close()
-            outputStream.close()
-        }
-    }
-
-    fun getFilename(uri: Uri): String? {
-        val cursor = context.contentResolver.query(
-            uri, null, null, null, null
-        )
-        cursor?.moveToFirst()
-        val name = cursor?.getStringOrNull(
-            cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME)
-        )
-        cursor?.close()
-        return name
-    }
-
-    fun getFileFromUri(uri: Uri): File? {
-        val filename = getFilename(uri)
-        return filename?.let { name ->
-            val file = File(context.filesDir, name)
-            val inputStream = context.contentResolver.openInputStream(uri)
-            inputStream?.let {
-                writeFile(it, file)
-            }
-            file
-        } ?: kotlin.run {
-            null
-        }
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-//
-
         Image(
-            painter = rememberAsyncImagePainter(model = selectedFileUri), contentDescription = null, modifier = Modifier.size(36.dp)
+            painter = rememberAsyncImagePainter(model = selectedFileUri),
+            contentDescription = null,
+            modifier = Modifier.size(36.dp)
         )
         Image(
-            painter = rememberAsyncImagePainter(model = tempFile), contentDescription = null, modifier = Modifier.size(36.dp)
+            painter = rememberAsyncImagePainter(model = tempFile),
+            contentDescription = null,
+            modifier = Modifier.size(36.dp)
         )
         Button(onClick = { chooseFileLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }) {
             Text(text = "Select File")
@@ -182,16 +140,13 @@ fun NormalState(onAction: (UploadAction) -> Unit, resource: FileResource?) {
 
         Button(onClick = {
             selectedFileUri?.let {
-                val file = getFileFromUri(it)
+                val file = getFileFromUri(context, it)
                 file?.let { f ->
                     onAction(UploadAction.Upload(f))
                 }
             }
-
         }) {
             Text(text = "Upload File")
         }
     }
-
-
 }

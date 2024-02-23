@@ -21,10 +21,8 @@ data class FileResource(
     val size: Long,
     val type: FileType,
     val mimeType: String,
-    val path: String?,
+    val path: String?
 ) : Parcelable
-
-
 
 /**
  *  Media type enum class representing the [FileColumns.MEDIA_TYPE] column

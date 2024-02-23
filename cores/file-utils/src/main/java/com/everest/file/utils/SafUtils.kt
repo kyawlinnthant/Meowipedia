@@ -14,11 +14,10 @@ object SafUtils {
      */
     suspend fun getResourceByUri(context: Context, uri: Uri): FileResource {
         return withContext(Dispatchers.IO) {
-
             val projection = arrayOf(
                 DocumentsContract.Document.COLUMN_DISPLAY_NAME,
                 DocumentsContract.Document.COLUMN_SIZE,
-                DocumentsContract.Document.COLUMN_MIME_TYPE,
+                DocumentsContract.Document.COLUMN_MIME_TYPE
             )
 
             val cursor = context.contentResolver.query(
@@ -47,7 +46,7 @@ object SafUtils {
                     size = cursor.getLong(sizeColumn),
                     type = FileType.DOCUMENT,
                     mimeType = cursor.getString(mimeTypeColumn),
-                    path = null,
+                    path = null
                 )
             }
         }

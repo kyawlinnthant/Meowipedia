@@ -2,9 +2,9 @@ package com.everest.network
 
 import com.everest.util.result.DataResult
 import com.everest.util.result.NetworkError
+import java.net.SocketTimeoutException
 import kotlinx.serialization.json.Json
 import retrofit2.Response
-import java.net.SocketTimeoutException
 
 inline fun <reified T> safeApiCall(
     apiCall: () -> Response<T>,

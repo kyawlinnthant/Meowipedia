@@ -5,6 +5,8 @@ import com.everest.data.service.UploadService
 import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall
 import com.everest.util.result.DataResult
+import java.io.File
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -12,9 +14,6 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
-import javax.inject.Inject
-
 
 class UploadFileRepoImpl @Inject constructor(
     private val uploadService: UploadService,
@@ -34,7 +33,7 @@ class UploadFileRepoImpl @Inject constructor(
             safeApiCall(
                 apiCall = {
                     uploadService.uploadFile(
-                        file = body,
+                        file = body
                     )
                 },
                 json = json
