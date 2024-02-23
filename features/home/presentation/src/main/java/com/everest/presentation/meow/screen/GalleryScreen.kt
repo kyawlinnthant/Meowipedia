@@ -1,5 +1,6 @@
 package com.everest.presentation.meow.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,8 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
@@ -30,28 +32,32 @@ fun GalleryScreen(
 ) {
     val lazyGridState = rememberLazyStaggeredGridState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val hasScrolled = remember { derivedStateOf { lazyGridState.firstVisibleItemIndex > 0 } }
+    val shouldShowTopBar by remember { derivedStateOf { !lazyGridState.isScrollInProgress } }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+//        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
-                title = { Text(text = stringResource(id = R.string.gallery)) },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            onAction(
-                                GalleryAction.GoToCategories
+            AnimatedVisibility(visible = shouldShowTopBar) {
+                TopAppBar(
+                    title = { Text(text = stringResource(id = R.string.gallery)) },
+                    actions = {
+                        IconButton(
+                            onClick = {
+                                onAction(
+                                    GalleryAction.GoToCategories
+                                )
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_apps_24),
+                                contentDescription = null
                             )
                         }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_apps_24),
-                            contentDescription = null
-                        )
                     }
-                },
-                scrollBehavior = scrollBehavior
-            )
+//                    scrollBehavior = scrollBehavior,
+                )
+            }
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) {

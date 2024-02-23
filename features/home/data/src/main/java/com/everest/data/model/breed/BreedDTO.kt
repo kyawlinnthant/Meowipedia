@@ -22,7 +22,7 @@ data class BreedDTO(
     @SerialName("alt_names")
     val nickname: String = "",
     @SerialName("reference_image_id")
-    val referenceImageId: String,
+    val referenceImageId: String = "",
     val weight: WeightDTO,
 
     // website
@@ -33,7 +33,7 @@ data class BreedDTO(
     @SerialName("vcahospitals_url")
     val website3: String = "",
     @SerialName("wikipedia_url")
-    val wikipediaUrl: String,
+    val wikipediaUrl: String = "",
 
     // from
     @SerialName("country_code")
