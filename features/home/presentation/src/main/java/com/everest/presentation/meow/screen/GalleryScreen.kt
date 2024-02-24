@@ -6,11 +6,15 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
@@ -22,13 +26,14 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberBottomAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -65,23 +70,37 @@ fun GalleryScreen(
             ) {
                 BottomAppBar(
                     actions = {
-                        IconButton(onClick = { onAction(GalleryAction.Navigate(route = Screens.Categories.route)) }) {
-                            Icon(Icons.Filled.Menu, contentDescription = null)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        IconButton(
+                            onClick = { onAction(GalleryAction.Navigate(route = Screens.Categories.route)) },
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
+                        ) {
+                            Icon(Icons.Filled.Menu, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                         }
-                        IconButton(onClick = { onAction(GalleryAction.Navigate(route = Screens.Settings.route)) }) {
-                            Icon(Icons.Filled.Settings, contentDescription = null)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        IconButton(
+                            onClick = { onAction(GalleryAction.Navigate(route = Screens.Settings.route)) },
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
+                        ) {
+                            Icon(Icons.Filled.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                         }
                     },
                     floatingActionButton = {
                         FloatingActionButton(
                             onClick = { onAction(GalleryAction.Upload) },
-                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
+                            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
+                            contentColor = MaterialTheme.colorScheme.onSurface,
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                         ) {
                             Icon(Icons.Filled.Add, null)
                         }
                     },
-                    scrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior(state = rememberBottomAppBarState())
+                    containerColor = BottomAppBarDefaults.containerColor.copy(alpha = 0f)
+
                 )
             }
         }
