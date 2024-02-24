@@ -34,16 +34,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.everest.file.utils.FileResource
 import com.everest.file.utils.FileUtils.getFileFromUri
 import com.everest.upload.presentation.R
-import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UploadScreen(
     state: UploadUiState,
-    selectedFile: FileResource?,
     filePickStatus: String?,
     onAction: (UploadAction) -> Unit
 ) {
@@ -77,7 +74,7 @@ fun UploadScreen(
             when (state) {
                 is UploadUiState.Error -> Text("Error")
                 UploadUiState.Loading -> CircularProgressIndicator()
-                UploadUiState.Normal -> NormalState(onAction, selectedFile)
+                UploadUiState.Normal -> NormalState(onAction)
                 UploadUiState.Success -> SuccessState(onAction)
             }
         }
@@ -87,7 +84,8 @@ fun UploadScreen(
 @Composable
 fun SuccessState(onAction: (UploadAction) -> Unit) {
     Column(
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Success")
         Button(onClick = { onAction(UploadAction.Reset) }) {
@@ -100,14 +98,17 @@ fun SuccessState(onAction: (UploadAction) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NormalState(onAction: (UploadAction) -> Unit, resource: FileResource?) {
+fun NormalState(onAction: (UploadAction) -> Unit) {
     val context = LocalContext.current
     var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
-    var tempFile by remember { mutableStateOf<File?>(null) }
 
     val chooseFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
         uri?.let {
             selectedFileUri = it
+            val file = getFileFromUri(context, it)
+            file?.let { f ->
+                onAction(UploadAction.FileSelect(f))
+            }
         }
     }
 
@@ -120,11 +121,6 @@ fun NormalState(onAction: (UploadAction) -> Unit, resource: FileResource?) {
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = selectedFileUri),
-            contentDescription = null,
-            modifier = Modifier.size(36.dp)
-        )
-        Image(
-            painter = rememberAsyncImagePainter(model = tempFile),
             contentDescription = null,
             modifier = Modifier.size(36.dp)
         )

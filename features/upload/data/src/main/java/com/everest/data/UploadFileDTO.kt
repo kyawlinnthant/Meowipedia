@@ -12,7 +12,7 @@ class UploadFileDTO(
     val originalFileName: String,
     val pending: Int,
     @SerialName("sub_id")
-    val subId: String,
+    val subId: String? = null,
     val url: String,
     val width: Int
 )

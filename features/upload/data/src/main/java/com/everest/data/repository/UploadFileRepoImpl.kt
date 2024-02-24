@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 
@@ -21,7 +21,7 @@ class UploadFileRepoImpl @Inject constructor(
     @DispatcherModule.IoDispatcher private val io: CoroutineDispatcher
 ) : UploadFileRepo {
     override suspend fun uploadFile(file: File): DataResult<UploadFileDTO> {
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val requestFile = file.asRequestBody("image/jpeg".toMediaType())
         val body = MultipartBody.Part.createFormData(
             "file",
             file.name,
