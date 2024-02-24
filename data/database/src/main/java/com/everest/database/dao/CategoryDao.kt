@@ -20,5 +20,5 @@ interface CategoryDao {
     fun pagingSource(): PagingSource<Int, CategoryEntity>
 
     @Query("SELECT * FROM ${CategoryEntity.TABLE_NAME} ORDER BY createdAt  DESC")
-    fun getMeowList(): List<CategoryEntity>
+    suspend fun getMeowList(): List<CategoryEntity>
 }

@@ -9,22 +9,22 @@ import com.everest.data.service.HomeApi
 import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.CategoryEntity
 import com.everest.database.entity.CategoryKeyEntity
-import javax.inject.Inject
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class CatRemoteMediator @Inject constructor(
     private val api: HomeApi,
     private val db: MeowDatabase
 ) : RemoteMediator<Int, CategoryEntity>() {
-
+    private val startPage = 0
     override suspend fun initialize(): InitializeAction {
         return if (shouldFetchInitialPage()) InitializeAction.LAUNCH_INITIAL_REFRESH else InitializeAction.SKIP_INITIAL_REFRESH
     }
 
     private suspend fun shouldFetchInitialPage(): Boolean {
-        return db.meowDao().getMeows().isEmpty()
+        return db.categoryDao().getMeowList().isEmpty()
     }
 
     override suspend fun load(
@@ -46,7 +46,7 @@ class CatRemoteMediator @Inject constructor(
                     db.meowDao().deleteAll()
                     db.meowKeyDao().deleteAll()
                 }
-                val prevKey = if (currentPage == 1) null else currentPage - 1
+                val prevKey = if (currentPage == startPage) null else currentPage - 1
                 val nextKey = if (isEndOfList) null else currentPage + 1
                 val keys = response.map {
                     it.toKeyEntity(
@@ -76,7 +76,7 @@ class CatRemoteMediator @Inject constructor(
             // loading
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.currentPage ?: 1
+                remoteKeys?.currentPage ?: startPage
             }
 
             // has data, load more

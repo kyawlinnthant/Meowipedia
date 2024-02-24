@@ -87,7 +87,11 @@ fun GalleryScreen(
                     }
                 }
 
-                is LoadState.NotLoading -> GalleryListScreen(galleries = galleries, paddingValue = it, lazyGridState = lazyGridState)
+                is LoadState.NotLoading -> GalleryListScreen(
+                    galleries = this,
+                    paddingValue = it,
+                    lazyGridState = lazyGridState
+                )
             }
         }
     }

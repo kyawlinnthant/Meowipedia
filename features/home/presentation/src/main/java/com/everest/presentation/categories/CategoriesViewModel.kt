@@ -28,7 +28,6 @@ class CategoriesViewModel @Inject constructor(
     private val saveMeow: SaveMeow,
     private val navigator: AppNavigator
 ) : ViewModel() {
-
     val categories = fetchCategories().cachedIn(viewModelScope)
     private val vmState = MutableStateFlow(CategoriesViewModelState())
     val uiState = vmState
@@ -39,7 +38,7 @@ class CategoriesViewModel @Inject constructor(
             initialValue = vmState.value.asUiState()
         )
 
-    fun save(categoryVO: CategoryVO) {
+    private fun save(categoryVO: CategoryVO) {
         viewModelScope.launch {
             saveMeow(categoryVO)
         }
