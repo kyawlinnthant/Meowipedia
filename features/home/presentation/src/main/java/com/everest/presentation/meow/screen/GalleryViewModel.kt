@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.everest.domain.usecase.GetMeows
-import com.everest.navigation.Screens
 import com.everest.navigation.navigator.AppNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,7 +17,10 @@ class GalleryViewModel @Inject constructor(
 
     fun onAction(action: GalleryAction) {
         when (action) {
-            GalleryAction.GoToCategories -> appNavigator.to(Screens.Categories.route)
+            is GalleryAction.Navigate -> appNavigator.to(action.route)
+            GalleryAction.Upload -> {
+                // todo : check logged in or not
+            }
         }
     }
 }

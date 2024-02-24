@@ -5,5 +5,7 @@ import com.everest.database.entity.meow.MeowEntity
 fun MeowEntity.toVo() = MeowVo(
     id = id,
     photo = url,
-    breedId = breedId
+    breedId = breedId,
+    width = width,
+    height = height
 )

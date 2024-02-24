@@ -10,8 +10,6 @@ import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.meow.MeowEntity
 import com.everest.database.entity.meow.MeowKeyEntity
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import okio.IOException
 import retrofit2.HttpException
 
@@ -37,33 +35,35 @@ class MeowRemoteMediator @Inject constructor(
         return try {
             val response = api.meows(page = currentPage, limit = state.config.pageSize)
             val isEndOfList = response.isEmpty()
-            withContext(Dispatchers.IO) {
-                db.withTransaction {
-                    if (loadType == LoadType.REFRESH) {
-                        db.meowDao().deleteAllPageable(isForPaging = true)
-                        db.meowKeyDao().deleteAll()
-                    }
-                    val prevKey = if (currentPage == startPage) null else currentPage - 1
-                    val nextKey = if (isEndOfList) null else currentPage + 1
-                    val keys = response.map {
-                        it.toKey(
-                            next = nextKey,
-                            prev = prevKey,
-                            current = currentPage
-                        )
-                    }
-                    val meows = response.map { it.toEntity(isForPaging = true) }
-                    val breeds = response.flatMap {
-                        it.breeds.map { breed ->
-                            breed.toEntity(isForPaging = true)
-                        }
-                    }
-
-                    db.meowKeyDao().insertKeys(keys)
-                    db.breedDao().insertBreeds(breeds)
-                    db.meowDao().insertMeows(meows)
+            db.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    db.meowDao().deleteAllPageable(isForPaging = true)
+                    db.meowKeyDao().deleteAll()
                 }
+                val prevKey = if (currentPage == startPage) null else currentPage - 1
+                val nextKey = if (isEndOfList) null else currentPage + 1
+                val keys = response.map {
+                    it.toKey(
+                        next = nextKey,
+                        prev = prevKey,
+                        current = currentPage
+                    )
+                }
+                // save BREEDS with paging status : false
+                // save MEOWS with paging status : true
+                // save MEOWS KEY
+                val breeds = response.flatMap {
+                    it.breeds.map { breed ->
+                        breed.toEntity(isForPaging = false)
+                    }
+                }
+                db.breedDao().insertBreeds(breeds)
+
+                val meows = response.map { it.toEntity(isForPaging = true) }
+                db.meowDao().insertMeows(meows)
+                db.meowKeyDao().insertKeys(keys)
             }
+
             MediatorResult.Success(endOfPaginationReached = isEndOfList)
         } catch (e: IOException) {
             MediatorResult.Error(e)
