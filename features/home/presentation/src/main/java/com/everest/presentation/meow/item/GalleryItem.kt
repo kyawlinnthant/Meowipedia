@@ -27,6 +27,7 @@ fun GalleryItem(
             .fillMaxWidth()
             .wrapContentHeight(),
         contentAlignment = Alignment.BottomCenter
+
     ) {
         AsyncImage(
             model = meowVo.photo,
