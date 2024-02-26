@@ -6,12 +6,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.paging.compose.LazyPagingItems
+import com.everest.domain.model.categories.breed.BreedVo
 import com.everest.presentation.breeds.CategoriesAction
 import com.everest.presentation.breeds.state.CategoriesListUiState
+import com.everest.presentation.categories.view.list.ListHasDataView
 
 @Composable
 fun CategoriesListView(
-    categories: LazyPagingItems<CategoryVO>,
+    categories: LazyPagingItems<BreedVo>,
     state: CategoriesListUiState,
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues,

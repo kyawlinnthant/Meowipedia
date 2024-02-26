@@ -15,10 +15,6 @@ import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
 import com.everest.presentation.UploadScreen
 import com.everest.presentation.UploadViewModel
-import com.everest.presentation.categories.CategoriesViewModel
-import com.everest.presentation.categories.view.CategoriesScreen
-import com.everest.presentation.gallery.screen.GalleryScreen
-import com.everest.presentation.gallery.screen.GalleryViewModel
 import com.everest.presentation.view.SettingsScreen
 
 @Composable

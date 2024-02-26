@@ -12,13 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import com.everest.domain.model.categories.CategoryVO
-import com.everest.presentation.categories.CategoriesAction
+import com.everest.domain.model.categories.breed.BreedVo
+import com.everest.presentation.breeds.CategoriesAction
 
 @Composable
 fun ListHasDataView(
     modifier: Modifier = Modifier,
-    categories: LazyPagingItems<CategoryVO>,
+    categories: LazyPagingItems<BreedVo>,
 //    categories: List<CategoryVO>,
     onAction: (CategoriesAction) -> Unit
 ) {

@@ -22,7 +22,11 @@ fun DynamicSection(
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = "App color with wallpaper", modifier = modifier.weight(1f))
+        Text(
+            text = "App color with wallpaper", modifier = modifier
+                .weight(1f)
+                .padding(start = 16.dp)
+        )
         Switch(checked = enabled, onCheckedChange = onUpdate)
     }
 }

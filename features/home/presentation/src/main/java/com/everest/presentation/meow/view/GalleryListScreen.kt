@@ -38,8 +38,8 @@ fun GalleryListScreen(
                 content = {
                     items(count = galleries.itemCount) { index ->
                         val currentItem = galleries[index]
-                        currentItem?.let {
-                            GalleryItem(index = index, meowVo = it)
+                        if (currentItem != null) {
+                            GalleryItem(index = index, meowVo = currentItem)
                         }
                     }
                     item {
