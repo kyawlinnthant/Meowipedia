@@ -1,7 +1,8 @@
 package com.everest.data.repository
 
-import com.everest.database.entity.MeowEntity
+import com.everest.database.entity.meow.MeowEntity
 
 interface HomeDbRepository {
-    suspend fun saveMeow(meowEntity: MeowEntity)
+    suspend fun saveMeow(meow: MeowEntity)
+    suspend fun saveMeows(meows: List<MeowEntity>)
 }

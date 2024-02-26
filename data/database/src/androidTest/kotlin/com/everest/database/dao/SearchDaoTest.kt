@@ -1,8 +1,9 @@
 package com.everest.database.dao
 
 import androidx.test.filters.SmallTest
+import com.everest.database.dao.search.SearchDao
 import com.everest.database.db.MeowDatabase
-import com.everest.database.entity.SearchEntity
+import com.everest.database.entity.search.SearchEntity
 import com.google.common.truth.Truth
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

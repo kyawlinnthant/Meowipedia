@@ -32,10 +32,10 @@ fun MeowGraph(
         modifier = modifier.fillMaxSize()
     ) {
         composable(route = Screens.Categories.route) {
-            val vm: CategoriesViewModel = hiltViewModel()
+            val vm: com.everest.presentation.breeds.CategoriesViewModel = hiltViewModel()
             val state = vm.uiState.collectAsState()
             val categories = vm.categories.collectAsLazyPagingItems()
-            CategoriesScreen(
+            com.everest.presentation.breeds.view.CategoriesScreen(
                 categories = categories,
                 state = state.value,
                 onAction = vm::onAction
@@ -59,9 +59,9 @@ fun MeowGraph(
             )
         }
         composable(route = Screens.Galleries.route) {
-            val vm: GalleryViewModel = hiltViewModel()
+            val vm: com.everest.presentation.meow.screen.GalleryViewModel = hiltViewModel()
             val galleries = vm.galleries.collectAsLazyPagingItems()
-            GalleryScreen(
+            com.everest.presentation.meow.screen.GalleryScreen(
                 galleries = galleries,
                 onAction = vm::onAction
             )

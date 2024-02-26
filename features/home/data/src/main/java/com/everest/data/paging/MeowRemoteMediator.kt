@@ -7,8 +7,8 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.everest.data.service.HomeApi
 import com.everest.database.db.MeowDatabase
-import com.everest.database.entity.MeowEntity
-import com.everest.database.entity.MeowKeyEntity
+import com.everest.database.entity.meow.MeowEntity
+import com.everest.database.entity.meow.MeowKeyEntity
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -35,26 +35,33 @@ class MeowRemoteMediator @Inject constructor(
         )
 
         return try {
-//            delay(1000L)
-            val response = api.fetchGallery(page = currentPage, size = state.config.pageSize)
+            val response = api.meows(page = currentPage, limit = state.config.pageSize)
             val isEndOfList = response.isEmpty()
             withContext(Dispatchers.IO) {
                 db.withTransaction {
                     if (loadType == LoadType.REFRESH) {
-                        db.meowDao().deleteAll()
+                        db.meowDao().deleteAllPageable(isForPaging = true)
                         db.meowKeyDao().deleteAll()
                     }
                     val prevKey = if (currentPage == startPage) null else currentPage - 1
                     val nextKey = if (isEndOfList) null else currentPage + 1
                     val keys = response.map {
-                        it.toKeyEntity(
+                        it.toKey(
                             next = nextKey,
                             prev = prevKey,
                             current = currentPage
                         )
                     }
-                    db.meowKeyDao().addMeowKeys(keys)
-                    db.meowDao().insertMeows(response.map { it.toMeowEntity() })
+                    val meows = response.map { it.toEntity(isForPaging = true) }
+                    val breeds = response.flatMap {
+                        it.breeds.map { breed ->
+                            breed.toEntity(isForPaging = true)
+                        }
+                    }
+
+                    db.meowKeyDao().insertKeys(keys)
+                    db.breedDao().insertBreeds(breeds)
+                    db.meowDao().insertMeows(meows)
                 }
             }
             MediatorResult.Success(endOfPaginationReached = isEndOfList)
@@ -95,7 +102,7 @@ class MeowRemoteMediator @Inject constructor(
     private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, MeowEntity>): MeowKeyEntity? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { catId ->
-                db.meowKeyDao().getMeowKey(catId)
+                db.meowKeyDao().getKeyById(catId)
             }
         }
     }
@@ -105,7 +112,7 @@ class MeowRemoteMediator @Inject constructor(
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()
             ?.let { cat ->
-                db.meowKeyDao().getMeowKey(cat.id)
+                db.meowKeyDao().getKeyById(cat.id)
             }
     }
 
@@ -114,7 +121,7 @@ class MeowRemoteMediator @Inject constructor(
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()
             ?.let { cat ->
-                db.meowKeyDao().getMeowKey(cat.id)
+                db.meowKeyDao().getKeyById(cat.id)
             }
     }
 }
