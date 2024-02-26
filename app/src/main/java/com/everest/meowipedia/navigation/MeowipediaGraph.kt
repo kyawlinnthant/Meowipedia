@@ -13,6 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
+import com.everest.presentation.UploadScreen
+import com.everest.presentation.UploadViewModel
 import com.everest.presentation.view.SettingsScreen
 
 @Composable
@@ -57,6 +59,17 @@ fun MeowGraph(
             val galleries = vm.galleries.collectAsLazyPagingItems()
             com.everest.presentation.meow.screen.GalleryScreen(
                 galleries = galleries,
+                onAction = vm::onAction
+            )
+        }
+
+        composable(route = Screens.Upload.route) {
+            val vm: UploadViewModel = hiltViewModel()
+            val uiState = vm.uiState.collectAsState()
+            val error = vm.errorFlow.collectAsState(null)
+            UploadScreen(
+                state = uiState.value,
+                filePickStatus = error.value,
                 onAction = vm::onAction
             )
         }

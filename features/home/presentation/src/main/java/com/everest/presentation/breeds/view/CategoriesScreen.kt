@@ -1,5 +1,6 @@
 package com.everest.presentation.breeds.view
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
@@ -11,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,31 +40,31 @@ fun CategoriesScreen(
                 is CategoriesViewModelUiState.ListState -> TopAppBar(title = {
                     Text(text = stringResource(id = R.string.categories))
                 }, actions = {
-                        IconButton(
-                            onClick = {
-                                onAction(
-                                    CategoriesAction.UpdateSearchView(shouldShow = true)
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_search_24),
-                                contentDescription = null
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                CategoriesAction.UpdateSearchView(shouldShow = true)
                             )
                         }
-                        IconButton(
-                            onClick = {
-                                onAction(
-                                    CategoriesAction.Navigate(route = Screens.Settings.route)
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_ac_unit_24),
-                                contentDescription = null
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_search_24),
+                            contentDescription = null
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                CategoriesAction.Navigate(route = Screens.Settings.route)
                             )
                         }
-                    })
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_ac_unit_24),
+                            contentDescription = null
+                        )
+                    }
+                })
 
                 is CategoriesViewModelUiState.SearchState -> TopAppBar(
                     title = {
@@ -101,28 +103,32 @@ fun CategoriesScreen(
                     when (loadState.refresh) {
                         is LoadState.Error -> {
                             if (loadState.mediator?.refresh is LoadState.Error) {
-                                Text(
-                                    "Category Error",
-                                    modifier = Modifier
-                                        .padding(it)
-                                        .fillMaxSize()
-                                )
+                                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    Text(
+                                        "Category Error",
+                                        modifier = Modifier
+                                            .padding(it)
+                                    )
+                                }
+
                             }
                         }
 
                         LoadState.Loading -> {
                             if (loadState.mediator?.refresh is LoadState.Loading) {
-                                Text(
-                                    "Category Loading",
-                                    modifier = Modifier
-                                        .padding(it)
-                                        .fillMaxSize()
-                                )
+                                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    Text(
+                                        "Category Loading",
+                                        modifier = Modifier
+                                            .padding(it)
+                                    )
+                                }
                             }
                         }
 
                         is LoadState.NotLoading -> CategoriesListView(
                             state = state.state,
+                            categories = this,
                             paddingValues = it,
                             onAction = onAction
                         )

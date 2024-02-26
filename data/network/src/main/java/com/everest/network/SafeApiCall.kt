@@ -9,6 +9,7 @@ import retrofit2.Response
 inline fun <reified T> safeApiCall(
     apiCall: () -> Response<T>,
     json: Json
+//    json: () -> Response<Any>
 ): DataResult<T> {
     return try {
         val response = apiCall()
@@ -28,6 +29,7 @@ inline fun <reified T> safeApiCall(
         DataResult.Failed(error = NetworkError.NoInternet)
         // you can use correct exception you want to catch
     } catch (e: Exception) {
+        println("SAFE API ERROR ${e.message}")
         DataResult.Failed(error = NetworkError.SomethingWrong)
     }
 }

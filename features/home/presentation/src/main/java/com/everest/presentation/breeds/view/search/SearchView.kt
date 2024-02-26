@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.everest.presentation.breeds.state.CategoriesSearchUiState
 
@@ -17,7 +18,7 @@ fun CategoriesSearchView(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(paddingValues)
+            .padding(paddingValues),
     ) {
         when (state) {
             is CategoriesSearchUiState.Error -> SearchErrorView(error = state.error)

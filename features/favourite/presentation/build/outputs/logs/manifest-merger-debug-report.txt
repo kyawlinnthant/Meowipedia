@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml:2:13-83
+INJECTED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml:2:13-83
+	package
+		INJECTED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml
+	xmlns:android
+		ADDED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml:2:23-81
+uses-sdk
+INJECTED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml reason: use-sdk injection requested
+INJECTED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml
+INJECTED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml
+	android:targetSdkVersion
+		INJECTED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml
+	android:minSdkVersion
+		INJECTED from /Users/rio/StudioProjects/Meowipedia/features/favourite/presentation/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15953712517933792576.xml

@@ -87,13 +87,13 @@ data class BreedDTO(
         temperament = temperament,
         description = description,
         lifeSpan = lifeSpan,
-        nickname = nickname ?: "",
+        nickname = nickname,
         referenceImageId = referenceImageId,
         weight = weight.toEntity(),
         website = WebsiteEntity(
-            website1 = website1 ?: "",
+            website1 = website1,
             website2 = website2,
-            website3 = website3 ?: "",
+            website3 = website3,
             wikipediaUrl = wikipediaUrl
         ),
         countryCode = CountryCodeEntity(
@@ -119,7 +119,7 @@ data class BreedDTO(
             hypoallergenic = hypoallergenic,
             indoor = indoor,
             intelligence = intelligence,
-            lap = lap ?: 0,
+            lap = lap,
             natural = natural,
             rare = rare,
             shortLegs = shortLegs,
