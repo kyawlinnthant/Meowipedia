@@ -9,9 +9,9 @@ import com.everest.data.service.HomeApi
 import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.breed.BreedEntity
 import com.everest.database.entity.breed.BreedKeyEntity
-import javax.inject.Inject
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class BreedRemoteMediator @Inject constructor(
@@ -20,12 +20,12 @@ class BreedRemoteMediator @Inject constructor(
 ) : RemoteMediator<Int, BreedEntity>() {
 
     override suspend fun initialize(): InitializeAction {
-        return if (shouldFetchInitialPage()) InitializeAction.LAUNCH_INITIAL_REFRESH else InitializeAction.SKIP_INITIAL_REFRESH
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
-    private suspend fun shouldFetchInitialPage(): Boolean {
-        return db.meowDao().getMeows().isEmpty()
-    }
+//    private suspend fun shouldFetchInitialPage(): Boolean {
+//        return db.breedDao().getBreeds().isEmpty()
+//    }
 
     override suspend fun load(
         loadType: LoadType,

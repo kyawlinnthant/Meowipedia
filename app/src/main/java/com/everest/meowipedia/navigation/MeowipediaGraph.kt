@@ -15,6 +15,7 @@ import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
 import com.everest.presentation.UploadScreen
 import com.everest.presentation.UploadViewModel
+import com.everest.presentation.breeds.view.CategoriesScreen
 import com.everest.presentation.view.SettingsScreen
 
 @Composable
@@ -31,7 +32,7 @@ fun MeowGraph(
             val vm: com.everest.presentation.breeds.CategoriesViewModel = hiltViewModel()
             val state = vm.uiState.collectAsState()
             val categories = vm.categories.collectAsLazyPagingItems()
-            com.everest.presentation.breeds.view.CategoriesScreen(
+            CategoriesScreen(
                 categories = categories,
                 state = state.value,
                 onAction = vm::onAction

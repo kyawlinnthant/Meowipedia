@@ -16,7 +16,12 @@ fun SearchHasDataView(
     LazyColumn(modifier = modifier) {
         items(count = categories.size, key = { index -> categories[index].id }) { index ->
             val currentVo = categories[index]
-            Text(text = currentVo.name, modifier = modifier.padding(8.dp))
+            Text(
+                text = currentVo.name, modifier = modifier.padding(
+                    horizontal = 16.dp,
+                    vertical = 8.dp
+                )
+            )
         }
     }
 }

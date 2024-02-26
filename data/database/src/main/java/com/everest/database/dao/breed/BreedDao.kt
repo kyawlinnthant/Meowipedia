@@ -20,8 +20,8 @@ interface BreedDao {
     @Query("SELECT * FROM ${BreedEntity.TABLE_NAME} WHERE should_show = :isForPaging")
     fun pagingSource(isForPaging: Boolean): PagingSource<Int, BreedEntity>
 
-    @Query("SELECT * FROM ${BreedEntity.TABLE_NAME}")
-    fun getBreeds(): List<BreedEntity>
+//    @Query("SELECT * FROM ${BreedEntity.TABLE_NAME}")
+//    suspend fun getBreeds(): List<BreedEntity>
 
     @Query("DELETE  FROM ${BreedEntity.TABLE_NAME} WHERE should_show = :isForPaging")
     suspend fun deleteAllPageable(isForPaging: Boolean)
