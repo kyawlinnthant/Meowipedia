@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.everest.network)
     alias(libs.plugins.everest.hilt)
     alias(libs.plugins.everest.unit.test)
+
+    alias(libs.plugins.junit5)
 }
 
 android {

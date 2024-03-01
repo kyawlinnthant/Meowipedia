@@ -7,9 +7,8 @@ import kotlinx.serialization.json.Json
 import retrofit2.Response
 
 inline fun <reified T> safeApiCall(
+    json: Json = Json { ignoreUnknownKeys = true },
     apiCall: () -> Response<T>,
-    json: Json
-//    json: () -> Response<Any>
 ): DataResult<T> {
     return try {
         val response = apiCall()
@@ -19,11 +18,18 @@ inline fun <reified T> safeApiCall(
             DataResult.Success(data = body!!)
         } else {
             // 4x,5x
-            val errorBody = response.errorBody()
-            val errorResponse =
-                json.decodeFromString<ServerError>(errorBody!!.string())
-            // you can use localized message for server error response
-            DataResult.Failed(error = NetworkError.Dynamic(message = errorResponse.message))
+            when (response.code()) {
+                404 ->{
+                    val errorBody = response.errorBody()
+                    val errorResponse = json.decodeFromString<ServerError>(errorBody!!.string())
+                    DataResult.Failed(error = NetworkError.Dynamic(message = errorResponse.message))
+                }
+                else ->{
+                    val error = response.errorBody()?.string()
+                    DataResult.Failed(error = NetworkError.Dynamic(message = error ?: "Something Wrong"))
+                }
+            }
+
         }
     } catch (e: SocketTimeoutException) {
         DataResult.Failed(error = NetworkError.NoInternet)

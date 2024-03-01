@@ -10,9 +10,24 @@ class TestUnitPlugin : Plugin<Project> {
         with(target) {
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-            val unitTest = libs.findBundle("unit-test").get()
+            val mockWebServer = libs.findLibrary("mockwebserver").get()
+            val coroutines = libs.findLibrary("coroutines-test").get()
+            val hilt = libs.findLibrary("google-hilt-test").get()
+            val jupiterApi = libs.findLibrary("jupiter-api").get()
+            val jupiterEngine = libs.findLibrary("jupiter-engine").get()
+            val jupiterParams = libs.findLibrary("jupiter-param").get()
+            val assertk = libs.findLibrary("assertk").get()
+            val mockk = libs.findLibrary("mockk").get()
+
             dependencies {
-                add("testImplementation", unitTest)
+                add("testImplementation", mockWebServer)
+                add("testRuntimeOnly", jupiterEngine)
+                add("testImplementation", coroutines)
+                add("testImplementation", hilt)
+                add("testImplementation", jupiterApi)
+                add("testImplementation", jupiterParams)
+                add("testImplementation", assertk)
+                add("testImplementation", mockk)
             }
         }
     }

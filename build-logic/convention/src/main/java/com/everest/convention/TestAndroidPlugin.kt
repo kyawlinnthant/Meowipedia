@@ -10,9 +10,9 @@ class TestAndroidPlugin : Plugin<Project> {
         with(target) {
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-            val unitTest = libs.findBundle("unit-test").get()
+//            val unitTest = libs.findBundle("unit-test").get()
             dependencies {
-                add("androidTestImplementation", unitTest)
+//                add("androidTestImplementation", unitTest)
             }
         }
     }

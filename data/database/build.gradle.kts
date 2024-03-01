@@ -13,6 +13,4 @@ android {
 dependencies {
     implementation(libs.date.time)
     implementation(libs.androidx.runner)
-    androidTestImplementation(libs.coroutines.test)
-    androidTestImplementation(libs.truth)
 }
