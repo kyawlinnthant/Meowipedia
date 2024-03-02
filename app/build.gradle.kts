@@ -26,9 +26,12 @@ android {
     }
 }
 dependencies {
+    implementation(project(":features:home:presentation"))
+    implementation(project(":features:settings:presentation"))
+    implementation(project(":features:upload:presentation"))
+    implementation(project(":features:settings:domain"))
     implementation(project(":cores:navigation"))
     implementation(project(":cores:file-utils"))
-    implementation(project(":features:settings:presentation"))
-    api(project(":features:home:presentation"))
-    implementation(project(":features:upload:presentation"))
+    implementation(project(":cores:model"))
+    implementation(project(":cores:theme"))
 }

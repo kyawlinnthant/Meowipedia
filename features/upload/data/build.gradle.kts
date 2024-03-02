@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    api(project(":cores:util"))
-    implementation(project(":cores:dispatcher"))
     api(project(":data:network"))
+    implementation(project(":cores:util"))
+    implementation(project(":cores:dispatcher"))
 }

@@ -27,8 +27,14 @@ internal fun Project.configureKotlin(
         kotlinOptions {
             jvmTarget = AppConfig.JAVA_VERSION.toString()
         }
+        val json = libs.findLibrary("serialization-json").get()
+        val dateTime = libs.findLibrary("date-time").get()
+
         dependencies {
             add("coreLibraryDesugaring", desugar)
+            add("implementation", json)
+            add("implementation", json)
+            add("implementation", dateTime)
         }
     }
 }

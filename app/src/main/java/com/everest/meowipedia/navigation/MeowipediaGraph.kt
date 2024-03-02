@@ -16,18 +16,33 @@ import com.everest.presentation.SettingsViewModel
 import com.everest.presentation.UploadScreen
 import com.everest.presentation.UploadViewModel
 import com.everest.presentation.breeds.view.CategoriesScreen
+import com.everest.presentation.meow.screen.MeowsScreen
+import com.everest.presentation.meow.screen.MeowsViewModel
 import com.everest.presentation.view.SettingsScreen
+import com.everest.theme.WindowSize
 
 @Composable
 fun MeowGraph(
+    modifier: Modifier = Modifier,
     controller: NavHostController,
-    modifier: Modifier = Modifier
+    window: WindowSize,
 ) {
     NavHost(
         navController = controller,
-        startDestination = Screens.Galleries.route,
+        startDestination = Screens.Meows.route,
         modifier = modifier.fillMaxSize()
     ) {
+
+        composable(route = Screens.Meows.route) {
+            val vm: MeowsViewModel = hiltViewModel()
+            val galleries = vm.galleries.collectAsLazyPagingItems()
+            MeowsScreen(
+                windowSize = window,
+                galleries = galleries,
+                onAction = vm::onAction
+            )
+        }
+
         composable(route = Screens.Categories.route) {
             val vm: com.everest.presentation.breeds.CategoriesViewModel = hiltViewModel()
             val state = vm.uiState.collectAsState()
@@ -55,14 +70,7 @@ fun MeowGraph(
                 isSupportDynamic = isSupportDynamicColor
             )
         }
-        composable(route = Screens.Galleries.route) {
-            val vm: com.everest.presentation.meow.screen.GalleryViewModel = hiltViewModel()
-            val galleries = vm.galleries.collectAsLazyPagingItems()
-            com.everest.presentation.meow.screen.GalleryScreen(
-                galleries = galleries,
-                onAction = vm::onAction
-            )
-        }
+
 
         composable(route = Screens.Upload.route) {
             val vm: UploadViewModel = hiltViewModel()

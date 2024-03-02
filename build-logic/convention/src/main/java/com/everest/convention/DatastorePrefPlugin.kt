@@ -10,7 +10,7 @@ class DatastorePrefPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val datastore = libs.findBundle("datastore").get()
             dependencies {
-                add("implementation", datastore)
+                add("api", datastore)
             }
         }
     }

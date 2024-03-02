@@ -13,7 +13,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.everest.domain.model.meow.MeowVo
 import com.everest.presentation.meow.item.GalleryEndItem
 import com.everest.presentation.meow.item.GalleryErrorItem
-import com.everest.presentation.meow.item.GalleryItem
+import com.everest.presentation.meow.item.MeowItem
 import com.everest.presentation.meow.item.GalleryLoadingItem
 
 @Composable
@@ -33,7 +33,7 @@ fun GalleryListScreen(
             items(count = galleries.itemCount) { index ->
                 val currentItem = galleries[index]
                 currentItem?.let {
-                    GalleryItem(index = index, meowVo = it)
+                    MeowItem(index = index, meowVo = it)
                 }
             }
             item {

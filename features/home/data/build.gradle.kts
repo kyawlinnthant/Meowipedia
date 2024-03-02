@@ -10,7 +10,6 @@ android {
 dependencies {
     api(project(":data:network"))
     api(project(":data:database"))
-    api(project(":cores:util"))
+    implementation(project(":cores:util"))
     implementation(project(":cores:dispatcher"))
-    api(libs.date.time)
 }

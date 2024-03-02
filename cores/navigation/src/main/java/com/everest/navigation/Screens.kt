@@ -12,10 +12,9 @@ sealed class Screens(val route: String) {
         fun getAbsolutePath() = this.route + "/{$EMAIL}"
     }
 
-    data object Categories : Screens("categories")
-    data object Galleries : Screens("galleries")
-    data object Settings : Screens("settings")
     data object Meows : Screens("meows")
+    data object Categories : Screens("categories")
+    data object Settings : Screens("settings")
     data object Favourites : Screens("favourites")
     data object Upload : Screens("upload")
     data object Detail : Screens("detail") {

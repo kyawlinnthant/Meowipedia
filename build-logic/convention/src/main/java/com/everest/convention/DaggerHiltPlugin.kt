@@ -6,22 +6,22 @@ import org.gradle.kotlin.dsl.getByType
 
 class DaggerHiltPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val googleKsp = "com.google.devtools.ksp"
-        val googleHilt = "com.google.dagger.hilt.android"
-
         with(target) {
-            with(pluginManager) {
-                apply(googleKsp)
-                apply(googleHilt)
-            }
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+            val hilt = libs.findPlugin("google-hilt").get().get().pluginId
+            val ksp = libs.findPlugin("google-ksp").get().get().pluginId
+            with(pluginManager) {
+                apply(hilt)
+                apply(ksp)
+            }
             val hiltAndroid = libs.findLibrary("google-hilt-android").get()
             val hiltCompiler = libs.findLibrary("google-hilt-compiler").get()
             val hiltTest = libs.findLibrary("google-hilt-test").get()
             dependencies {
                 add("implementation", hiltAndroid)
                 add("ksp", hiltCompiler)
-                add("androidTestApi", hiltTest)
+                add("androidTestImplementation", hiltTest)
+                add("testImplementation", hiltTest)
             }
         }
     }

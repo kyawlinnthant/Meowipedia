@@ -8,7 +8,9 @@ android {
     namespace = "com.everest.home.presentation"
 }
 dependencies {
-    api(project(":features:home:domain"))
+    implementation(project(":features:home:domain"))
     implementation(project(":cores:navigation"))
     implementation(project(":cores:ui"))
+    implementation(project(":cores:util"))
+    implementation(project(":cores:theme"))
 }

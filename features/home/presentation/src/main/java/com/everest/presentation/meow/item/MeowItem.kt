@@ -17,7 +17,7 @@ import com.everest.domain.model.meow.MeowVo
 import com.everest.home.presentation.R
 
 @Composable
-fun GalleryItem(
+fun MeowItem(
     index: Int,
     meowVo: MeowVo,
     modifier: Modifier = Modifier
@@ -39,7 +39,7 @@ fun GalleryItem(
             placeholder = painterResource(id = R.drawable.placeholder)
         )
         Text(
-            text = "${index + 1}  = ${meowVo.id}",
+            text = "${index + 1} : ${meowVo.id}, ${meowVo.width}, ${meowVo.height}",
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier
                 .fillMaxWidth()

@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.everest.datastore.DayNightTheme
+import com.everest.type.DayNightTheme
 
 @Composable
 fun ThemeSection(
@@ -20,9 +20,10 @@ fun ThemeSection(
 ) {
     val isSelected = type == selected
 
-    Row(modifier = modifier
-        .fillMaxWidth()
-        .padding(8.dp)
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
     ) {
         Text(
             text = text,

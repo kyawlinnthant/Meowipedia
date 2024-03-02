@@ -10,7 +10,3 @@ android {
         testInstrumentationRunner = "com.everest.database.DatabaseTestRunner"
     }
 }
-dependencies {
-    implementation(libs.date.time)
-    implementation(libs.androidx.runner)
-}

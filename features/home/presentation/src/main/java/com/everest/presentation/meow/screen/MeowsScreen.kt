@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -42,22 +41,25 @@ import com.everest.domain.model.meow.MeowVo
 import com.everest.navigation.Screens
 import com.everest.presentation.meow.item.GalleryEndItem
 import com.everest.presentation.meow.item.GalleryErrorItem
-import com.everest.presentation.meow.item.GalleryItem
+import com.everest.presentation.meow.item.MeowItem
 import com.everest.presentation.meow.item.GalleryLoadingItem
 import com.everest.presentation.meow.view.GalleryFirstTimeError
 import com.everest.presentation.meow.view.GalleryFirstTimeShimmer
+import com.everest.theme.WindowSize
+import com.everest.ui.screen.FullScreenErrorView
+import com.everest.util.result.toErrorType
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun GalleryScreen(
+fun MeowsScreen(
+    windowSize: WindowSize,
     galleries: LazyPagingItems<MeowVo>,
-    onAction: (GalleryAction) -> Unit
+    onAction: (MeowsAction) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
-    val isScrolling by remember {
+    val isScrolling by remember(galleries) {
         derivedStateOf {
-            lazyListState.isScrollInProgress
+            if(galleries.itemCount == 0) false else lazyListState.isScrollInProgress
         }
     }
 
@@ -72,7 +74,7 @@ fun GalleryScreen(
                     actions = {
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
-                            onClick = { onAction(GalleryAction.Navigate(route = Screens.Categories.route)) },
+                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Categories.route)) },
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
@@ -81,7 +83,7 @@ fun GalleryScreen(
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
-                            onClick = { onAction(GalleryAction.Navigate(route = Screens.Settings.route)) },
+                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Settings.route)) },
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
@@ -91,7 +93,7 @@ fun GalleryScreen(
                     },
                     floatingActionButton = {
                         FloatingActionButton(
-                            onClick = { onAction(GalleryAction.Upload) },
+                            onClick = { onAction(MeowsAction.Upload) },
                             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
                             contentColor = MaterialTheme.colorScheme.onSurface,
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
@@ -99,9 +101,10 @@ fun GalleryScreen(
                             Icon(Icons.Filled.Add, null)
                         }
                     },
-                    containerColor = BottomAppBarDefaults.containerColor.copy(alpha = 0f)
+                    containerColor = BottomAppBarDefaults.containerColor.copy(alpha = 0f),
 
-                )
+
+                    )
             }
         }
     ) {
@@ -112,13 +115,13 @@ fun GalleryScreen(
                 }
 
                 loadState.refresh is LoadState.Error && this.itemCount == 0 -> {
-                    val error = (loadState.refresh as LoadState.Error).error.message
-                    GalleryFirstTimeError(
-                        message = error ?: "Something's wrong",
-                        paddingValue = it
-                    ) {
+                    val throwable = (loadState.refresh as LoadState.Error).error
+                    val errorType = throwable.toErrorType()
+
+                    FullScreenErrorView(type = errorType) {
                         retry()
                     }
+
                 }
             }
 
@@ -131,13 +134,13 @@ fun GalleryScreen(
                     key = galleries.itemKey { it.id }
                 ) { index ->
 
-                    GalleryItem(
+                    MeowItem(
                         index = index,
                         meowVo = galleries[index] ?: MeowVo()
                     )
                 }
                 item {
-                    if (loadState.append is LoadState.Loading || loadState.mediator?.refresh is LoadState.Loading) {
+                    if (loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0) {
                         GalleryLoadingItem(
                             modifier = Modifier
                                 .navigationBarsPadding()
@@ -145,21 +148,9 @@ fun GalleryScreen(
                         )
                     }
                 }
+
                 item {
-                    if (loadState.append is LoadState.Error) {
-                        val error = (loadState.append as LoadState.Error).error.message
-                        GalleryErrorItem(
-                            message = error ?: "Something's wrong",
-                            modifier = Modifier
-                                .navigationBarsPadding()
-                                .padding(bottom = 80.dp)
-                        ) {
-                            retry()
-                        }
-                    }
-                }
-                item {
-                    if (loadState.mediator?.refresh is LoadState.Error) {
+                    if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) {
                         val error = (loadState.mediator!!.refresh as LoadState.Error).error.message
                         GalleryErrorItem(
                             message = error ?: "Something's wrong",
@@ -172,7 +163,7 @@ fun GalleryScreen(
                     }
                 }
                 item {
-                    if (loadState.append.endOfPaginationReached) {
+                    if (loadState.append.endOfPaginationReached && this@apply.itemCount != 0) {
                         GalleryEndItem(
                             modifier = Modifier
                                 .navigationBarsPadding()

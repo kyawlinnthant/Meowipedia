@@ -1,4 +1,4 @@
-package com.everest.datastore
+package com.everest.type
 
 sealed interface DayNightTheme {
     data object Day : DayNightTheme
