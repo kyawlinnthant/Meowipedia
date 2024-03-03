@@ -11,4 +11,5 @@ dependencies {
     implementation(projects.features.auth.domain)
     implementation(projects.cores.navigation)
     implementation(projects.cores.util)
+    implementation(project(":cores:ui"))
 }

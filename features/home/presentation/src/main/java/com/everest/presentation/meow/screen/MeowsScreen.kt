@@ -94,9 +94,7 @@ fun MeowsScreen(
                     floatingActionButton = {
                         FloatingActionButton(
                             onClick = {
-//                                onAction(MeowsAction.Upload),
-//                                onAction(MeowsAction.Navigate(route = Screens.Login.route))
-                                onAction(MeowsAction.Navigate(route = Screens.Register.route))
+                                onAction(MeowsAction.Navigate(route = Screens.Login.route))
                             },
                             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
                             contentColor = MaterialTheme.colorScheme.onSurface,

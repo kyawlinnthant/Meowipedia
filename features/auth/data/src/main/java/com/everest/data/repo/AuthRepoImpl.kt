@@ -11,8 +11,12 @@ class AuthRepoImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
 ) : AuthRepo {
     override suspend fun signIn(email: String, password: String): DataResult<AuthResult> {
-        val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
-        return DataResult.Success(result)
+        return try {
+            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            DataResult.Success(result)
+        } catch (e: Exception) {
+            DataResult.Failed(error = NetworkError.Dynamic(message = e.message ?: ""))
+        }
     }
 
     override suspend fun register(email: String, password: String): DataResult<AuthResult> {
