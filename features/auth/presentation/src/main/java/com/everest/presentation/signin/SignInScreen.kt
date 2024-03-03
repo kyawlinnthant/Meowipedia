@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.text2.BasicSecureTextField
 import androidx.compose.foundation.text2.input.TextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -36,6 +37,7 @@ import com.everest.navigation.Screens
 import com.everest.presentation.register.DefaultView
 import com.everest.theme.WindowSize
 import com.everest.theme.WindowType
+import com.everest.ui.textfield.CommonSecureTextField
 import com.everest.ui.textfield.CommonTextField
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -97,7 +99,7 @@ fun SignInCompact(
         ) {
             CommonTextField(mail)
             Spacer(modifier = Modifier.height(16.dp))
-            CommonTextField(password)
+            CommonSecureTextField(password)
             Spacer(modifier = Modifier.height(16.dp))
             when (state) {
                 SignInUIState.Loading -> CircularProgressIndicator(
@@ -145,7 +147,7 @@ fun SignInTablet(
         ) {
             CommonTextField(mail)
             Spacer(modifier = Modifier.height(16.dp))
-            CommonTextField(password)
+            BasicSecureTextField(password)
             Spacer(modifier = Modifier.height(16.dp))
             when (state) {
                 SignInUIState.Loading -> CircularProgressIndicator(

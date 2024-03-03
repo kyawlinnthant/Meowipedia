@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.text2.BasicSecureTextField
 import androidx.compose.foundation.text2.input.TextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.everest.ui.textfield.CommonSecureTextField
 import com.everest.ui.textfield.CommonTextField
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -46,7 +48,7 @@ fun RegisterScreen(
         ) {
             CommonTextField(mail)
             Spacer(modifier = Modifier.height(16.dp))
-            CommonTextField(password)
+            CommonSecureTextField(password)
             Spacer(modifier = Modifier.height(16.dp))
             when (state) {
                 RegisterUIState.Loading -> CircularProgressIndicator(
