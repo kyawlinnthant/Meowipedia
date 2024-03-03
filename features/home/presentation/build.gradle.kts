@@ -13,4 +13,5 @@ dependencies {
     implementation(project(":cores:ui"))
     implementation(project(":cores:util"))
     implementation(project(":cores:theme"))
+    implementation(project(":cores:model"))
 }

@@ -3,11 +3,9 @@ package com.everest.presentation.meow.screen
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
@@ -15,13 +13,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,7 +32,12 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.everest.domain.model.meow.MeowVo
 import com.everest.navigation.Screens
-import com.everest.presentation.meow.view.GalleryFirstTimeShimmer
+import com.everest.presentation.meow.view.list.MeowsCompactList
+import com.everest.presentation.meow.view.list.MeowsExpandedList
+import com.everest.presentation.meow.view.list.MeowsMediumList
+import com.everest.presentation.meow.view.loading.MeowsCompactLoading
+import com.everest.presentation.meow.view.loading.MeowsExpandedLoading
+import com.everest.presentation.meow.view.loading.MeowsMediumLoading
 import com.everest.theme.WindowSize
 import com.everest.theme.WindowType
 import com.everest.ui.screen.FullScreenErrorView
@@ -93,27 +93,19 @@ fun MeowsScreen(
                             Icon(Icons.Filled.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                         }
                     },
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = { onAction(MeowsAction.Upload) },
-                            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
-                            contentColor = MaterialTheme.colorScheme.onSurface,
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                        ) {
-                            Icon(Icons.Filled.Add, null)
-                        }
-                    },
-                    containerColor = BottomAppBarDefaults.containerColor.copy(alpha = 0f),
-
-
-                    )
+                    containerColor = BottomAppBarDefaults.containerColor.copy(alpha = 0f)
+                )
             }
         }
     ) {
         meows.apply {
             when {
                 loadState.refresh is LoadState.Loading && this.itemCount == 0 -> {
-                    GalleryFirstTimeShimmer(paddingValue = it)
+                    when (windowSize.width) {
+                        WindowType.Compact -> MeowsCompactLoading()
+                        WindowType.Medium -> MeowsMediumLoading()
+                        WindowType.Expanded -> MeowsExpandedLoading()
+                    }
                 }
 
                 loadState.refresh is LoadState.Error && this.itemCount == 0 -> {
@@ -133,10 +125,10 @@ fun MeowsScreen(
                             isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
                             isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
                             error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
-                            listState = lazyListState
-                        ) {
-                            retry()
-                        }
+                            listState = lazyListState,
+                            onRetry = { retry() },
+                            onItemClick = {}
+                        )
 
                         WindowType.Medium -> MeowsMediumList(
                             meows = this.itemSnapshotList.items,
@@ -144,10 +136,10 @@ fun MeowsScreen(
                             isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
                             isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
                             error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
-                            listState = lazyStaggeredGridState
-                        ) {
-                            retry()
-                        }
+                            listState = lazyStaggeredGridState,
+                            onRetry = { retry() },
+                            onItemClick = {}
+                        )
 
                         WindowType.Expanded -> MeowsExpandedList(
                             meows = this.itemSnapshotList.items,
@@ -155,10 +147,10 @@ fun MeowsScreen(
                             isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
                             isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
                             error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
-                            listState = lazyStaggeredGridState
-                        ) {
-                            retry()
-                        }
+                            listState = lazyStaggeredGridState,
+                            onRetry = { retry() },
+                            onItemClick = {}
+                        )
                     }
                 }
             }
