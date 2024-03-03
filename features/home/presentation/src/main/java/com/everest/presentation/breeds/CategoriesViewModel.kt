@@ -27,13 +27,13 @@ class CategoriesViewModel @Inject constructor(
 ) : ViewModel() {
 
     val categories = getBreeds().cachedIn(viewModelScope)
-    private val vmState = MutableStateFlow(CategoriesViewModelState())
-    val uiState = vmState
+    private val _vmState = MutableStateFlow(CategoriesViewModelState())
+    val uiState = _vmState
         .map(CategoriesViewModelState::asUiState)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = vmState.value.asUiState()
+            initialValue = _vmState.value.asUiState()
         )
 
     fun onAction(action: CategoriesAction) {
@@ -51,7 +51,7 @@ class CategoriesViewModel @Inject constructor(
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500L)
-            vmState.update { state ->
+            _vmState.update { state ->
                 state.copy(
                     searchState = state.searchState.copy(
                         isLoading = true
@@ -59,7 +59,7 @@ class CategoriesViewModel @Inject constructor(
                 )
             }
             when (val response = searchBreeds(keyword = query)) {
-                is DataResult.Failed -> vmState.update { state ->
+                is DataResult.Failed -> _vmState.update { state ->
                     state.copy(
                         searchState = state.searchState.copy(
                             isError = response.error,
@@ -68,7 +68,7 @@ class CategoriesViewModel @Inject constructor(
                     )
                 }
 
-                is DataResult.Success -> vmState.update { state ->
+                is DataResult.Success -> _vmState.update { state ->
                     state.copy(
                         searchState = state.searchState.copy(
                             categories = response.data,
@@ -81,7 +81,7 @@ class CategoriesViewModel @Inject constructor(
     }
 
     private fun updateSearchQuery(query: String) {
-        vmState.update { state ->
+        _vmState.update { state ->
             state.copy(
                 searchState = state.searchState.copy(
                     searchQuery = query
@@ -93,7 +93,7 @@ class CategoriesViewModel @Inject constructor(
     }
 
     private fun updateShouldShowSearch(shouldShow: Boolean) {
-        vmState.update { state ->
+        _vmState.update { state ->
             state.copy(
                 shouldShowSearch = shouldShow
             )

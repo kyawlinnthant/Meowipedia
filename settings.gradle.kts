@@ -1,8 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":cores:file-utils")
-
-
 pluginManagement {
     repositories {
         includeBuild("build-logic")
@@ -21,6 +18,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "Meowipedia"
 include(":app")
+
+include(":cores:file-utils")
+
 include(
     ":cores:theme",
     ":cores:navigation",

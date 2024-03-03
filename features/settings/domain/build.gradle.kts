@@ -9,5 +9,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":features:settings:data"))
+    implementation(projects.features.settings.data)
 }

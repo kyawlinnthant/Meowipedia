@@ -10,4 +10,5 @@ android {
 
 dependencies {
     implementation(project(":features:auth:data"))
+    implementation(project(":cores:util"))
 }

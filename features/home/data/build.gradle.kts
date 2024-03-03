@@ -8,8 +8,8 @@ android {
     namespace = "com.everest.home.data"
 }
 dependencies {
-    api(project(":data:network"))
-    api(project(":data:database"))
-    implementation(project(":cores:util"))
-    implementation(project(":cores:dispatcher"))
+    api(projects.data.network)
+    api(projects.data.database)
+    api(projects.cores.util)
+    api(projects.cores.dispatcher)
 }

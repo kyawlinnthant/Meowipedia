@@ -11,7 +11,8 @@ class TestUnitPlugin : Plugin<Project> {
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val mockWebServer = libs.findLibrary("mockwebserver").get()
-            val coroutines = libs.findLibrary("coroutines-test").get()
+            val coroutinesTest = libs.findLibrary("coroutines-test").get()
+            val coroutinesCore = libs.findLibrary("coroutines-core").get()
             val jupiterApi = libs.findLibrary("jupiter-api").get()
             val jupiterEngine = libs.findLibrary("jupiter-engine").get()
             val jupiterParams = libs.findLibrary("jupiter-param").get()
@@ -21,7 +22,8 @@ class TestUnitPlugin : Plugin<Project> {
             dependencies {
                 add("testImplementation", mockWebServer)
                 add("testRuntimeOnly", jupiterEngine)
-                add("testImplementation", coroutines)
+                add("testImplementation", coroutinesTest)
+                add("testImplementation", coroutinesCore)
                 add("testImplementation", jupiterApi)
                 add("testImplementation", jupiterParams)
                 add("testImplementation", assertk)

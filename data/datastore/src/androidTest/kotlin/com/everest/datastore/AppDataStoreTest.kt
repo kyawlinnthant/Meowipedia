@@ -2,7 +2,6 @@ package com.everest.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.test.filters.SmallTest
 import com.everest.testrule.CoroutinesTestRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -13,7 +12,6 @@ import org.junit.Rule
 import javax.inject.Inject
 
 @HiltAndroidTest
-@SmallTest
 @UninstallModules(DataStoreModule::class)
 class AppDataStoreTest {
 
