@@ -34,9 +34,11 @@ fun RegisterScreen(
     password: TextFieldState,
     onAction: (RegisterAction) -> Unit
 ) {
-    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }, topBar = {
-        TopAppBar(title = { Text(text = "Register") })
-    }) {
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        topBar = {
+            TopAppBar(title = { Text(text = "Register") })
+        }) {
         Column(
             modifier = Modifier
                 .padding(it)

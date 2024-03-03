@@ -85,7 +85,8 @@ fun MeowsScreen(
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
-                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Settings.route)) },
+//                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Settings.route)) },
+                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Login.route)) },
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))

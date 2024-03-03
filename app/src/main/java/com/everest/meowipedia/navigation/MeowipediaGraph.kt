@@ -88,6 +88,7 @@ fun MeowGraph(
                 }
             }
             SignInScreen(
+                windowSize = window,
                 state = vmState.value,
                 snackbarHostState = snackbarHostState,
                 mail = vm.mail,
