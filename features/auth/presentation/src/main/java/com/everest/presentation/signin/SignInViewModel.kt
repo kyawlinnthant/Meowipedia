@@ -1,4 +1,4 @@
-package com.everest.presentation
+package com.everest.presentation.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,28 +14,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val signIn: SignIn, private val appNavigator: AppNavigator) : ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val signIn: SignIn,
+    private val appNavigator: AppNavigator
+) : ViewModel() {
 
     private val _vmState = MutableStateFlow(SignInState())
-    val uiState = _vmState
-        .map(SignInState::asUiState)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = _vmState.value.asUiState()
-        )
+    val uiState = _vmState.map(SignInState::asUiState).stateIn(
+        scope = viewModelScope, started = SharingStarted.Eagerly, initialValue = _vmState.value.asUiState()
+    )
 
 
     fun onAction(action: SignInAction) {
         when (action) {
             is SignInAction.Navigate -> appNavigator.to(action.route)
-            SignInAction.SignIn -> {
-                onSignInResult()
-            }
+            SignInAction.SignIn -> doSign()
         }
     }
 
-    private fun onSignInResult() {
+    private fun doSign() {
         viewModelScope.launch {
             _vmState.update {
                 it.copy(
@@ -44,8 +41,5 @@ class SignInViewModel @Inject constructor(private val signIn: SignIn, private va
             }
             signIn.invoke("kyawsoewin.dev@gmail.com", "123456")
         }
-
-
     }
-
 }

@@ -1,13 +1,6 @@
-package com.everest.presentation
+package com.everest.presentation.signin
 
 import com.everest.util.result.NetworkError
-
-//
-//data class SignInState(
-//    val isSignInSuccessful: Boolean = false,
-//    val signInError: String? = null
-//)
-
 
 data class SignInState(
     val email: String = "",

@@ -9,6 +9,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":features:auth:data"))
-    implementation(project(":cores:util"))
+    implementation(projects.features.auth.data)
+    implementation(projects.cores.util)
+    implementation("com.google.firebase:firebase-auth-ktx:21.1.0")
 }

@@ -13,13 +13,15 @@ import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
-import com.everest.presentation.SignInScreen
-import com.everest.presentation.SignInViewModel
 import com.everest.presentation.UploadScreen
 import com.everest.presentation.UploadViewModel
 import com.everest.presentation.breeds.view.CategoriesScreen
 import com.everest.presentation.meow.screen.MeowsScreen
 import com.everest.presentation.meow.screen.MeowsViewModel
+import com.everest.presentation.register.RegisterScreen
+import com.everest.presentation.register.RegisterViewModel
+import com.everest.presentation.signin.SignInScreen
+import com.everest.presentation.signin.SignInViewModel
 import com.everest.presentation.view.SettingsScreen
 import com.everest.theme.WindowSize
 
@@ -34,6 +36,15 @@ fun MeowGraph(
         startDestination = Screens.Meows.route,
         modifier = modifier.fillMaxSize()
     ) {
+
+        composable(route = Screens.Register.route) {
+            val vm: RegisterViewModel = hiltViewModel()
+            val vmState = vm.uiState.collectAsState()
+            RegisterScreen(
+                state = vmState.value,
+                onAction = vm::onAction
+            )
+        }
 
         composable(route = Screens.Login.route) {
             val vm: SignInViewModel = hiltViewModel()

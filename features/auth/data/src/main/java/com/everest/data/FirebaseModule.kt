@@ -1,19 +1,16 @@
 package com.everest.data
 
-import com.everest.data.repo.AuthRepo
-import com.everest.data.repo.AuthRepoImpl
-import dagger.Binds
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface AuthModule {
-    @Binds
+class FirebaseModule {
+    @Provides
     @Singleton
-    fun provideSignInRepoImpl(repo: AuthRepoImpl): AuthRepo
+    fun providesFirebaseInstance() = FirebaseAuth.getInstance()
 }
-
-

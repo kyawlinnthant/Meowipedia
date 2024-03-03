@@ -7,6 +7,7 @@ sealed class Screens(val route: String) {
     }
 
     data object Login : Screens("login")
+    data object Register : Screens("register")
     data object ForgotPassword : Screens("forgotPassword") {
         fun passEmail(email: String) = this.route + "/$email"
         fun getAbsolutePath() = this.route + "/{$EMAIL}"

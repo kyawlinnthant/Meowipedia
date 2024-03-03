@@ -3,11 +3,9 @@ package com.everest.presentation.meow.screen
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
@@ -95,7 +93,11 @@ fun MeowsScreen(
                     },
                     floatingActionButton = {
                         FloatingActionButton(
-                            onClick = { onAction(MeowsAction.Upload) },
+                            onClick = {
+//                                onAction(MeowsAction.Upload),
+//                                onAction(MeowsAction.Navigate(route = Screens.Login.route))
+                                onAction(MeowsAction.Navigate(route = Screens.Register.route))
+                            },
                             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
                             contentColor = MaterialTheme.colorScheme.onSurface,
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
