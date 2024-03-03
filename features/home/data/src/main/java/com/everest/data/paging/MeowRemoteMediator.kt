@@ -9,17 +9,16 @@ import com.everest.data.service.HomeApi
 import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.meow.MeowEntity
 import com.everest.database.entity.meow.MeowKeyEntity
-import javax.inject.Inject
+import com.everest.util.constant.Constant
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class MeowRemoteMediator @Inject constructor(
     private val api: HomeApi,
     private val db: MeowDatabase
 ) : RemoteMediator<Int, MeowEntity>() {
-
-    private val startPage = 1
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
@@ -40,7 +39,7 @@ class MeowRemoteMediator @Inject constructor(
                     db.meowDao().deleteAllPageable(isForPaging = true)
                     db.meowKeyDao().deleteAll()
                 }
-                val prevKey = if (currentPage == startPage) null else currentPage - 1
+                val prevKey = if (currentPage == Constant.START_PAGE) null else currentPage - 1
                 val nextKey = if (isEndOfList) null else currentPage + 1
                 val keys = response.map {
                     it.toKey(
@@ -82,7 +81,7 @@ class MeowRemoteMediator @Inject constructor(
             // loading
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.currentPage ?: startPage
+                remoteKeys?.currentPage ?: Constant.START_PAGE
             }
 
             // has data, load more

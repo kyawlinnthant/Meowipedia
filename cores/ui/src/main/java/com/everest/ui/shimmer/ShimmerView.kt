@@ -17,7 +17,11 @@ fun ShimmerView(
 ) {
     val shimmerColors = listOf(
         MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
         MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
     )
     val transition = rememberInfiniteTransition(label = "")

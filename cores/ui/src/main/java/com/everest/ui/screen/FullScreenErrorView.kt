@@ -19,6 +19,7 @@ import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -92,13 +93,13 @@ fun FullScreenErrorView(
 }
 
 @Composable
-@Preview(
-    showSystemUi = true
-)
+@Preview
 private fun Preview() {
     MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
-        FullScreenErrorView(type = NetworkError.NoInternet) {
+        Surface {
+            FullScreenErrorView(type = NetworkError.NoInternet) {
 
+            }
         }
     }
 }
