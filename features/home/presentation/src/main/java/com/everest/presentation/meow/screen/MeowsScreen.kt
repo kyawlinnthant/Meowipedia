@@ -2,18 +2,17 @@ package com.everest.presentation.meow.screen
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -36,30 +35,33 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
 import com.everest.domain.model.meow.MeowVo
 import com.everest.navigation.Screens
-import com.everest.presentation.meow.item.GalleryEndItem
-import com.everest.presentation.meow.item.GalleryErrorItem
-import com.everest.presentation.meow.item.MeowItem
-import com.everest.presentation.meow.item.GalleryLoadingItem
-import com.everest.presentation.meow.view.GalleryFirstTimeError
 import com.everest.presentation.meow.view.GalleryFirstTimeShimmer
 import com.everest.theme.WindowSize
+import com.everest.theme.WindowType
 import com.everest.ui.screen.FullScreenErrorView
+import com.everest.util.result.NetworkError
 import com.everest.util.result.toErrorType
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MeowsScreen(
     windowSize: WindowSize,
-    galleries: LazyPagingItems<MeowVo>,
+    meows: LazyPagingItems<MeowVo>,
     onAction: (MeowsAction) -> Unit
 ) {
+
+    val lazyStaggeredGridState = rememberLazyStaggeredGridState()
     val lazyListState = rememberLazyListState()
-    val isScrolling by remember(galleries) {
+
+    val isScrolling by remember(meows) {
         derivedStateOf {
-            if(galleries.itemCount == 0) false else lazyListState.isScrollInProgress
+            if (meows.itemCount == 0) false else when (windowSize.width) {
+                WindowType.Compact -> lazyListState.isScrollInProgress
+                WindowType.Medium -> lazyStaggeredGridState.isScrollInProgress
+                WindowType.Expanded -> lazyStaggeredGridState.isScrollInProgress
+            }
         }
     }
 
@@ -67,8 +69,8 @@ fun MeowsScreen(
         bottomBar = {
             AnimatedVisibility(
                 visible = !isScrolling,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically()
+                enter = fadeIn() + expandHorizontally(),
+                exit = fadeOut() + shrinkHorizontally()
             ) {
                 BottomAppBar(
                     actions = {
@@ -108,7 +110,7 @@ fun MeowsScreen(
             }
         }
     ) {
-        galleries.apply {
+        meows.apply {
             when {
                 loadState.refresh is LoadState.Loading && this.itemCount == 0 -> {
                     GalleryFirstTimeShimmer(paddingValue = it)
@@ -121,54 +123,42 @@ fun MeowsScreen(
                     FullScreenErrorView(type = errorType) {
                         retry()
                     }
-
-                }
-            }
-
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                state = lazyListState
-            ) {
-                items(
-                    count = galleries.itemCount,
-                    key = galleries.itemKey { it.id }
-                ) { index ->
-
-                    MeowItem(
-                        index = index,
-                        meowVo = galleries[index] ?: MeowVo()
-                    )
-                }
-                item {
-                    if (loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0) {
-                        GalleryLoadingItem(
-                            modifier = Modifier
-                                .navigationBarsPadding()
-                                .padding(bottom = 80.dp)
-                        )
-                    }
                 }
 
-                item {
-                    if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) {
-                        val error = (loadState.mediator!!.refresh as LoadState.Error).error.message
-                        GalleryErrorItem(
-                            message = error ?: "Something's wrong",
-                            modifier = Modifier
-                                .navigationBarsPadding()
-                                .padding(bottom = 80.dp)
+                else -> {
+                    when (windowSize.width) {
+                        WindowType.Compact -> MeowsCompactList(
+                            meows = this.itemSnapshotList.items,
+                            isLoading = loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0,
+                            isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
+                            isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
+                            error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
+                            listState = lazyListState
                         ) {
                             retry()
                         }
-                    }
-                }
-                item {
-                    if (loadState.append.endOfPaginationReached && this@apply.itemCount != 0) {
-                        GalleryEndItem(
-                            modifier = Modifier
-                                .navigationBarsPadding()
-                                .padding(bottom = 80.dp)
-                        )
+
+                        WindowType.Medium -> MeowsMediumList(
+                            meows = this.itemSnapshotList.items,
+                            isLoading = loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0,
+                            isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
+                            isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
+                            error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
+                            listState = lazyStaggeredGridState
+                        ) {
+                            retry()
+                        }
+
+                        WindowType.Expanded -> MeowsExpandedList(
+                            meows = this.itemSnapshotList.items,
+                            isLoading = loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0,
+                            isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
+                            isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
+                            error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
+                            listState = lazyStaggeredGridState
+                        ) {
+                            retry()
+                        }
                     }
                 }
             }

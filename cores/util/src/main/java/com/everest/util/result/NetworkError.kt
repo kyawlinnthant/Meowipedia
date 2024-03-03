@@ -16,3 +16,5 @@ fun Throwable.toErrorType(): NetworkError {
         else -> NetworkError.SomethingWrong
     }
 }
+
+

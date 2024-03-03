@@ -38,7 +38,7 @@ fun MeowGraph(
             val galleries = vm.galleries.collectAsLazyPagingItems()
             MeowsScreen(
                 windowSize = window,
-                galleries = galleries,
+                meows = galleries,
                 onAction = vm::onAction
             )
         }

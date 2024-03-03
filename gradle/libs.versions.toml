@@ -63,7 +63,9 @@ room-compiler = { module = "androidx.room:room-compiler",  version.ref = "room" 
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
-
+# firebase
+firebase-bom = { module = "com.google.firebase:firebase-bom", version = "32.7.3" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 
 # test
 androidx-runner = { module = "androidx.test:runner", version = "1.5.2" }
@@ -129,6 +131,7 @@ google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "google-hil
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 junit5 = { id = "de.mannodermaus.android-junit5", version = "1.10.0.0" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.1" }
 
 # Plugins defined by this project
 everest-android-application = { id = "com.everest.android.application", version = "unspecified" }
