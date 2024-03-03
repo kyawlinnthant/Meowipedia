@@ -14,8 +14,8 @@ import com.everest.database.entity.meow.MeowEntity.Companion.TABLE_NAME
             entity = BreedEntity::class,
             parentColumns = [BreedEntity.BREED_ID],
             childColumns = [MeowEntity.BREED_ID],
-            onDelete = ForeignKey.NO_ACTION,
-            onUpdate = ForeignKey.NO_ACTION
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         )
     ]
 )

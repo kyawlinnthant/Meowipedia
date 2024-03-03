@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.everest.android.application)
     alias(libs.plugins.everest.compose.application)
     alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -26,19 +27,15 @@ android {
     }
 }
 dependencies {
-    implementation(projects.features.auth.presentation)
-    implementation(projects.features.home.presentation)
-    implementation(projects.features.settings.presentation)
-    implementation(projects.features.upload.presentation)
-    implementation(projects.features.settings.domain)
+    implementation(project(":features:home:presentation"))
+    implementation(project(":features:settings:presentation"))
+    implementation(project(":features:upload:presentation"))
+    implementation(project(":features:settings:domain"))
+    implementation(project(":cores:navigation"))
+    implementation(project(":cores:file-utils"))
+    implementation(project(":cores:model"))
+    implementation(project(":cores:theme"))
 
-    implementation(projects.cores.navigation)
-    implementation(projects.cores.fileUtils)
-    implementation(projects.cores.model)
-    implementation(projects.cores.theme)
-
-
-    implementation("com.google.firebase:firebase-auth")
-
-    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 }
