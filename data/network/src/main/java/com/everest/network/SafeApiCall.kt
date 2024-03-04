@@ -2,9 +2,9 @@ package com.everest.network
 
 import com.everest.util.result.DataResult
 import com.everest.util.result.NetworkError
-import java.net.SocketTimeoutException
 import kotlinx.serialization.json.Json
 import retrofit2.Response
+import java.net.SocketTimeoutException
 
 inline fun <reified T> safeApiCall(
     json: Json = Json { ignoreUnknownKeys = true },
@@ -19,12 +19,13 @@ inline fun <reified T> safeApiCall(
         } else {
             // 4x,5x
             when (response.code()) {
-                404 ->{
+                404 -> {
                     val errorBody = response.errorBody()
                     val errorResponse = json.decodeFromString<ServerError>(errorBody!!.string())
                     DataResult.Failed(error = NetworkError.Dynamic(message = errorResponse.message))
                 }
-                else ->{
+
+                else -> {
                     val error = response.errorBody()?.string()
                     DataResult.Failed(error = NetworkError.Dynamic(message = error ?: "Something Wrong"))
                 }

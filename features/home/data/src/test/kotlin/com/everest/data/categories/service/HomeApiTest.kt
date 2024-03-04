@@ -23,6 +23,7 @@ class HomeApiTest {
         ignoreUnknownKeys = true
         encodeDefaults = true
     }
+
     private val factory = json.asConverterFactory("application/json".toMediaType())
 
     @Before

@@ -11,7 +11,7 @@ android {
     }
 }
 dependencies {
-    implementation(project(":cores:dispatcher"))
-    implementation(project(":cores:test-rule"))
-    implementation(project(":cores:model"))
+    implementation(projects.cores.dispatcher)
+    implementation(projects.cores.testRule)
+    implementation(projects.cores.model)
 }

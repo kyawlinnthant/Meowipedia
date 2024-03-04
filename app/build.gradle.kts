@@ -27,14 +27,15 @@ android {
     }
 }
 dependencies {
-    implementation(project(":features:home:presentation"))
-    implementation(project(":features:settings:presentation"))
-    implementation(project(":features:upload:presentation"))
-    implementation(project(":features:settings:domain"))
-    implementation(project(":cores:navigation"))
-    implementation(project(":cores:file-utils"))
-    implementation(project(":cores:model"))
-    implementation(project(":cores:theme"))
+    implementation(projects.features.auth.presentation)
+    implementation(projects.features.home.presentation)
+    implementation(projects.features.settings.presentation)
+    implementation(projects.features.upload.presentation)
+    implementation(projects.features.settings.domain)
+    implementation(projects.cores.navigation)
+    implementation(projects.cores.fileUtils)
+    implementation(projects.cores.model)
+    implementation(projects.cores.theme)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

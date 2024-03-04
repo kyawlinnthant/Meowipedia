@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":cores:dispatcher"))
+    implementation(projects.cores.dispatcher)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }

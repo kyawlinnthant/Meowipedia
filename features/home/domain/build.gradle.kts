@@ -9,6 +9,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":features:home:data"))
-    implementation(project(":cores:util"))
+    implementation(projects.features.home.data)
+    implementation(projects.cores.util)
 }

@@ -8,8 +8,8 @@ android {
     namespace = "com.everest.upload.presentation"
 }
 dependencies {
-    implementation(project(":features:upload:domain"))
-    implementation(project(":cores:navigation"))
-    implementation(project(":cores:file-utils"))
-    implementation(project(":cores:util"))
+    implementation(projects.features.upload.domain)
+    implementation(projects.cores.navigation)
+    implementation(projects.cores.fileUtils)
+    implementation(projects.cores.util)
 }
