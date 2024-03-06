@@ -4,6 +4,7 @@ import com.everest.data.model.breed.BreedDTO
 import com.everest.data.model.meow.MeowDTO
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface HomeApi {
@@ -11,8 +12,9 @@ interface HomeApi {
     companion object {
         private const val IMAGES = "images"
         const val MEOWS = "$IMAGES/search"
+        const val MEOW_BY_ID = "$IMAGES/search"
         const val BREEDS = "breeds"
-        const val SEARCH_BREEDS = "$BREEDS/search"
+        const val SEARCH_BREEDS = "$IMAGES/search"
     }
 
     @GET(MEOWS)
@@ -34,4 +36,9 @@ interface HomeApi {
     suspend fun searchBreeds(
         @Query("q") keyword: String
     ): Response<List<BreedDTO>>
+
+    @GET("$MEOW_BY_ID/{id}")
+    suspend fun getMeowById(
+        @Path("id") id: String
+    ): Response<MeowDTO>
 }

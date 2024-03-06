@@ -26,8 +26,10 @@
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/cores" />
             <option value="$PROJECT_DIR$/cores/dispatcher" />
+            <option value="$PROJECT_DIR$/cores/file-utils" />
             <option value="$PROJECT_DIR$/cores/model" />
             <option value="$PROJECT_DIR$/cores/navigation" />
+            <option value="$PROJECT_DIR$/cores/test-rule" />
             <option value="$PROJECT_DIR$/cores/theme" />
             <option value="$PROJECT_DIR$/cores/ui" />
             <option value="$PROJECT_DIR$/cores/util" />
@@ -36,10 +38,22 @@
             <option value="$PROJECT_DIR$/data/datastore" />
             <option value="$PROJECT_DIR$/data/network" />
             <option value="$PROJECT_DIR$/features" />
-            <option value="$PROJECT_DIR$/features/categories" />
-            <option value="$PROJECT_DIR$/features/categories/data" />
-            <option value="$PROJECT_DIR$/features/categories/domain" />
-            <option value="$PROJECT_DIR$/features/categories/presentation" />
+            <option value="$PROJECT_DIR$/features/auth" />
+            <option value="$PROJECT_DIR$/features/auth/data" />
+            <option value="$PROJECT_DIR$/features/auth/domain" />
+            <option value="$PROJECT_DIR$/features/auth/presentation" />
+            <option value="$PROJECT_DIR$/features/home" />
+            <option value="$PROJECT_DIR$/features/home/data" />
+            <option value="$PROJECT_DIR$/features/home/domain" />
+            <option value="$PROJECT_DIR$/features/home/presentation" />
+            <option value="$PROJECT_DIR$/features/settings" />
+            <option value="$PROJECT_DIR$/features/settings/data" />
+            <option value="$PROJECT_DIR$/features/settings/domain" />
+            <option value="$PROJECT_DIR$/features/settings/presentation" />
+            <option value="$PROJECT_DIR$/features/upload" />
+            <option value="$PROJECT_DIR$/features/upload/data" />
+            <option value="$PROJECT_DIR$/features/upload/domain" />
+            <option value="$PROJECT_DIR$/features/upload/presentation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

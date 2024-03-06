@@ -14,10 +14,12 @@ import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall
 import com.everest.util.constant.Constant
 import com.everest.util.result.DataResult
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
 class HomeApiRepositoryImpl @Inject constructor(
     private val api: HomeApi,
@@ -78,5 +80,20 @@ class HomeApiRepositoryImpl @Inject constructor(
             remoteMediator = remoteMediator,
             pagingSourceFactory = dbSource
         )
+    }
+
+    override fun getMeowById(id: String): Flow<DataResult<Unit>> = flow {
+        withContext(io) {
+            when (val response = safeApiCall { api.getMeowById(id) }) {
+                is DataResult.Failed -> emit(DataResult.Failed(error = response.error))
+                is DataResult.Success -> {
+                    db.meowDao().insertMeow(response.data.toEntity(false))
+                    response.data.breeds.map {
+                        db.breedDao().insertBreed(it.toEntity())
+                    }
+                    emit(DataResult.Success(Unit))
+                }
+            }
+        }
     }
 }

@@ -10,6 +10,8 @@ import androidx.room.Transaction
 import com.everest.database.entity.breed.BreedEntity
 import com.everest.database.entity.meow.MeowEntity
 import com.everest.database.map.BreedWithMeows
+import com.everest.database.map.MeowWithBreeds
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MeowDao {
@@ -21,6 +23,9 @@ interface MeowDao {
 
     @Query("SELECT * FROM ${MeowEntity.TABLE_NAME}")
     suspend fun getMeows(): List<MeowEntity>
+
+    @Query("SELECT * FROM ${MeowEntity.TABLE_NAME} where id = :id")
+    suspend fun getMeowById(id:String): Flow<MeowWithBreeds>
 
     @Query("SELECT * FROM ${MeowEntity.TABLE_NAME} WHERE should_show = :isForPaging")
     fun pagingSource(isForPaging: Boolean): PagingSource<Int, MeowEntity>
