@@ -6,6 +6,7 @@ import kotlinx.serialization.json.Json
 import retrofit2.Response
 import java.net.SocketTimeoutException
 
+
 inline fun <reified T> safeApiCall(
     json: Json = Json { ignoreUnknownKeys = true },
     apiCall: () -> Response<T>,
@@ -30,13 +31,11 @@ inline fun <reified T> safeApiCall(
                     DataResult.Failed(error = NetworkError.Dynamic(message = error ?: "Something Wrong"))
                 }
             }
-
         }
     } catch (e: SocketTimeoutException) {
         DataResult.Failed(error = NetworkError.NoInternet)
         // you can use correct exception you want to catch
     } catch (e: Exception) {
-        println("SAFE API ERROR ${e.message}")
         DataResult.Failed(error = NetworkError.SomethingWrong)
     }
 }
