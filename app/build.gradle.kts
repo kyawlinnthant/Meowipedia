@@ -47,10 +47,9 @@ dependencies {
 secrets {
     // Change the properties file from the default "local.properties" in your root project
     // to another properties file in your root project.
-    propertiesFileName = "credetntials.properties"
+    propertiesFileName = "credentials.properties"
 
     // A properties file containing default secret values. This file can be checked in version
     // control.
     defaultPropertiesFileName = "secrets.defaults.properties"
-
 }
