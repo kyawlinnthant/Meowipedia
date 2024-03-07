@@ -1,8 +1,12 @@
 package com.everest.network
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import com.everest.util.result.DataResult
 import com.everest.util.result.NetworkError
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
@@ -16,66 +20,93 @@ import java.net.SocketTimeoutException
 
 class SafeApiCallMockTest {
     private val json = mockk<Json>(relaxed = true)
-    private val mockResponse: Response<ServerError> = mockk()
+    private val failResponse: Response<ServerError> = mockk(relaxed = true)
+    private val successResponse = mockk<Response<Boolean>>(relaxed = true)
 
     @Test
-    @DisplayName("Every Throwable returns error message")
-    fun `throw exceptions`() = runTest {
-        val errorMessage = "No user"
-        val errorBody = errorMessage.toResponseBody("text/plain".toMediaTypeOrNull())
+    fun `test safeApiCall with Success Case`() {
+        successResponse.apply {
+            every { code() } returns 200
+            every { body() } returns true
+            every { isSuccessful } returns true
+        }
 
-
-////        fun serverErrorCall() = Response.error<String>(
-////            400,
-////            errorBody
-////        )
-//        every {
-//            safeApiCall(json = json) {
-//                serverErrorCall()
-//                mockResponse
-//            }
-//        }
-//
-//
-//        val output = safeApiCall {
-//            serverErrorCall()
-//        }
-//
-//        val outputError = (output as DataResult.Failed).error
-//        val outputMessage = (outputError as NetworkError.Dynamic).message
-//        assertThat(outputError).isInstanceOf(NetworkError::class)
-//        assertThat(outputMessage).isEqualTo(errorMessage)
+        val result = safeApiCall {
+            successResponse
+        }
+        assertEquals(DataResult.Success(true), result)
     }
 
     @Test
+    @DisplayName("Every 404 Server Fail response decodes error message")
+    fun `404`() = runTest {
+        val errorMessage = "Not Found"
+        val errorBody = "{\"message\": \"$errorMessage\"}"
+            .toResponseBody("application/json".toMediaTypeOrNull())
+        failResponse.apply {
+            every { code() } returns 404
+            every { errorBody() } returns errorBody
+            every { isSuccessful } returns false
+        }
+
+        val result = safeApiCall {
+            failResponse
+        }
+        assertEquals(
+            DataResult.Failed(
+                error = NetworkError.Dynamic(message = errorMessage)
+            ), result
+        )
+    }
+
+
+    @Test
+    @DisplayName("Every Server Fail response decodes error message")
+    fun `4xx 5xx not 404`() = runTest {
+        val errorMessage = "No user"
+        val errorBody = errorMessage.toResponseBody("text/plain".toMediaTypeOrNull())
+        failResponse.apply {
+            every { code() } returns 400
+            every { errorBody() } returns errorBody
+            every { isSuccessful } returns false
+        }
+
+        val result = safeApiCall {
+            failResponse
+        }
+        assertEquals(
+            DataResult.Failed(
+                error = NetworkError.Dynamic(message = errorMessage)
+            ), result
+        )
+    }
+
+
+    @Test
     fun `test safeApiCall with SocketTimeoutException`() {
-        val mockResponse: Response<String> = mockk(relaxed = true)
         coEvery {
             safeApiCall {
-                mockResponse
+                failResponse
             }
         } throws SocketTimeoutException()
         val result = safeApiCall {
-            mockResponse
+            failResponse
         }
 
-        println(">>>> $result")
         assertEquals(DataResult.Failed(NetworkError.NoInternet), result)
     }
 
     @Test
     fun `test safeApiCall with Exception`() {
-        val mockResponse: Response<String> = mockk(relaxed = true)
         coEvery {
             safeApiCall {
-                mockResponse
+                failResponse
             }
         } throws Exception()
         val result = safeApiCall {
-            mockResponse
+            failResponse
         }
 
-        println(">>>> $result")
         assertEquals(DataResult.Failed(NetworkError.SomethingWrong), result)
     }
 
