@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.multidex.BuildConfig
 import androidx.navigation.compose.rememberNavController
 import com.everest.meowipedia.navigation.MeowGraph
 import com.everest.meowipedia.view.MainViewModel

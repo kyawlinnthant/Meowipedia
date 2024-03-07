@@ -56,18 +56,22 @@ network-profiler = { group = "com.localebro", name = "okhttpprofiler", version =
 
 # database
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-room-paging = { module = "androidx.room:room-paging", version.ref = "room"  }
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room"  }
-room-compiler = { module = "androidx.room:room-compiler",  version.ref = "room"  }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 # gradle plugin
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # firebase
-firebase-bom = { module = "com.google.firebase:firebase-bom", version = "32.7.3" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.7.3" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version = "22.3.1" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 
+#play-service
+
+play-service-auth = { module = "com.google.android.gms:play-services-auth", version = "21.0.0" }
 # test
 androidx-runner = { module = "androidx.test:runner", version = "1.5.2" }
 junit = { module = "junit:junit", version = "4.13.2" } # replace with jupiter when we know it
@@ -79,7 +83,7 @@ google-hilt-test = { group = "com.google.dagger", name = "hilt-android-testing",
 jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
 jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
 jupiter-param = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
-assertk = { module = "com.willowtreeapps.assertk:assertk", version = "0.28.0"}
+assertk = { module = "com.willowtreeapps.assertk:assertk", version = "0.28.0" }
 mockk = { module = "io.mockk:mockk", version = "1.13.9" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play-services-auth" }
 
@@ -111,6 +115,9 @@ room = [
     "room-runtime",
     "room-paging"
 ]
+
+secrete-dragle = [
+]
 network = [
     "network-okhttp",
     "network-profiler",
@@ -135,7 +142,8 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 junit5 = { id = "de.mannodermaus.android-junit5", version = "1.10.0.0" }
 google-services = { id = "com.google.gms.google-services", version = "4.4.1" }
-
+app-secrete-gradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version = "unspecified" }
+secrete-gradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version = "2.0.1" }
 # Plugins defined by this project
 everest-android-application = { id = "com.everest.android.application", version = "unspecified" }
 everest-compose-application = { id = "com.everest.compose.application", version = "unspecified" }
