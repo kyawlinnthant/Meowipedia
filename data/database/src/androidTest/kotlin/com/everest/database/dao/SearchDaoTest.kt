@@ -1,6 +1,7 @@
 package com.everest.database.dao
 
 import androidx.test.filters.SmallTest
+import app.cash.turbine.test
 import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.isEmpty
@@ -92,5 +93,50 @@ class SearchDaoTest {
         dao.deleteSearch(query = "everest")
         val actual = dao.getSearchHistories()
         assertThat(actual).isEmpty()
+    }
+
+    @Test
+    @DisplayName("Add new Entity always emit in flow")
+    fun listen() = runTest {
+        val createdAt1 = LocalDateTime(
+            year = 1994,
+            month = Month.JANUARY,
+            dayOfMonth = 24,
+            hour = 10,
+            minute = 10,
+            second = 10
+        )
+
+        val search1 = SearchEntity(
+            query = "everest1",
+            createdAt = createdAt1
+        )
+
+        val createdAt2 = LocalDateTime(
+            year = 1997,
+            month = Month.JANUARY,
+            dayOfMonth = 15,
+            hour = 10,
+            minute = 10,
+            second = 10
+        )
+        val search2 = SearchEntity(
+            query = "everest2",
+            createdAt = createdAt2
+        )
+
+        dao.insertSearch(search1)
+        dao.listenSearchHistories().test {
+            val expected = awaitItem()
+            assertThat(expected).contains(search1)
+        }
+
+        dao.insertSearch(search2)
+        dao.listenSearchHistories().test {
+            val expected = awaitItem()
+            assertThat(expected).contains(search1)
+            assertThat(expected).contains(search2)
+            assertThat(expected.size).isEqualTo(2)
+        }
     }
 }
