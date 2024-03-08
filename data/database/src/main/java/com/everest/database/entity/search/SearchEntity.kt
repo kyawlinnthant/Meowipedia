@@ -17,7 +17,6 @@ data class SearchEntity(
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = Random.nextInt()
-
     companion object {
         const val TABLE_NAME = "search_table"
     }

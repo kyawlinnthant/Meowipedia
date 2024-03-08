@@ -99,7 +99,7 @@ fun MeowGraph(
 
         composable(route = Screens.Meows.route) {
             val vm: MeowsViewModel = hiltViewModel()
-            val galleries = vm.galleries.collectAsLazyPagingItems()
+            val galleries = vm.meows.collectAsLazyPagingItems()
             MeowsScreen(
                 windowSize = window,
                 meows = galleries,
