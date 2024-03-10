@@ -11,6 +11,7 @@ import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.search.SearchEntity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month

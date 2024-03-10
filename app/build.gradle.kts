@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.everest.hilt)
     alias(libs.plugins.google.services)
 
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+//    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {

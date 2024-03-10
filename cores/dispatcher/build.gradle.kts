@@ -4,5 +4,5 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.dispatcher"
+    namespace = libs.versions.cores.dispatchers.get()
 }

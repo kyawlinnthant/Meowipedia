@@ -14,7 +14,7 @@ plugins {
     alias(libs.plugins.google.ksp).apply(false)
     alias(libs.plugins.detekt).apply(false)
     alias(libs.plugins.ktlint).apply(false)
-    alias(libs.plugins.secrete.gradle).apply(false)
+    alias(libs.plugins.secret.gradle).apply(false)
 }
 
 subprojects {
