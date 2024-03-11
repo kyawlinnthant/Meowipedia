@@ -61,7 +61,7 @@ class HomeApiRepositoryImpl @Inject constructor(
     override fun getMeows(): Pager<Int, MeowEntity> {
         val dbSource = { db.meowDao().pagingSource(isForPaging = true) }
         val config = PagingConfig(
-            initialLoadSize = PagingConfig.MAX_SIZE_UNBOUNDED,
+            initialLoadSize = Constant.PAGE_SIZE,
             pageSize = Constant.PAGE_SIZE,
             maxSize = PagingConfig.MAX_SIZE_UNBOUNDED,
             jumpThreshold = 1,

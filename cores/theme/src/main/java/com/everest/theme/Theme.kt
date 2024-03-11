@@ -89,7 +89,7 @@ fun MeowipediaTheme(
         com.everest.type.DayNightTheme.Night -> true
         com.everest.type.DayNightTheme.System -> isSystemInDarkTheme()
     }
-    val colorScheme = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    val meowsColor = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val context = LocalContext.current
         when (appTheme) {
             com.everest.type.DayNightTheme.Day -> dynamicLightColorScheme(context)
@@ -116,8 +116,9 @@ fun MeowipediaTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = NimbleTypo,
+        colorScheme = meowsColor,
+        typography = MeowsTypo,
+        shapes = MeowsShape,
         content = content
     )
 }

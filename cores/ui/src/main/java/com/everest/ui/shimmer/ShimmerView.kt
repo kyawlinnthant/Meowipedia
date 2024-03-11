@@ -1,6 +1,7 @@
 package com.everest.ui.shimmer
 
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -15,14 +16,15 @@ import androidx.compose.ui.graphics.Brush
 fun ShimmerView(
     content: @Composable (brush: Brush) -> Unit
 ) {
+    content(ShimmerBrush())
+}
+
+@Composable
+fun ShimmerBrush() : Brush {
     val shimmerColors = listOf(
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
         MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
     )
     val transition = rememberInfiniteTransition(label = "")
     val translateAnim = transition.animateFloat(
@@ -31,18 +33,16 @@ fun ShimmerView(
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = 1000,
-                easing = FastOutSlowInEasing
+                easing = LinearEasing
             ),
             repeatMode = RepeatMode.Reverse
         ),
         label = ""
     )
-    val brush = Brush.linearGradient(
+    return Brush.linearGradient(
         colors = shimmerColors,
         start = Offset.Zero,
         end = Offset(x = translateAnim.value, y = translateAnim.value)
     )
-
-    content(brush)
 }
 
