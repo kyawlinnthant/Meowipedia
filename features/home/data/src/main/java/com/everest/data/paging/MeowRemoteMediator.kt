@@ -27,9 +27,22 @@ class MeowRemoteMediator @Inject constructor(
         loadType: LoadType,
         state: PagingState<Int, MeowEntity>
     ): MediatorResult {
-        val currentPage = getPage(loadType, state) ?: return MediatorResult.Success(
-            endOfPaginationReached = false
-        )
+
+
+        val currentPage = when (val pageState = getPage(
+            loadType = loadType,
+            state = state
+        )) {
+            is PageState.Append -> pageState.page ?: return MediatorResult.Success(
+                endOfPaginationReached = false
+            )
+
+            is PageState.Prepend -> pageState.page ?: return MediatorResult.Success(
+                endOfPaginationReached = true
+            )
+
+            is PageState.Refresh -> pageState.page
+        }
 
         return try {
             val response = api.meows(page = currentPage, limit = state.config.pageSize)
@@ -76,24 +89,27 @@ class MeowRemoteMediator @Inject constructor(
     private suspend fun getPage(
         loadType: LoadType,
         state: PagingState<Int, MeowEntity>
-    ): Int? {
+    ): PageState {
         return when (loadType) {
             // loading
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.currentPage ?: Constant.START_PAGE
+                val page = remoteKeys?.currentPage ?: Constant.START_PAGE
+                PageState.Refresh(page)
             }
 
             // has data, load more
             LoadType.APPEND -> {
                 val remoteKeys = getLastRemoteKey(state)
-                remoteKeys?.nextPage
+                val page = remoteKeys?.nextPage
+                PageState.Append(page)
             }
 
             // has data, load previous
             LoadType.PREPEND -> {
                 val remoteKeys = getFirstRemoteKey(state)
-                remoteKeys?.prevPage
+                val page = remoteKeys?.prevPage
+                PageState.Prepend(page)
             }
         }
     }

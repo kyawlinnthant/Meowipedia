@@ -1,4 +1,4 @@
-package com.everest.presentation
+package com.everest.domain.usecase
 
 import com.everest.domain.usecase.ListenDynamicStatus
 import com.everest.domain.usecase.ListenThemeStatus

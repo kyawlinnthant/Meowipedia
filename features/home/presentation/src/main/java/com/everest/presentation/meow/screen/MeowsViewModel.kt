@@ -6,6 +6,7 @@ import androidx.paging.cachedIn
 import com.everest.domain.usecase.GetMeows
 import com.everest.navigation.navigator.AppNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,7 +14,9 @@ class MeowsViewModel @Inject constructor(
     getMeows: GetMeows,
     private val appNavigator: AppNavigator
 ) : ViewModel() {
-    val galleries = getMeows().cachedIn(viewModelScope)
+    val meows = getMeows()
+        .distinctUntilChanged()
+        .cachedIn(viewModelScope)
 
     fun onAction(action: MeowsAction) {
         when (action) {

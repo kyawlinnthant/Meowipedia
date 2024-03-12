@@ -43,7 +43,7 @@ fun MeowsCompactLoading(
         LazyColumn(
             modifier = modifier.fillMaxSize(),
             state = rememberLazyListState(),
-            verticalArrangement = Arrangement.spacedBy(1.dp)
+//            verticalArrangement = Arrangement.spacedBy(1.dp)
         ) {
             items(
                 items = items,

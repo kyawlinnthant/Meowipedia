@@ -14,10 +14,11 @@ import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall
 import com.everest.util.constant.Constant
 import com.everest.util.result.DataResult
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
 class HomeApiRepositoryImpl @Inject constructor(
     private val api: HomeApi,
@@ -30,12 +31,12 @@ class HomeApiRepositoryImpl @Inject constructor(
     override fun getBreeds(): Pager<Int, BreedEntity> {
         val dbSource = { db.breedDao().pagingSource(isForPaging = true) }
         val config = PagingConfig(
-            initialLoadSize = Constant.INITIAL_LOAD_SIZE,
+            initialLoadSize = PagingConfig.MAX_SIZE_UNBOUNDED,
             pageSize = Constant.PAGE_SIZE,
-            maxSize = Constant.MAX_LOAD_SIZE,
+            maxSize = PagingConfig.MAX_SIZE_UNBOUNDED,
             jumpThreshold = 1,
             enablePlaceholders = true,
-            prefetchDistance = Constant.PREFETCH_DISTANCE
+            prefetchDistance = Constant.PAGE_SIZE.div(2)
         )
         val remoteMediator = BreedRemoteMediator(
             api = api,
@@ -59,14 +60,14 @@ class HomeApiRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMeows(): Pager<Int, MeowEntity> {
-        val dbSource = { db.meowDao().pagingSource(isForPaging = true) }
+        val dbSource = { db.meowDao().getPagingSource(isForPaging = true) }
         val config = PagingConfig(
-            initialLoadSize = Constant.INITIAL_LOAD_SIZE,
+            initialLoadSize = Constant.PAGE_SIZE,
             pageSize = Constant.PAGE_SIZE,
-            maxSize = Constant.MAX_LOAD_SIZE,
+            maxSize = PagingConfig.MAX_SIZE_UNBOUNDED,
             jumpThreshold = 1,
             enablePlaceholders = true,
-            prefetchDistance = Constant.PREFETCH_DISTANCE
+            prefetchDistance = Constant.PAGE_SIZE.div(2)
         )
         val remoteMediator = MeowRemoteMediator(
             api = api,

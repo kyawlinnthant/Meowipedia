@@ -18,6 +18,7 @@ class TestUnitPlugin : Plugin<Project> {
             val jupiterParams = libs.findLibrary("jupiter-param").get()
             val assertk = libs.findLibrary("assertk").get()
             val mockk = libs.findLibrary("mockk").get()
+            val turbine = libs.findLibrary("turbine").get()
 
             dependencies {
                 add("testImplementation", mockWebServer)
@@ -28,6 +29,7 @@ class TestUnitPlugin : Plugin<Project> {
                 add("testImplementation", jupiterParams)
                 add("testImplementation", assertk)
                 add("testImplementation", mockk)
+                add("testImplementation", turbine)
             }
         }
     }
