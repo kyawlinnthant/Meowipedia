@@ -15,6 +15,7 @@ import com.everest.network.safeApiCall
 import com.everest.util.constant.Constant
 import com.everest.util.result.DataResult
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -59,7 +60,7 @@ class HomeApiRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMeows(): Pager<Int, MeowEntity> {
-        val dbSource = { db.meowDao().pagingSource(isForPaging = true) }
+        val dbSource = { db.meowDao().getPagingSource(isForPaging = true) }
         val config = PagingConfig(
             initialLoadSize = PagingConfig.MAX_SIZE_UNBOUNDED,
             pageSize = Constant.PAGE_SIZE,

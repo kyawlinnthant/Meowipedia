@@ -33,17 +33,17 @@ subprojects {
         config.setFrom(file("${rootProject.rootDir}/config/detekt/detekt.yml"))
     }
 }
-
-val credentialDp = loadCredentialData()
-
-extra.apply {
-    set("baseURL", credentialDp.getProperty("BASE_URL"))
-    set("apiKey", credentialDp.getProperty("API_KEY"))
-}
-
-fun loadCredentialData(): Properties {
-    val keysFile = file("credentials.properties")
-    val keysProperties = Properties()
-    keysProperties.load(FileInputStream(keysFile))
-    return keysProperties
-}
+//
+//val credentialDp = loadCredentialData()
+//
+//extra.apply {
+//    set("baseURL", credentialDp.getProperty("BASE_URL"))
+//    set("apiKey", credentialDp.getProperty("API_KEY"))
+//}
+//
+//fun loadCredentialData(): Properties {
+//    val keysFile = file("credentials.properties")
+//    val keysProperties = Properties()
+//    keysProperties.load(FileInputStream(keysFile))
+//    return keysProperties
+//}
