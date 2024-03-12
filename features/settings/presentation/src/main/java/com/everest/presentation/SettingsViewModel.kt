@@ -2,6 +2,7 @@ package com.everest.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.everest.domain.usecase.SettingsViewModelUseCase
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.presentation.state.SettingsViewModelState
 import com.everest.type.DayNightTheme

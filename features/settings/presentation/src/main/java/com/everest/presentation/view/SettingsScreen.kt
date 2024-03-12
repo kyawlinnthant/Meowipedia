@@ -2,8 +2,6 @@ package com.everest.presentation.view
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -12,7 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.everest.presentation.SettingsAction
+import com.everest.presentation.item.DynamicSectionItem
+import com.everest.presentation.item.ThemeSectionItem
+import com.everest.settings.presentation.R
 import com.everest.type.DayNightTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,10 +29,10 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Setting") },
+                title = { Text(text = stringResource(id = R.string.settings)) },
                 navigationIcon = {
                     IconButton(onClick = { onAction(SettingsAction.OnBackPress) }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Icon(painter = painterResource(id = R.drawable.baseline_keyboard_arrow_left_24), contentDescription = "Back")
                     }
                 }
             )
@@ -37,32 +40,13 @@ fun SettingsScreen(
     ) {
         LazyColumn(modifier = Modifier.padding(it)) {
             item {
-                ThemeSection(
-                    text = "Light Mode",
-                    type = DayNightTheme.Day,
-                    selected = theme,
-                    onUpdate = { theme -> onAction(SettingsAction.UpdateTheme(theme)) }
-                )
-            }
-            item {
-                ThemeSection(
-                    text = "Dark Mode",
-                    type = DayNightTheme.Night,
-                    selected = theme,
-                    onUpdate = { theme -> onAction(SettingsAction.UpdateTheme(theme)) }
-                )
-            }
-            item {
-                ThemeSection(
-                    text = "System Default",
-                    type = DayNightTheme.System,
-                    selected = theme,
-                    onUpdate = { theme -> onAction(SettingsAction.UpdateTheme(theme)) }
-                )
+                ThemeSectionItem(selected = theme, onUpdate = {
+                    onAction(SettingsAction.UpdateTheme(it))
+                })
             }
             if (isSupportDynamic) {
                 item {
-                    DynamicSection(
+                    DynamicSectionItem(
                         enabled = dynamicEnabled,
                         onUpdate = { enabled ->
                             onAction(SettingsAction.UpdateDynamic(enabled))
