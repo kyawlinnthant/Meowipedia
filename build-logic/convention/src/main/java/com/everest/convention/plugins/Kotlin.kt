@@ -27,6 +27,13 @@ internal fun Project.configureKotlin(
         kotlinOptions {
             jvmTarget = AppConfig.JAVA_VERSION.toString()
         }
+        packaging {
+            resources {
+                excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                excludes.add("META-INF/LICENSE.md")
+                excludes.add("META-INF/LICENSE-notice.md")
+            }
+        }
         val json = libs.findLibrary("serialization-json").get()
         val dateTime = libs.findLibrary("date-time").get()
 

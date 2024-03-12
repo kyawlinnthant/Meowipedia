@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
@@ -27,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -66,6 +68,7 @@ fun MeowsScreen(
     }
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             AnimatedVisibility(
                 visible = !isScrolling,
@@ -85,75 +88,80 @@ fun MeowsScreen(
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
-//                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Settings.route)) },
-                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Login.route)) },
+                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Settings.route)) },
+//                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Login.route)) },
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
+                                .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.2f))
                         ) {
                             Icon(Icons.Filled.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                         }
                     },
-                    containerColor = BottomAppBarDefaults.containerColor.copy(alpha = 0f)
+                    containerColor = Color.Transparent,
+                    contentColor = Color.Transparent
                 )
             }
         }
     ) {
         meows.apply {
-            when {
-                loadState.refresh is LoadState.Loading && this.itemCount == 0 -> {
-                    when (windowSize.width) {
-                        WindowType.Compact -> MeowsCompactLoading()
-                        WindowType.Medium -> MeowsMediumLoading()
-                        WindowType.Expanded -> MeowsExpandedLoading()
-                    }
+
+            if (
+                loadState.refresh is LoadState.Loading
+                && loadState.source.refresh is LoadState.Loading
+                && loadState.mediator?.refresh is LoadState.Loading
+                && this.itemCount == 0
+            ) {
+                when (windowSize.width) {
+                    WindowType.Compact -> MeowsCompactLoading()
+                    WindowType.Medium -> MeowsMediumLoading()
+                    WindowType.Expanded -> MeowsExpandedLoading()
                 }
+                return@apply
+            }
 
-                loadState.refresh is LoadState.Error && this.itemCount == 0 -> {
-                    val throwable = (loadState.refresh as LoadState.Error).error
-                    val errorType = throwable.toErrorType()
+            if (
+                loadState.refresh is LoadState.Error
+                && loadState.mediator?.refresh is LoadState.Error
+                && this.itemCount == 0
+            ) {
+                val throwable = (loadState.refresh as LoadState.Error).error
+                val errorType = throwable.toErrorType()
 
-                    FullScreenErrorView(type = errorType) {
-                        retry()
-                    }
+                FullScreenErrorView(type = errorType) {
+                    this.retry()
                 }
+                return@apply
+            }
 
-                else -> {
-                    when (windowSize.width) {
-                        WindowType.Compact -> MeowsCompactList(
-                            meows = this.itemSnapshotList.items,
-                            isLoading = loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0,
-                            isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
-                            isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
-                            error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
-                            listState = lazyListState,
-                            onRetry = { retry() },
-                            onItemClick = {}
-                        )
+            when (windowSize.width) {
+                WindowType.Compact -> MeowsCompactList(
+                    meows = this,
+                    listState = lazyListState,
+                    onRetry = { retry() },
+                    onItemClick = {}
+                )
 
-                        WindowType.Medium -> MeowsMediumList(
-                            meows = this.itemSnapshotList.items,
-                            isLoading = loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0,
-                            isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
-                            isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
-                            error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
-                            listState = lazyStaggeredGridState,
-                            onRetry = { retry() },
-                            onItemClick = {}
-                        )
+                WindowType.Medium -> MeowsMediumList(
+                    meows = this.itemSnapshotList.items,
+                    isLoading = loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0,
+                    isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
+                    isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
+                    error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
+                    listState = lazyStaggeredGridState,
+                    onRetry = { retry() },
+                    onItemClick = {}
+                )
 
-                        WindowType.Expanded -> MeowsExpandedList(
-                            meows = this.itemSnapshotList.items,
-                            isLoading = loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0,
-                            isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
-                            isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
-                            error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
-                            listState = lazyStaggeredGridState,
-                            onRetry = { retry() },
-                            onItemClick = {}
-                        )
-                    }
-                }
+                WindowType.Expanded -> MeowsExpandedList(
+                    meows = this.itemSnapshotList.items,
+                    isLoading = loadState.mediator?.refresh is LoadState.Loading && this@apply.itemCount != 0,
+                    isError = loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0,
+                    isEnd = loadState.append.endOfPaginationReached && this@apply.itemCount != 0,
+                    error = if (loadState.mediator?.refresh is LoadState.Error && this@apply.itemCount != 0) (loadState.mediator?.refresh as LoadState.Error).error.toErrorType() else NetworkError.SomethingWrong,
+                    listState = lazyStaggeredGridState,
+                    onRetry = { retry() },
+                    onItemClick = {}
+                )
             }
         }
     }
