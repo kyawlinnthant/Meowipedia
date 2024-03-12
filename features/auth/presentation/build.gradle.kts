@@ -8,5 +8,9 @@ android {
     namespace = "com.everest.auth.presentation"
 }
 dependencies {
-    implementation(project(":features:auth:domain"))
+    implementation(projects.features.auth.domain)
+    implementation(projects.cores.navigation)
+    implementation(projects.cores.ui)
+    implementation(projects.cores.util)
+    implementation(projects.cores.theme)
 }

@@ -6,5 +6,7 @@ android {
     namespace = "com.everest.ui"
 }
 dependencies {
-    implementation(project(":cores:util"))
+    implementation(projects.cores.util)
+    implementation(projects.cores.theme)
+    implementation(projects.cores.model)
 }

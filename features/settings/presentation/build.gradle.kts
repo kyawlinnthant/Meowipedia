@@ -8,9 +8,10 @@ android {
     namespace = "com.everest.settings.presentation"
 }
 dependencies {
-    api(project(":features:settings:domain"))
-    implementation(project(":cores:util"))
-    implementation(project(":cores:ui"))
-    api(project(":cores:theme"))
-    api(project(":cores:navigation"))
+    implementation(projects.features.settings.domain)
+    implementation(projects.cores.util)
+    implementation(projects.cores.model)
+    implementation(projects.cores.ui)
+    implementation(projects.cores.theme)
+    implementation(projects.cores.navigation)
 }

@@ -12,7 +12,10 @@ java {
 dependencies {
     compileOnly(libs.android.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
+
+    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 }
+
 gradlePlugin {
     plugins {
         register("android.application") {

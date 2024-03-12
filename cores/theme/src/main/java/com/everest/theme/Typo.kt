@@ -18,7 +18,7 @@ val fonts = FontFamily(
     Font(R.font.google_sans_medium_italic, weight = FontWeight.Medium)
 )
 
-val NimbleTypo = Typography(
+val MeowsTypo = Typography(
     displayLarge = TextStyle(
         fontFamily = fonts,
         lineHeight = 64.sp,

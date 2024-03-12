@@ -1,5 +1,5 @@
 @file:Suppress("UnstableApiUsage")
-
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
         includeBuild("build-logic")
@@ -18,6 +18,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "Meowipedia"
 include(":app")
+
+include(":cores:file-utils")
+
 include(
     ":cores:theme",
     ":cores:navigation",

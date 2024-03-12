@@ -6,5 +6,5 @@ android {
     namespace = "com.everest.theme"
 }
 dependencies {
-    implementation(project(":data:datastore"))
+    implementation(project(":cores:model"))
 }

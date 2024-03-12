@@ -9,5 +9,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":features:upload:data"))
+    implementation(projects.features.upload.data)
+    implementation(projects.cores.util)
 }

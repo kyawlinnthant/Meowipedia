@@ -1,0 +1,21 @@
+package com.everest.domain.usecase
+
+import com.everest.data.repo.AuthRepo
+import com.everest.domain.model.SignInResult
+import com.everest.domain.model.UserData
+import com.everest.util.result.DataResult
+import javax.inject.Inject
+
+class SignIn @Inject constructor(private val signInRepo: AuthRepo) {
+    suspend operator fun invoke(email: String, password: String): DataResult<SignInResult> {
+        val result = signInRepo.signIn(email = email, password = password)
+        return DataResult.Success(
+            SignInResult(
+                data = UserData(
+                    "1", "Testing", "ERROR"
+                ),
+                errorMessage = null
+            ),
+        )
+    }
+}

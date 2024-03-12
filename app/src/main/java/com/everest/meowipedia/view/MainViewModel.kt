@@ -2,10 +2,10 @@ package com.everest.meowipedia.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.everest.datastore.DayNightTheme
 import com.everest.domain.usecase.ListenDynamicStatus
 import com.everest.domain.usecase.ListenThemeStatus
 import com.everest.navigation.navigator.AppNavigator
+import com.everest.type.DayNightTheme
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

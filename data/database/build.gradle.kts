@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.everest.android.library)
     alias(libs.plugins.everest.database)
     alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.junit5)
+    alias(libs.plugins.everest.unit.test)
+    alias(libs.plugins.everest.android.test)
 }
 
 android {
@@ -10,9 +13,8 @@ android {
         testInstrumentationRunner = "com.everest.database.DatabaseTestRunner"
     }
 }
+
+
 dependencies {
-    implementation(libs.date.time)
-    implementation(libs.androidx.runner)
-    androidTestImplementation(libs.coroutines.test)
-    androidTestImplementation(libs.truth)
+    implementation(projects.cores.testRule)
 }

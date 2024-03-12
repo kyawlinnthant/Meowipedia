@@ -1,6 +1,6 @@
 package com.everest.meowipedia.view
 
-import com.everest.datastore.DayNightTheme
+import com.everest.type.DayNightTheme
 
 data class MainViewModelState(
     val theme: DayNightTheme = DayNightTheme.System,

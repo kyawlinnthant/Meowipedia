@@ -10,19 +10,23 @@ import com.everest.convention.plugins.configureKotlin
 
 class AndroidApplicationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val androidApplication = "com.android.application"
-        val androidKotlin = "org.jetbrains.kotlin.android"
 
         with(target) {
+            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+            val app = libs.findPlugin("android-application").get().get().pluginId
+            val kotlin = libs.findPlugin("kotlin-android").get().get().pluginId
+            val serialization = libs.findPlugin("kotlin-serialization").get().get().pluginId
+            val secret = libs.findPlugin("secret-gradle").get().get().pluginId
             with(pluginManager) {
-                apply(androidApplication)
-                apply(androidKotlin)
+                apply(app)
+                apply(kotlin)
+                apply(serialization)
+                apply(secret)
             }
             extensions.configure<ApplicationExtension> {
                 configureKotlin(this)
                 defaultConfig.targetSdk = AppConfig.TARGET_SDK
             }
-            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val cores = libs.findBundle("androidx-cores").get()
             dependencies {
                 add("implementation",cores)

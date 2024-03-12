@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.everest.android.application)
     alias(libs.plugins.everest.compose.application)
     alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.google.services)
+    id("de.mannodermaus.android-junit5") version "1.10.0.0"
+//    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -26,7 +29,16 @@ android {
     }
 }
 dependencies {
-    implementation(project(":cores:navigation"))
-    implementation(project(":features:settings:presentation"))
-    api(project(":features:home:presentation"))
+    implementation(projects.features.auth.presentation)
+    implementation(projects.features.home.presentation)
+    implementation(projects.features.settings.presentation)
+    implementation(projects.features.upload.presentation)
+    implementation(projects.features.settings.domain)
+    implementation(projects.cores.navigation)
+    implementation(projects.cores.fileUtils)
+    implementation(projects.cores.model)
+    implementation(projects.cores.theme)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 }

@@ -6,18 +6,12 @@ import org.gradle.kotlin.dsl.getByType
 
 class NetworkPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val serialization = "org.jetbrains.kotlin.plugin.serialization"
 
         with(target) {
-            with(pluginManager) {
-                apply(serialization)
-            }
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val network = libs.findBundle("network").get()
-            val serializedJson = libs.findLibrary("serialization-json").get()
             dependencies {
                 add("api", network)
-                add("api", serializedJson)
             }
         }
     }

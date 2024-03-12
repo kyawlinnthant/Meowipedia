@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="no_internet">No Internet</string>
-    <string name="something_wrong">Something\'s wrong</string>
+    <string name="no_internet">No Internet! Please connect wifi or mobile data!</string>
+    <string name="something_wrong">Something\'s wrong! Please Try Again!</string>
+    <string name="retry">Retry</string>
 </resources>

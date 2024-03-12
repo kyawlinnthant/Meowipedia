@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.everest.network)
     alias(libs.plugins.everest.hilt)
     alias(libs.plugins.everest.unit.test)
+    alias(libs.plugins.junit5)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -11,18 +13,19 @@ android {
     buildFeatures {
         buildConfig = true
     }
-
-    buildTypes {
-        debug {
-            buildConfigField("String", "API_KEY", "\"${rootProject.extra["apiKey"]}\"")
-            buildConfigField("String", "BASE_URL", "\"${rootProject.extra["baseURL"]}\"")
-        }
-        release {
-            buildConfigField("String", "API_KEY", "\"${rootProject.extra["apiKey"]}\"")
-            buildConfigField("String", "BASE_URL", "\"${rootProject.extra["baseURL"]}\"")
-        }
-    }
 }
 dependencies {
-    implementation(project(":cores:util"))
+    implementation(projects.cores.util)
 }
+
+secrets {
+    // Change the properties file from the default "local.properties" in your root project
+    // to another properties file in your root project.
+    propertiesFileName = "credentials.properties"
+
+    // A properties file containing default secret values. This file can be checked in version
+    // control.
+    defaultPropertiesFileName = "secrets.defaults.properties"
+    ignoreList.add("keyToIgnore")
+}
+

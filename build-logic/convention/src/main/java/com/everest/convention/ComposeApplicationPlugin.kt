@@ -9,16 +9,16 @@ import org.gradle.kotlin.dsl.getByType
 
 class ComposeApplicationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val androidApplication = "com.android.application"
 
         with(target) {
+            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+            val app = libs.findPlugin("android-application").get().get().pluginId
             with(pluginManager) {
-                apply(androidApplication)
+                apply(app)
             }
             extensions.configure<ApplicationExtension> {
                 configureCompose(this)
             }
-            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val ui = libs.findBundle("androidx-compose").get()
             val debug = libs.findBundle("androidx-compose-debug").get()
             dependencies {

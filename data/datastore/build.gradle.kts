@@ -11,9 +11,7 @@ android {
     }
 }
 dependencies {
-    implementation(project(":cores:dispatcher"))
-    implementation(project(":cores:test-rule"))
-    implementation(libs.androidx.runner)
-    androidTestImplementation(libs.coroutines.test)
-    androidTestImplementation(libs.truth)
+    implementation(projects.cores.dispatcher)
+    implementation(projects.cores.testRule)
+    implementation(projects.cores.model)
 }

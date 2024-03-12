@@ -23,6 +23,7 @@ class HomeApiTest {
         ignoreUnknownKeys = true
         encodeDefaults = true
     }
+
     private val factory = json.asConverterFactory("application/json".toMediaType())
 
     @Before
@@ -51,7 +52,7 @@ class HomeApiTest {
     fun `fetch categories with limit 2 success 2xx`() = runTest {
         val limit = 2
         enqueueResponse("success_2_data_response.json")
-        val response = service.categories(limit = limit)
+        val response = service.breeds(limit = limit)
         val request = mockWebServer.takeRequest()
         // is correct request
         Truth.assertThat(request.method).isEqualTo("GET")
@@ -65,7 +66,7 @@ class HomeApiTest {
     fun `fetch categories with limit 20 success 2xx`() = runTest {
         val limit = 20
         enqueueResponse("success_20_data_response.json")
-        val response = service.categories(limit = limit)
+        val response = service.breeds(limit = limit)
         val request = mockWebServer.takeRequest()
         // is correct request
         Truth.assertThat(request.method).isEqualTo("GET")
@@ -78,7 +79,7 @@ class HomeApiTest {
     @Test(expected = Exception::class)
     fun `malformed json throws exception`() = runTest {
         enqueueResponse("malformed.json")
-        service.categories()
+        service.breeds()
     }
 
 }

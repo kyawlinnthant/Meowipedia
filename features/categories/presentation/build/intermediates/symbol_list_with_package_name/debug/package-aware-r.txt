@@ -1,0 +1,5 @@
+com.everest.categories.presentation
+drawable baseline_ac_unit_24
+drawable baseline_arrow_back_24
+drawable baseline_search_24
+string categories

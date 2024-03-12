@@ -1,9 +1,11 @@
 plugins {
-    id("kotlin")
+    alias(libs.plugins.everest.android.library)
+}
+android {
+    namespace = "com.everest.testrule"
 }
 
-group = "com.everest.testrule"
 dependencies {
-    api(libs.coroutines.test)
-    api(libs.junit)
+    implementation(libs.coroutines.test)
+    implementation(libs.junit)
 }

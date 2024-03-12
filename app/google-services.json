@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "833211145593",
+    "project_id": "meowipedia-24e8b",
+    "storage_bucket": "meowipedia-24e8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833211145593:android:202ffe838208933b3763a8",
+        "android_client_info": {
+          "package_name": "com.everest.meowipedia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVyC6DORKA5nyHA7BP3_cVUi6pXsc1du0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

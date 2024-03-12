@@ -9,5 +9,8 @@ android {
 }
 
 dependencies {
+    api(projects.data.datastore)
+    api(projects.cores.model)
     api(project(":data:datastore"))
+    api(project(":cores:model"))
 }

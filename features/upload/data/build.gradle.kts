@@ -7,3 +7,9 @@ plugins {
 android {
     namespace = "com.everest.upload.data"
 }
+
+dependencies {
+    api(projects.data.network)
+    implementation(projects.cores.util)
+    implementation(projects.cores.dispatcher)
+}

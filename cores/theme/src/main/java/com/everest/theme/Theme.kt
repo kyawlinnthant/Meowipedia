@@ -13,7 +13,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.everest.datastore.DayNightTheme
 
 private val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -81,27 +80,27 @@ private val darkColors = darkColorScheme(
 
 @Composable
 fun MeowipediaTheme(
-    appTheme: DayNightTheme,
+    appTheme: com.everest.type.DayNightTheme,
     dynamicColor: Boolean,
     content: @Composable () -> Unit
 ) {
     val supportDark = when (appTheme) {
-        DayNightTheme.Day -> false
-        DayNightTheme.Night -> true
-        DayNightTheme.System -> isSystemInDarkTheme()
+        com.everest.type.DayNightTheme.Day -> false
+        com.everest.type.DayNightTheme.Night -> true
+        com.everest.type.DayNightTheme.System -> isSystemInDarkTheme()
     }
-    val colorScheme = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    val meowsColor = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val context = LocalContext.current
         when (appTheme) {
-            DayNightTheme.Day -> dynamicLightColorScheme(context)
-            DayNightTheme.Night -> dynamicDarkColorScheme(context)
-            DayNightTheme.System -> if (isSystemInDarkTheme()) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            com.everest.type.DayNightTheme.Day -> dynamicLightColorScheme(context)
+            com.everest.type.DayNightTheme.Night -> dynamicDarkColorScheme(context)
+            com.everest.type.DayNightTheme.System -> if (isSystemInDarkTheme()) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
     } else {
         when (appTheme) {
-            DayNightTheme.Day -> lightColors
-            DayNightTheme.Night -> darkColors
-            DayNightTheme.System -> if (isSystemInDarkTheme()) darkColors else lightColors
+            com.everest.type.DayNightTheme.Day -> lightColors
+            com.everest.type.DayNightTheme.Night -> darkColors
+            com.everest.type.DayNightTheme.System -> if (isSystemInDarkTheme()) darkColors else lightColors
         }
     }
     val view = LocalView.current
@@ -117,8 +116,9 @@ fun MeowipediaTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = NimbleTypo,
+        colorScheme = meowsColor,
+        typography = MeowsTypo,
+        shapes = MeowsShape,
         content = content
     )
 }
