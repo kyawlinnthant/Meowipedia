@@ -1,5 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
@@ -35,16 +33,3 @@ subprojects {
     }
 }
 
-val credentialDp = loadCredentialData()
-
-extra.apply {
-    set("baseURL", credentialDp.getProperty("BASE_URL"))
-    set("apiKey", credentialDp.getProperty("API_KEY"))
-}
-
-fun loadCredentialData(): Properties {
-    val keysFile = file("credentials.properties")
-    val keysProperties = Properties()
-    keysProperties.load(FileInputStream(keysFile))
-    return keysProperties
-}

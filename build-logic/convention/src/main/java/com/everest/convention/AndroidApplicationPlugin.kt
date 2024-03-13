@@ -16,12 +16,10 @@ class AndroidApplicationPlugin : Plugin<Project> {
             val app = libs.findPlugin("android-application").get().get().pluginId
             val kotlin = libs.findPlugin("kotlin-android").get().get().pluginId
             val serialization = libs.findPlugin("kotlin-serialization").get().get().pluginId
-            val secret = libs.findPlugin("secret-gradle").get().get().pluginId
             with(pluginManager) {
                 apply(app)
                 apply(kotlin)
                 apply(serialization)
-                apply(secret)
             }
             extensions.configure<ApplicationExtension> {
                 configureKotlin(this)
