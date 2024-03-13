@@ -23,7 +23,8 @@ fun DynamicSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "App color with wallpaper", modifier = modifier
+            text = "App color with wallpaper",
+            modifier = modifier
                 .weight(1f)
                 .padding(start = 16.dp)
         )

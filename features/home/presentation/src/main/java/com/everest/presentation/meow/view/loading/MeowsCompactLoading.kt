@@ -25,7 +25,6 @@ import com.everest.ui.shimmer.ShimmerView
 fun MeowsCompactLoading(
     modifier: Modifier = Modifier
 ) {
-
     val items = listOf(
         2160f / 1284f,
         973f / 973f,
@@ -35,7 +34,7 @@ fun MeowsCompactLoading(
         973f / 973f,
         1024f / 817f,
         900f / 1137f,
-        1024f / 768f,
+        1024f / 768f
     )
 
     ShimmerView { brush ->
@@ -56,8 +55,8 @@ fun MeowsCompactLoading(
                             ratio = it,
                             matchHeightConstraintsFirst = true
                         )
-                        .background(brush = brush),
-                    )
+                        .background(brush = brush)
+                )
             }
 
             item {
@@ -69,7 +68,6 @@ fun MeowsCompactLoading(
             }
         }
     }
-
 }
 
 @Composable
@@ -81,4 +79,3 @@ private fun Preview() {
         }
     }
 }
-

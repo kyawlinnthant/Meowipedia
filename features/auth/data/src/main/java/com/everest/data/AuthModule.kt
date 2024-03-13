@@ -15,5 +15,3 @@ interface AuthModule {
     @Singleton
     fun provideSignInRepoImpl(repo: AuthRepoImpl): AuthRepo
 }
-
-

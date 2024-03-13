@@ -2,9 +2,7 @@ plugins {
     alias(libs.plugins.everest.android.application)
     alias(libs.plugins.everest.compose.application)
     alias(libs.plugins.everest.hilt)
-    alias(libs.plugins.google.services)
-
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.everest.firebase)
 }
 
 android {
@@ -42,7 +40,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
 }
-
 
 secrets {
     // Change the properties file from the default "local.properties" in your root project

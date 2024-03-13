@@ -15,11 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.everest.domain.model.meow.MeowVo
+import com.everest.presentation.meow.item.MeowItem
+import com.everest.theme.dimen
 import com.everest.ui.item.EndItem
 import com.everest.ui.item.ErrorItem
 import com.everest.ui.item.LoadingItem
-import com.everest.presentation.meow.item.MeowItem
-import com.everest.theme.dimen
 import com.everest.ui.text.asErrorMessage
 import com.everest.util.result.NetworkError
 
@@ -35,7 +35,6 @@ fun MeowsExpandedList(
     onRetry: () -> Unit,
     onItemClick: (MeowVo) -> Unit
 ) {
-
     val errorMessage = asErrorMessage(error = error)
 
     LazyVerticalStaggeredGrid(
@@ -45,14 +44,13 @@ fun MeowsExpandedList(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimen.small),
         state = listState
     ) {
-
         items(
             items = meows,
             key = { it.id }
-        ){
+        ) {
             MeowItem(
                 meowVo = it
-            ){
+            ) {
                 onItemClick(it)
             }
         }
@@ -86,5 +84,4 @@ fun MeowsExpandedList(
             )
         }
     }
-
 }

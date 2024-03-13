@@ -2,21 +2,19 @@ package com.everest.network
 
 import com.everest.util.result.DataResult
 import com.everest.util.result.NetworkError
+import java.net.SocketTimeoutException
 import kotlinx.serialization.json.Json
 import retrofit2.Response
-import java.net.SocketTimeoutException
-
 
 inline fun <reified T> safeApiCall(
     json: Json = Json { ignoreUnknownKeys = true },
-    apiCall: () -> Response<T>,
+    apiCall: () -> Response<T>
 ): DataResult<T> {
     return try {
         val response = apiCall()
 
         // 2x
         if (response.isSuccessful) {
-
             val body = response.body()
             DataResult.Success(data = body!!)
         } else {

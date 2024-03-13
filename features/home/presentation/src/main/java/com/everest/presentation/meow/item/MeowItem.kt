@@ -37,7 +37,6 @@ fun MeowItem(
         contentAlignment = Alignment.BottomCenter
 
     ) {
-
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(meowVo.photo)
@@ -47,10 +46,10 @@ fun MeowItem(
             contentScale = ContentScale.Crop,
             modifier = modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
 
-            )
+        )
 
-        Image(painter = painterResource(id = R.drawable.baseline_image_24), contentDescription = null, contentScale = ContentScale.Inside )
+        Image(painter = painterResource(id = R.drawable.baseline_image_24), contentDescription = null, contentScale = ContentScale.Inside)
     }
 }

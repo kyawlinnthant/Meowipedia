@@ -21,7 +21,6 @@ import com.everest.ui.item.EndItem
 import com.everest.ui.item.ErrorItem
 import com.everest.ui.item.LoadingItem
 import com.everest.ui.text.asErrorMessage
-import com.everest.util.result.NetworkError
 import com.everest.util.result.toErrorType
 
 @Composable
@@ -34,7 +33,6 @@ fun MeowsCompactList(
     onItemClick: (MeowVo) -> Unit
 ) {
     meows.apply {
-
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
@@ -83,5 +81,4 @@ fun MeowsCompactList(
             }
         }
     }
-
 }

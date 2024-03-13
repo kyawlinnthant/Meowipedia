@@ -6,5 +6,5 @@ android {
     namespace = "com.everest.theme"
 }
 dependencies {
-    implementation(project(":cores:model"))
+    implementation(projects.cores.model)
 }

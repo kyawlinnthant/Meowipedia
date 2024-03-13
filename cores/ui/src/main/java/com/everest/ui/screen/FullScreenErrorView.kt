@@ -41,7 +41,6 @@ fun FullScreenErrorView(
     type: NetworkError,
     onRetry: () -> Unit
 ) {
-
     val description = when (type) {
         is NetworkError.Dynamic -> type.message
         NetworkError.NoInternet -> stringResource(id = R.string.no_internet)
@@ -63,7 +62,8 @@ fun FullScreenErrorView(
                 easing = LinearEasing
             ),
             repeatMode = RepeatMode.Reverse
-        ), label = "repeat"
+        ),
+        label = "repeat"
     )
     Column(
         modifier = modifier.fillMaxSize(),
@@ -78,7 +78,7 @@ fun FullScreenErrorView(
                 .graphicsLayer(
                     transformOrigin = TransformOrigin(
                         pivotFractionX = 0.5f,
-                        pivotFractionY = 0.0f,
+                        pivotFractionY = 0.0f
                     ),
                     rotationZ = value
                 )
@@ -98,7 +98,6 @@ private fun Preview() {
     MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
         Surface {
             FullScreenErrorView(type = NetworkError.NoInternet) {
-
             }
         }
     }

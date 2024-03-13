@@ -52,16 +52,19 @@ fun MeowsScreen(
     meows: LazyPagingItems<MeowVo>,
     onAction: (MeowsAction) -> Unit
 ) {
-
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
     val lazyListState = rememberLazyListState()
 
     val isScrolling by remember(meows) {
         derivedStateOf {
-            if (meows.itemCount == 0) false else when (windowSize.width) {
-                WindowType.Compact -> lazyListState.isScrollInProgress
-                WindowType.Medium -> lazyStaggeredGridState.isScrollInProgress
-                WindowType.Expanded -> lazyStaggeredGridState.isScrollInProgress
+            if (meows.itemCount == 0) {
+                false
+            } else {
+                when (windowSize.width) {
+                    WindowType.Compact -> lazyListState.isScrollInProgress
+                    WindowType.Medium -> lazyStaggeredGridState.isScrollInProgress
+                    WindowType.Expanded -> lazyStaggeredGridState.isScrollInProgress
+                }
             }
         }
     }
@@ -102,11 +105,10 @@ fun MeowsScreen(
         }
     ) {
         meows.apply {
-
             if (
-                loadState.refresh is LoadState.Loading
-                && loadState.source.refresh is LoadState.Loading
-                && loadState.mediator?.refresh is LoadState.Loading
+                loadState.refresh is LoadState.Loading &&
+                loadState.source.refresh is LoadState.Loading &&
+                loadState.mediator?.refresh is LoadState.Loading
             ) {
                 when (windowSize.width) {
                     WindowType.Compact -> MeowsCompactLoading()
@@ -116,8 +118,8 @@ fun MeowsScreen(
             }
 
             if (
-                loadState.refresh is LoadState.Error
-                && loadState.mediator?.refresh is LoadState.Error
+                loadState.refresh is LoadState.Error &&
+                loadState.mediator?.refresh is LoadState.Error
             ) {
                 val throwable = (loadState.refresh as LoadState.Error).error
                 val errorType = throwable.toErrorType()

@@ -1,7 +1,7 @@
 package com.everest.presentation.register
 
 data class RegisterState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = false
 ) {
     fun asUiState() = if (isLoading) {
         RegisterUIState.Loading

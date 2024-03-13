@@ -14,10 +14,10 @@ import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall
 import com.everest.util.constant.Constant
 import com.everest.util.result.DataResult
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
-import javax.inject.Inject
 
 class HomeApiRepositoryImpl @Inject constructor(
     private val api: HomeApi,

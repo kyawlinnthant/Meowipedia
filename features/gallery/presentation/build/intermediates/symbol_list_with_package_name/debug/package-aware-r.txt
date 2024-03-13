@@ -1,5 +1,0 @@
-com.everest.gallery.presentation
-drawable baseline_apps_24
-drawable placeholder
-string gallery
-string retry

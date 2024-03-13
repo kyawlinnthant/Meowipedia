@@ -47,7 +47,7 @@ fun CommonTextField(
                 if (state.text.isEmpty()) {
                     Text(
                         text = hint,
-                        color = Color.Gray.copy(alpha = 0.5f),
+                        color = Color.Gray.copy(alpha = 0.5f)
                     )
                 }
                 innerTextField()
@@ -55,5 +55,3 @@ fun CommonTextField(
         }
     )
 }
-
-

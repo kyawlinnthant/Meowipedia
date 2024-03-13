@@ -29,7 +29,6 @@ fun EndItem(
             .padding(MaterialTheme.dimen.base2x),
         contentAlignment = Alignment.Center
     ) {
-
         Row(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimen.base),
             verticalAlignment = Alignment.CenterVertically
@@ -42,7 +41,6 @@ fun EndItem(
                         .background(MaterialTheme.colorScheme.primary)
                 )
             }
-
         }
     }
 }

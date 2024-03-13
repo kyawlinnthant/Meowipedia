@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.collectLatest
 fun MeowGraph(
     modifier: Modifier = Modifier,
     controller: NavHostController,
-    window: WindowSize,
+    window: WindowSize
 ) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -46,7 +46,6 @@ fun MeowGraph(
         startDestination = Screens.Meows.route,
         modifier = modifier.fillMaxSize()
     ) {
-
         composable(route = Screens.Register.route) {
             val vm: RegisterViewModel = hiltViewModel()
             val vmState = vm.uiState.collectAsState()
@@ -134,7 +133,6 @@ fun MeowGraph(
                 isSupportDynamic = isSupportDynamicColor
             )
         }
-
 
         composable(route = Screens.Upload.route) {
             val vm: UploadViewModel = hiltViewModel()

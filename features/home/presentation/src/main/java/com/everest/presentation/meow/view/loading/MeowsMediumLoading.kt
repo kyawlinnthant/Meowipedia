@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -31,14 +29,13 @@ import com.everest.ui.shimmer.ShimmerView
 fun MeowsMediumLoading(
     modifier: Modifier = Modifier
 ) {
-
     val items = listOf(
         2160f / 1284f,
         1250f / 2064f,
         973f / 973f,
         1024f / 817f,
-        900f/1137f,
-        1024f/768f,
+        900f / 1137f,
+        1024f / 768f,
         881f / 1280f,
         944f / 1024f,
         1280f / 1290f,
@@ -49,12 +46,12 @@ fun MeowsMediumLoading(
         1280f / 960f,
         3888f / 2592f,
         1250f / 702f,
-        110f /733f,
+        110f / 733f,
         1920f / 902f,
         1200f / 901f,
         640f / 960f,
-        1366f/ 768f,
-        1265f/ 2309f,
+        1366f / 768f,
+        1265f / 2309f,
         857f / 1298f,
         908f / 565f,
         1234f / 897f,
@@ -69,8 +66,7 @@ fun MeowsMediumLoading(
             verticalItemSpacing = MaterialTheme.dimen.small,
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimen.small),
             state = rememberLazyStaggeredGridState()
-        ){
-
+        ) {
             items(
                 items = items,
                 key = { it }
@@ -82,8 +78,8 @@ fun MeowsMediumLoading(
                             ratio = it,
                             matchHeightConstraintsFirst = true
                         )
-                        .background(brush = brush),
-                    )
+                        .background(brush = brush)
+                )
             }
 
             item {
@@ -95,7 +91,6 @@ fun MeowsMediumLoading(
             }
         }
     }
-
 }
 
 @Composable
@@ -107,4 +102,3 @@ private fun Preview() {
         }
     }
 }
-

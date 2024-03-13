@@ -22,7 +22,7 @@ data class Dimen(
     val indicator: Dp = 8.dp,
     val contentSection: Dp = 168.dp,
     val indicatorPadding: Dp = 200.dp,
-    val descriptionIcon : Dp = 120.dp
+    val descriptionIcon: Dp = 120.dp
 )
 
 val LocalSize = compositionLocalOf { Dimen() }

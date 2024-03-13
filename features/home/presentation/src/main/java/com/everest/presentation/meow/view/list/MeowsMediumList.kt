@@ -34,7 +34,6 @@ fun MeowsMediumList(
     onRetry: () -> Unit,
     onItemClick: (MeowVo) -> Unit
 ) {
-
     val errorMessage = asErrorMessage(error = error)
 
     LazyVerticalStaggeredGrid(
@@ -44,7 +43,6 @@ fun MeowsMediumList(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimen.small),
         state = listState
     ) {
-
         items(
             items = meows,
             key = { it.id }
@@ -86,5 +84,4 @@ fun MeowsMediumList(
             )
         }
     }
-
 }

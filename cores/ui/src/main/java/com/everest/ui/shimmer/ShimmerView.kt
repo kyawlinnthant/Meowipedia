@@ -22,7 +22,7 @@ fun ShimmerView(
         MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
         MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
         MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
     )
     val transition = rememberInfiniteTransition(label = "")
     val translateAnim = transition.animateFloat(
@@ -45,4 +45,3 @@ fun ShimmerView(
 
     content(brush)
 }
-
