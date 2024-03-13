@@ -24,7 +24,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.DisplayName
 import javax.inject.Inject
 
 @SmallTest
@@ -57,7 +56,6 @@ class MeowDaoTest {
 
 
     @Test
-    @DisplayName("Successfully Insert New Entity")
     fun insert() = runTest {
         val meowKeyEntity = listOf(
             MeowKeyEntity(
@@ -144,7 +142,6 @@ class MeowDaoTest {
     }
 
     @Test
-    @DisplayName("Successfully Insert New Entity")
     fun delete() = runTest {
         meowDao.deleteAllPageable(isForPaging = true)
         meowKeyDao.deleteAll()
