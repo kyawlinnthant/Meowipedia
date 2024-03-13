@@ -1,4 +1,5 @@
 [versions]
+cores-dispatchers = "com.everest.dispatchers"
 kotlin = "1.9.22"
 gradle = "8.2.2"
 compose-compiler = "1.5.8"
@@ -142,6 +143,7 @@ secret-gradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 junit5 = { id = "de.mannodermaus.android-junit5", version = "1.10.0.0" }
+
 # Plugins defined by this project
 everest-android-application = { id = "com.everest.android.application", version = "unspecified" }
 everest-compose-application = { id = "com.everest.compose.application", version = "unspecified" }

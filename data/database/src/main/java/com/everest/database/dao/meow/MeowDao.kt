@@ -14,16 +14,13 @@ import com.everest.database.map.BreedWithMeows
 @Dao
 interface MeowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMeow(meow: MeowEntity)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeows(meows: List<MeowEntity>)
 
     @Query("SELECT * FROM ${MeowEntity.TABLE_NAME}")
     suspend fun getMeows(): List<MeowEntity>
 
     @Query("SELECT * FROM ${MeowEntity.TABLE_NAME} WHERE should_show = :isForPaging")
-    fun pagingSource(isForPaging: Boolean): PagingSource<Int, MeowEntity>
+    fun getPagingSource(isForPaging: Boolean): PagingSource<Int, MeowEntity>
 
     @Query("DELETE  FROM ${MeowEntity.TABLE_NAME} WHERE should_show = :isForPaging")
     suspend fun deleteAllPageable(isForPaging: Boolean)

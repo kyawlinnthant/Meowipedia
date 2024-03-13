@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.everest.compose.application)
     alias(libs.plugins.everest.hilt)
     alias(libs.plugins.everest.firebase)
+    alias(libs.plugins.google.services)
 }
 
 android {

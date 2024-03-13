@@ -1,7 +1,6 @@
 package com.everest.presentation.meow.view.loading
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -41,8 +40,8 @@ fun MeowsCompactLoading(
 
         LazyColumn(
             modifier = modifier.fillMaxSize(),
-            state = rememberLazyListState(),
-            verticalArrangement = Arrangement.spacedBy(1.dp)
+            state = rememberLazyListState()
+//            verticalArrangement = Arrangement.spacedBy(1.dp)
         ) {
             items(
                 items = items,

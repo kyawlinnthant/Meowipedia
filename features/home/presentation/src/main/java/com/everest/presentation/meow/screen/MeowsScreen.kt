@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -90,49 +90,53 @@ fun MeowsScreen(
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
-//                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Settings.route)) },
-                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Login.route)) },
+                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Settings.route)) },
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
+                                .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.2f))
                         ) {
                             Icon(Icons.Filled.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                         }
                     },
-                    containerColor = BottomAppBarDefaults.containerColor.copy(alpha = 0f)
+                    containerColor = Color.Transparent,
+                    contentColor = Color.Transparent
                 )
             }
         }
     ) {
         meows.apply {
             if (
+
                 loadState.refresh is LoadState.Loading &&
                 loadState.source.refresh is LoadState.Loading &&
-                loadState.mediator?.refresh is LoadState.Loading
+                loadState.mediator?.refresh is LoadState.Loading &&
+                this.itemCount == 0
             ) {
                 when (windowSize.width) {
                     WindowType.Compact -> MeowsCompactLoading()
                     WindowType.Medium -> MeowsMediumLoading()
                     WindowType.Expanded -> MeowsExpandedLoading()
                 }
+                return@apply
             }
 
             if (
                 loadState.refresh is LoadState.Error &&
-                loadState.mediator?.refresh is LoadState.Error
+                loadState.mediator?.refresh is LoadState.Error &&
+                this.itemCount == 0
             ) {
                 val throwable = (loadState.refresh as LoadState.Error).error
                 val errorType = throwable.toErrorType()
 
                 FullScreenErrorView(type = errorType) {
-                    retry()
+                    this.retry()
                 }
+                return@apply
             }
 
             when (windowSize.width) {
                 WindowType.Compact -> MeowsCompactList(
                     meows = this,
-                    paddingValues = it,
                     listState = lazyListState,
                     onRetry = { retry() },
                     onItemClick = {}

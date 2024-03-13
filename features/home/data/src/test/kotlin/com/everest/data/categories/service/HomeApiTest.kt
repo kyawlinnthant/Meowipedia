@@ -1,7 +1,8 @@
 package com.everest.data.categories.service
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import com.everest.data.service.HomeApi
-import com.google.common.truth.Truth
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
@@ -55,11 +56,11 @@ class HomeApiTest {
         val response = service.breeds(limit = limit)
         val request = mockWebServer.takeRequest()
         // is correct request
-        Truth.assertThat(request.method).isEqualTo("GET")
-        Truth.assertThat(request.path)
+        assertThat(request.method).isEqualTo("GET")
+        assertThat(request.path)
             .isEqualTo("/" + HomeApi.BREEDS + "?limit=$limit&page=0")
         // is correct response
-        Truth.assertThat(response.size).isEqualTo(limit)
+        assertThat(response.size).isEqualTo(limit)
     }
 
     @Test
@@ -69,11 +70,11 @@ class HomeApiTest {
         val response = service.breeds(limit = limit)
         val request = mockWebServer.takeRequest()
         // is correct request
-        Truth.assertThat(request.method).isEqualTo("GET")
-        Truth.assertThat(request.path)
+        assertThat(request.method).isEqualTo("GET")
+        assertThat(request.path)
             .isEqualTo("/" + HomeApi.BREEDS + "?limit=$limit&page=0")
         // is correct response
-        Truth.assertThat(response.size).isEqualTo(limit)
+        assertThat(response.size).isEqualTo(limit)
     }
 
     @Test(expected = Exception::class)

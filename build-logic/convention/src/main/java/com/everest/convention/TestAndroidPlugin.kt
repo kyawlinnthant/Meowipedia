@@ -19,11 +19,11 @@ class TestAndroidPlugin : Plugin<Project> {
             val turbine = libs.findLibrary("turbine").get()
 
             dependencies {
-                add("testRuntimeOnly", jupiterEngine)
+                add("androidTestRuntimeOnly", jupiterEngine)
                 add("androidTestImplementation", coroutinesTest)
                 add("androidTestImplementation", coroutinesCore)
                 add("androidTestImplementation", jupiterApi)
-                add("testImplementation", jupiterParams)
+                add("androidTestImplementation", jupiterParams)
                 add("androidTestImplementation", assertk)
                 add("androidTestImplementation", mockk)
                 add("androidTestImplementation", turbine)
