@@ -1,6 +1,7 @@
 package com.everest.data.categories.service
 
 import assertk.assertThat
+import assertk.assertions.contains
 import assertk.assertions.isEqualTo
 import com.everest.data.service.HomeApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -14,6 +15,7 @@ import okio.source
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.assertThrows
 import retrofit2.Retrofit
 
 class HomeApiTest {
@@ -40,19 +42,20 @@ class HomeApiTest {
         mockWebServer.shutdown()
     }
 
-    private fun enqueueResponse(fileName: String) {
+    private fun enqueueResponse(fileName: String, responseCode: Int = 200) {
         val inputStream = javaClass.classLoader!!.getResourceAsStream(fileName)
         val mockResponse = MockResponse()
+        mockResponse.setResponseCode(responseCode)
         val source = inputStream.source().buffer()
         mockWebServer.enqueue(
-            mockResponse.setBody(source.readString(Charsets.UTF_8)),
+            mockResponse.setBody(source.readString(Charsets.UTF_8))
         )
     }
 
     @Test
     fun `fetch categories with limit 2 success 2xx`() = runTest {
         val limit = 2
-        enqueueResponse("success_2_data_response.json")
+        enqueueResponse("category_success_2_data_response.json")
         val response = service.breeds(limit = limit)
         val request = mockWebServer.takeRequest()
         // is correct request
@@ -64,9 +67,9 @@ class HomeApiTest {
     }
 
     @Test
-    fun `fetch categories with limit 20 success 2xx`() = runTest {
-        val limit = 20
-        enqueueResponse("success_20_data_response.json")
+    fun `fetch categories with limit 10 success 2xx`() = runTest {
+        val limit = 10
+        enqueueResponse("category_success_10_data_response.json")
         val response = service.breeds(limit = limit)
         val request = mockWebServer.takeRequest()
         // is correct request
@@ -77,10 +80,58 @@ class HomeApiTest {
         assertThat(response.size).isEqualTo(limit)
     }
 
-    @Test(expected = Exception::class)
+    @Test
     fun `malformed json throws exception`() = runTest {
         enqueueResponse("malformed.json")
-        service.breeds()
+        assertThrows<Exception> {
+            service.breeds()
+        }
     }
 
+    @Test
+    fun `fetch search categories with success 2xx`() = runTest {
+        val keyword = "air"
+        enqueueResponse("search_success_data_response.json")
+        val response = service.searchBreeds(keyword = keyword)
+        val request = mockWebServer.takeRequest()
+        // is correct request
+        assertThat(request.method).isEqualTo("GET")
+        assertThat(request.path)
+            .isEqualTo("/" + HomeApi.SEARCH_BREEDS + "?q=$keyword")
+        // is correct response
+        assertThat(response.isSuccessful).isEqualTo(true)
+        response.body()?.let {
+            val item = it.first()
+            assertThat(item.name).contains(keyword)
+        }
+    }
+
+    @Test
+    fun `fetch gallery with success 2xx`() = runTest {
+        val limit = 10
+        enqueueResponse("gallery_success_data_response.json")
+        val response = service.meows(limit = limit, page = 0)
+        val request = mockWebServer.takeRequest()
+        // is correct request
+        assertThat(request.method).isEqualTo("GET")
+        assertThat(request.path)
+            .isEqualTo("/" + HomeApi.MEOWS + "?limit=$limit&page=0&order=RANDOM&size=med&has_breeds=true")
+        // is correct response
+        assertThat(response.size).isEqualTo(limit)
+    }
+
+    @Test
+    fun `fetch search with success 400`() = runTest {
+        val keyword = "testing"
+        enqueueResponse("search_success_data_response.json", 400)
+        val response = service.searchBreeds(keyword = keyword)
+        val request = mockWebServer.takeRequest()
+        // is correct request
+        assertThat(request.method).isEqualTo("GET")
+        assertThat(request.path)
+            .isEqualTo("/" + HomeApi.SEARCH_BREEDS + "?q=$keyword")
+        // is correct response
+        assertThat(response.isSuccessful).isEqualTo(false)
+        assertThat(response.code()).isEqualTo(400)
+    }
 }
