@@ -12,9 +12,9 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okio.buffer
 import okio.source
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import retrofit2.Retrofit
 
@@ -29,7 +29,7 @@ class HomeApiTest {
 
     private val factory = json.asConverterFactory("application/json".toMediaType())
 
-    @Before
+    @BeforeEach
     fun setup() {
         mockWebServer = MockWebServer()
         service = Retrofit.Builder().baseUrl(mockWebServer.url("/"))
@@ -37,7 +37,7 @@ class HomeApiTest {
             .build().create(HomeApi::class.java)
     }
 
-    @After
+    @AfterEach
     fun teardown() {
         mockWebServer.shutdown()
     }
