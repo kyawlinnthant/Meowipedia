@@ -4,18 +4,20 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
-class NetworkPlugin : Plugin<Project> {
+class FirebasePlugin : Plugin<Project> {
     override fun apply(target: Project) {
 
         with(target) {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-            val secret = libs.findPlugin("secret-gradle").get().get().pluginId
+            val services = libs.findPlugin("google-services").get().get().pluginId
             with(pluginManager) {
-                apply(secret)
+                apply(services)
             }
-            val network = libs.findBundle("network").get()
+            val bom = libs.findLibrary("firebase-bom").get()
+            val firebase = libs.findBundle("firebase").get()
             dependencies {
-                add("api", network)
+                add("implementation", platform(bom))
+                add("implementation", firebase)
             }
         }
     }

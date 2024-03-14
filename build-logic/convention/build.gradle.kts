@@ -58,5 +58,9 @@ gradlePlugin {
             id = "com.everest.test.android"
             implementationClass = "TestAndroidPlugin"
         }
+        register("firebase") {
+            id = "com.everest.firebase"
+            implementationClass = "FirebasePlugin"
+        }
     }
 }

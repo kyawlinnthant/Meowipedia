@@ -40,7 +40,7 @@ fun LoadingItem(
     keyframe: KeyframesSpec<Float> = keyframes {
         durationMillis = durationMilli
         0.0f at 0 using LinearOutSlowInEasing
-    },
+    }
 ) {
     val distance = with(LocalDensity.current) { travelDistance.toPx() }
     val descriptions = text.toCharArray()
@@ -55,31 +55,33 @@ fun LoadingItem(
                 targetValue = 1f,
                 animationSpec = infiniteRepeatable(
                     animation = keyframe,
-                    repeatMode = RepeatMode.Reverse,
-                ),
+                    repeatMode = RepeatMode.Reverse
+                )
             )
         }
     }
-
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(MaterialTheme.dimen.base)
-            .padding(top = travelDistance), contentAlignment = Alignment.Center
+            .padding(top = travelDistance),
+        contentAlignment = Alignment.Center
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(spaceBetween),
+            horizontalArrangement = Arrangement.spacedBy(spaceBetween)
         ) {
             charMap.forEach { (char, anim) ->
-                Text(text = "$char", modifier = modifier.graphicsLayer {
-                    translationY = -anim.value * distance
-                }, style = MaterialTheme.typography.labelLarge)
-
+                Text(
+                    text = "$char",
+                    modifier = modifier.graphicsLayer {
+                        translationY = -anim.value * distance
+                    },
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
         }
     }
-
 }
 
 @Composable
@@ -87,7 +89,6 @@ fun LoadingItem(
 private fun Preview() {
     MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
         Surface {
-
             LoadingItem()
         }
     }

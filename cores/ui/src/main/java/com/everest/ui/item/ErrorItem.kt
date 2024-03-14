@@ -29,7 +29,7 @@ import com.everest.ui.R
 fun ErrorItem(
     modifier: Modifier = Modifier,
     message: String,
-    isGrid : Boolean = false,
+    isGrid: Boolean = false,
     onRetry: () -> Unit
 ) {
     Box(
@@ -38,7 +38,6 @@ fun ErrorItem(
             .padding(MaterialTheme.dimen.base2x),
         contentAlignment = Alignment.Center
     ) {
-
         if (isGrid) {
             Column(
                 modifier = modifier.fillMaxWidth(),
@@ -59,13 +58,12 @@ fun ErrorItem(
                 )
                 Spacer(modifier = modifier.height(MaterialTheme.dimen.base2x))
                 OutlinedButton(
-                    onClick = onRetry,
+                    onClick = onRetry
                 ) {
                     Text(text = stringResource(id = R.string.retry))
                 }
             }
-        }else{
-
+        } else {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
@@ -84,13 +82,12 @@ fun ErrorItem(
                 )
                 Spacer(modifier = modifier.width(MaterialTheme.dimen.base2x))
                 OutlinedButton(
-                    onClick = onRetry,
+                    onClick = onRetry
                 ) {
                     Text(text = stringResource(id = R.string.retry))
                 }
             }
         }
-
     }
 }
 
@@ -100,20 +97,18 @@ private fun ListPreview() {
     MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
         Surface {
             ErrorItem(message = "No Internet! Please connect wifi or mobile data!") {
-
             }
         }
     }
 }
+
 @Composable
 @Preview
 private fun GridPreview() {
     MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
         Surface {
             ErrorItem(message = "No Internet! Please connect wifi or mobile data!", isGrid = true) {
-
             }
         }
     }
 }
-

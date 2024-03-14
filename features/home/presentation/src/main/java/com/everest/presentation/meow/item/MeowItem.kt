@@ -9,13 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.everest.domain.model.meow.MeowVo
-import com.everest.ui.item.LoadingItem
 import com.everest.ui.shimmer.ShimmerBrush
 
 @Composable
@@ -35,7 +33,7 @@ fun MeowItem(
             )
             .drawBehind {
                 drawRect(
-                    brush = brush,
+                    brush = brush
                 )
             }
             .clickable {
@@ -44,7 +42,6 @@ fun MeowItem(
         contentAlignment = Alignment.BottomCenter
 
     ) {
-
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(meowVo.photo)
@@ -54,8 +51,8 @@ fun MeowItem(
             contentScale = ContentScale.Crop,
             modifier = modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
 
-            )
+        )
     }
 }

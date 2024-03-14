@@ -20,10 +20,12 @@ class Register @Inject constructor(private val signInRepo: AuthRepo) {
                     DataResult.Success(
                         SignInResult(
                             data = UserData(
-                                it.uid, it.displayName, "",
+                                it.uid,
+                                it.displayName,
+                                ""
                             ),
                             errorMessage = null
-                        ),
+                        )
                     )
                 } ?: run {
                     DataResult.Failed(error = NetworkError.Dynamic(message = "No User"))

@@ -1,7 +1,6 @@
 package com.everest.presentation.meow.view.loading
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -25,7 +24,6 @@ import com.everest.ui.shimmer.ShimmerView
 fun MeowsCompactLoading(
     modifier: Modifier = Modifier
 ) {
-
     val items = listOf(
         2160f / 1284f,
         973f / 973f,
@@ -35,14 +33,14 @@ fun MeowsCompactLoading(
         973f / 973f,
         1024f / 817f,
         900f / 1137f,
-        1024f / 768f,
+        1024f / 768f
     )
 
     ShimmerView { brush ->
 
         LazyColumn(
             modifier = modifier.fillMaxSize(),
-            state = rememberLazyListState(),
+            state = rememberLazyListState()
 //            verticalArrangement = Arrangement.spacedBy(1.dp)
         ) {
             items(
@@ -56,8 +54,8 @@ fun MeowsCompactLoading(
                             ratio = it,
                             matchHeightConstraintsFirst = true
                         )
-                        .background(brush = brush),
-                    )
+                        .background(brush = brush)
+                )
             }
 
             item {
@@ -69,7 +67,6 @@ fun MeowsCompactLoading(
             }
         }
     }
-
 }
 
 @Composable
@@ -81,4 +78,3 @@ private fun Preview() {
         }
     }
 }
-

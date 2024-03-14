@@ -9,9 +9,9 @@ import com.everest.data.service.HomeApi
 import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.breed.BreedEntity
 import com.everest.database.entity.breed.BreedKeyEntity
+import javax.inject.Inject
 import okio.IOException
 import retrofit2.HttpException
-import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class BreedRemoteMediator @Inject constructor(

@@ -14,7 +14,6 @@ android {
     }
 }
 
-
 dependencies {
     implementation(projects.cores.testRule)
 }

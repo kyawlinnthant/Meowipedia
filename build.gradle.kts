@@ -1,5 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
@@ -12,9 +10,10 @@ plugins {
     alias(libs.plugins.kotlin.serialization).apply(false)
     alias(libs.plugins.google.hilt).apply(false)
     alias(libs.plugins.google.ksp).apply(false)
+    alias(libs.plugins.secret.gradle).apply(false)
+    alias(libs.plugins.google.services).apply(false)
     alias(libs.plugins.detekt).apply(false)
     alias(libs.plugins.ktlint).apply(false)
-    alias(libs.plugins.secret.gradle).apply(false)
 }
 
 subprojects {
@@ -33,17 +32,4 @@ subprojects {
         config.setFrom(file("${rootProject.rootDir}/config/detekt/detekt.yml"))
     }
 }
-//
-//val credentialDp = loadCredentialData()
-//
-//extra.apply {
-//    set("baseURL", credentialDp.getProperty("BASE_URL"))
-//    set("apiKey", credentialDp.getProperty("API_KEY"))
-//}
-//
-//fun loadCredentialData(): Properties {
-//    val keysFile = file("credentials.properties")
-//    val keysProperties = Properties()
-//    keysProperties.load(FileInputStream(keysFile))
-//    return keysProperties
-//}
+

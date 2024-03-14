@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.everest.hilt)
     alias(libs.plugins.everest.unit.test)
     alias(libs.plugins.junit5)
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -17,15 +16,17 @@ android {
 dependencies {
     implementation(projects.cores.util)
 }
-
 secrets {
-    // Change the properties file from the default "local.properties" in your root project
-    // to another properties file in your root project.
-    propertiesFileName = "credentials.properties"
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
 
-    // A properties file containing default secret values. This file can be checked in version
-    // control.
-    defaultPropertiesFileName = "secrets.defaults.properties"
-    ignoreList.add("keyToIgnore")
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*") // Ignore all keys matching the regexp "sdk.*"
 }
-

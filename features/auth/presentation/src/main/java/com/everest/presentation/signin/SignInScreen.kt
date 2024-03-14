@@ -68,14 +68,10 @@ fun SignInScreen(
                     password = password,
                     onAction = onAction
                 )
-
             }
         }
-
     }
-
 }
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -95,7 +91,9 @@ fun SignInCompact(
         )
         Column(
             modifier = Modifier
-                .fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CommonTextField(mail)
             Spacer(modifier = Modifier.height(16.dp))
@@ -111,7 +109,8 @@ fun SignInCompact(
                 else -> DefaultView(
                     onAction = {
                         onAction(SignInAction.SignIn)
-                    }, title = "Sign In"
+                    },
+                    title = "Sign In"
                 )
             }
             Button(
@@ -120,13 +119,13 @@ fun SignInCompact(
                     .padding(horizontal = 16.dp),
                 onClick = {
                     onAction(SignInAction.Navigate(Screens.Register.route))
-                }, shape = CutCornerShape(10)
+                },
+                shape = CutCornerShape(10)
             ) {
                 Text(text = "Register")
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -159,7 +158,8 @@ fun SignInTablet(
                 else -> DefaultView(
                     onAction = {
                         onAction(SignInAction.SignIn)
-                    }, title = "Sign In"
+                    },
+                    title = "Sign In"
                 )
             }
             Button(
@@ -168,7 +168,8 @@ fun SignInTablet(
                     .padding(horizontal = 16.dp),
                 onClick = {
                     onAction(SignInAction.Navigate(Screens.Register.route))
-                }, shape = CutCornerShape(10)
+                },
+                shape = CutCornerShape(10)
             ) {
                 Text(text = "Register")
             }
@@ -182,9 +183,7 @@ fun SignInTablet(
                 .fillMaxSize()
         )
     }
-
 }
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Preview(device = Devices.PIXEL_5)
@@ -192,11 +191,11 @@ fun SignInTablet(
 fun PreviewSignCompact() {
     SignInScreen(
         windowSize = WindowSize(WindowType.Compact, WindowType.Compact),
-        state = SignInUIState.DefaultView, snackbarHostState = SnackbarHostState(),
+        state = SignInUIState.DefaultView,
+        snackbarHostState = SnackbarHostState(),
         mail = TextFieldState(),
         password = TextFieldState()
     ) {
-
     }
 }
 
@@ -206,10 +205,10 @@ fun PreviewSignCompact() {
 fun PreviewSignMedium() {
     SignInScreen(
         windowSize = WindowSize(WindowType.Medium, WindowType.Medium),
-        state = SignInUIState.DefaultView, snackbarHostState = SnackbarHostState(),
+        state = SignInUIState.DefaultView,
+        snackbarHostState = SnackbarHostState(),
         mail = TextFieldState(),
         password = TextFieldState()
     ) {
-
     }
 }

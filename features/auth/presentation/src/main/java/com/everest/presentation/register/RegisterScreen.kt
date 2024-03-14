@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.text2.BasicSecureTextField
 import androidx.compose.foundation.text2.input.TextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -40,11 +39,14 @@ fun RegisterScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(title = { Text(text = "Register") })
-        }) {
+        }
+    ) {
         Column(
             modifier = Modifier
                 .padding(it)
-                .fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CommonTextField(mail)
             Spacer(modifier = Modifier.height(16.dp))
@@ -60,14 +62,13 @@ fun RegisterScreen(
                 else -> DefaultView(
                     onAction = {
                         onAction(RegisterAction.Register)
-                    }, title = "Register"
+                    },
+                    title = "Register"
                 )
             }
         }
     }
-
 }
-
 
 @Composable
 fun DefaultView(onAction: (RegisterAction) -> Unit, title: String) {
@@ -79,7 +80,7 @@ fun DefaultView(onAction: (RegisterAction) -> Unit, title: String) {
             onClick = {
                 onAction(RegisterAction.Register)
             },
-            shape = CutCornerShape(10),
+            shape = CutCornerShape(10)
         ) {
             Text(text = title)
         }

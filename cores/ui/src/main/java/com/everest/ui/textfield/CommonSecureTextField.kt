@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text2.BasicSecureTextField
-import androidx.compose.foundation.text2.BasicTextField2
 import androidx.compose.foundation.text2.input.TextFieldState
 import androidx.compose.foundation.text2.input.TextObfuscationMode
 import androidx.compose.material3.Text
@@ -50,7 +49,7 @@ fun CommonSecureTextField(
                 if (state.text.isEmpty()) {
                     Text(
                         text = hint,
-                        color = Color.Gray.copy(alpha = 0.5f),
+                        color = Color.Gray.copy(alpha = 0.5f)
                     )
                 }
                 innerTextField()
@@ -58,5 +57,3 @@ fun CommonSecureTextField(
         }
     )
 }
-
-

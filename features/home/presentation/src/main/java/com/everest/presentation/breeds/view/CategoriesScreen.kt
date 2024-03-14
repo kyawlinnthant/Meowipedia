@@ -40,31 +40,31 @@ fun CategoriesScreen(
                 is CategoriesViewModelUiState.ListState -> TopAppBar(title = {
                     Text(text = stringResource(id = R.string.categories))
                 }, actions = {
-                    IconButton(
-                        onClick = {
-                            onAction(
-                                CategoriesAction.UpdateSearchView(shouldShow = true)
+                        IconButton(
+                            onClick = {
+                                onAction(
+                                    CategoriesAction.UpdateSearchView(shouldShow = true)
+                                )
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_search_24),
+                                contentDescription = null
                             )
                         }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_search_24),
-                            contentDescription = null
-                        )
-                    }
-                    IconButton(
-                        onClick = {
-                            onAction(
-                                CategoriesAction.Navigate(route = Screens.Settings.route)
+                        IconButton(
+                            onClick = {
+                                onAction(
+                                    CategoriesAction.Navigate(route = Screens.Settings.route)
+                                )
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_ac_unit_24),
+                                contentDescription = null
                             )
                         }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_ac_unit_24),
-                            contentDescription = null
-                        )
-                    }
-                })
+                    })
 
                 is CategoriesViewModelUiState.SearchState -> TopAppBar(
                     title = {
@@ -110,7 +110,6 @@ fun CategoriesScreen(
                                             .padding(it)
                                     )
                                 }
-
                             }
                         }
 

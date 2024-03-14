@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -53,16 +52,19 @@ fun MeowsScreen(
     meows: LazyPagingItems<MeowVo>,
     onAction: (MeowsAction) -> Unit
 ) {
-
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
     val lazyListState = rememberLazyListState()
 
     val isScrolling by remember(meows) {
         derivedStateOf {
-            if (meows.itemCount == 0) false else when (windowSize.width) {
-                WindowType.Compact -> lazyListState.isScrollInProgress
-                WindowType.Medium -> lazyStaggeredGridState.isScrollInProgress
-                WindowType.Expanded -> lazyStaggeredGridState.isScrollInProgress
+            if (meows.itemCount == 0) {
+                false
+            } else {
+                when (windowSize.width) {
+                    WindowType.Compact -> lazyListState.isScrollInProgress
+                    WindowType.Medium -> lazyStaggeredGridState.isScrollInProgress
+                    WindowType.Expanded -> lazyStaggeredGridState.isScrollInProgress
+                }
             }
         }
     }
@@ -89,7 +91,6 @@ fun MeowsScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
                             onClick = { onAction(MeowsAction.Navigate(route = Screens.Settings.route)) },
-//                            onClick = { onAction(MeowsAction.Navigate(route = Screens.Login.route)) },
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.2f))
@@ -104,12 +105,12 @@ fun MeowsScreen(
         }
     ) {
         meows.apply {
-
             if (
-                loadState.refresh is LoadState.Loading
-                && loadState.source.refresh is LoadState.Loading
-                && loadState.mediator?.refresh is LoadState.Loading
-                && this.itemCount == 0
+
+                loadState.refresh is LoadState.Loading &&
+                loadState.source.refresh is LoadState.Loading &&
+                loadState.mediator?.refresh is LoadState.Loading &&
+                this.itemCount == 0
             ) {
                 when (windowSize.width) {
                     WindowType.Compact -> MeowsCompactLoading()
@@ -120,9 +121,9 @@ fun MeowsScreen(
             }
 
             if (
-                loadState.refresh is LoadState.Error
-                && loadState.mediator?.refresh is LoadState.Error
-                && this.itemCount == 0
+                loadState.refresh is LoadState.Error &&
+                loadState.mediator?.refresh is LoadState.Error &&
+                this.itemCount == 0
             ) {
                 val throwable = (loadState.refresh as LoadState.Error).error
                 val errorType = throwable.toErrorType()

@@ -30,11 +30,10 @@ fun MeowsCompactList(
     onItemClick: (MeowVo) -> Unit
 ) {
     meows.apply {
-
         LazyColumn(
             modifier = modifier
                 .fillMaxSize(),
-            state = listState,
+            state = listState
         ) {
             items(
                 count = meows.itemCount,
@@ -80,5 +79,4 @@ fun MeowsCompactList(
             }
         }
     }
-
 }

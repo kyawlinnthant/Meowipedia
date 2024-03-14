@@ -28,7 +28,6 @@ import com.everest.ui.shimmer.ShimmerView
 fun MeowsExpandedLoading(
     modifier: Modifier = Modifier
 ) {
-
     val items = listOf(
         2160f / 1284f,
         1250f / 2064f,
@@ -53,7 +52,7 @@ fun MeowsExpandedLoading(
         1265f / 2309f,
         857f / 1298f,
         908f / 565f,
-        1234f / 897f,
+        1234f / 897f
     )
 
     ShimmerView { brush ->
@@ -75,7 +74,7 @@ fun MeowsExpandedLoading(
                             ratio = it,
                             matchHeightConstraintsFirst = true
                         )
-                        .background(brush = brush),
+                        .background(brush = brush)
                 )
             }
 
@@ -88,7 +87,6 @@ fun MeowsExpandedLoading(
             }
         }
     }
-
 }
 
 @Composable
@@ -100,4 +98,3 @@ private fun Preview() {
         }
     }
 }
-

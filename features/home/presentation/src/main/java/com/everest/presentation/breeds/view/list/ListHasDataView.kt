@@ -38,7 +38,6 @@ fun ListHasDataView(
                     }
                 }
             }
-
         }
     }
 }

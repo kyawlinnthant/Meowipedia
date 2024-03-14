@@ -12,10 +12,12 @@ class SignIn @Inject constructor(private val signInRepo: AuthRepo) {
         return DataResult.Success(
             SignInResult(
                 data = UserData(
-                    "1", "Testing", "ERROR"
+                    "1",
+                    "Testing",
+                    "ERROR"
                 ),
                 errorMessage = null
-            ),
+            )
         )
     }
 }

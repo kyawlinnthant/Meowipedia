@@ -1,6 +1,5 @@
 package com.everest.ui.shimmer
 
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -20,11 +19,11 @@ fun ShimmerView(
 }
 
 @Composable
-fun ShimmerBrush() : Brush {
+fun ShimmerBrush(): Brush {
     val shimmerColors = listOf(
         MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
         MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
     )
     val transition = rememberInfiniteTransition(label = "")
     val translateAnim = transition.animateFloat(
@@ -45,4 +44,3 @@ fun ShimmerBrush() : Brush {
         end = Offset(x = translateAnim.value, y = translateAnim.value)
     )
 }
-
