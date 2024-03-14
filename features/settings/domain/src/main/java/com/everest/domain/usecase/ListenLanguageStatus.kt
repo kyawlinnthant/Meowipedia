@@ -2,13 +2,14 @@ package com.everest.domain.usecase
 
 import com.everest.data.repository.SettingDsRepo
 import com.everest.type.DayNightTheme
-import javax.inject.Inject
+import com.everest.type.LanguageType
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class ListenThemeStatus @Inject constructor(
+class ListenLanguageStatus @Inject constructor(
     private val repo: SettingDsRepo
 ) {
-    suspend operator fun invoke(): Flow<DayNightTheme> {
-        return repo.listenThemeStatus()
+    suspend operator fun invoke(): Flow<LanguageType> {
+        return repo.listenLanguage()
     }
 }

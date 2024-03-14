@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">设置</string>
+    <string name="theme">应用主题</string>
+    <string name="language">语言</string>
+    <string name="dynamic">应用程序颜色与壁纸</string>
+    <string name="light_mode">灯光模式</string>
+    <string name="dark_mode">深色模式</string>
+    <string name="system_default">系统默认</string>
+    <string name="light">光</string>
+    <string name="dark">深色</string>
+    <string name="system">默认</string>
+</resources>

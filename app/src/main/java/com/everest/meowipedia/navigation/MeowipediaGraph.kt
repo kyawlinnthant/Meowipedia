@@ -120,15 +120,18 @@ fun MeowGraph(
         composable(route = Screens.Settings.route) {
             val vm: SettingsViewModel = hiltViewModel()
             val theme = vm.uiTheme.collectAsState()
+            val language = vm.language.collectAsState()
             val dynamic = vm.uiDynamic.collectAsState()
             val isSupportDynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             LaunchedEffect(key1 = true) {
                 vm.listenTheme()
                 vm.listenDynamic()
+                vm.listenLanguage()
             }
             SettingsScreen(
                 theme = theme.value,
                 dynamicEnabled = dynamic.value,
+                language = language.value,
                 onAction = vm::onAction,
                 isSupportDynamic = isSupportDynamicColor
             )

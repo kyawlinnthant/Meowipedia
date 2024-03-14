@@ -6,8 +6,8 @@ import com.everest.domain.usecase.SettingsViewModelUseCase
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.presentation.state.SettingsViewModelState
 import com.everest.type.DayNightTheme
+import com.everest.type.LanguageType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -29,6 +30,13 @@ class SettingsViewModel @Inject constructor(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
             initialValue = vmState.value.asTheme()
+        )
+    val language = vmState
+        .map(SettingsViewModelState::asLanguage)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = vmState.value.asLanguage()
         )
     val uiDynamic = vmState
         .map(SettingsViewModelState::asDynamic)
@@ -45,6 +53,8 @@ class SettingsViewModel @Inject constructor(
             SettingsAction.OnBackPress -> {
                 appNavigator.back()
             }
+
+            is SettingsAction.UpdateLanguage -> saveLanguage(action.languageType)
         }
     }
 
@@ -52,6 +62,14 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             useCase.listenTheme().collectLatest {
                 setTheme(it)
+            }
+        }
+    }
+
+    fun listenLanguage() {
+        viewModelScope.launch {
+            useCase.listenLanguage().collectLatest {
+                setLanguage(it)
             }
         }
     }
@@ -80,9 +98,23 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    private fun setLanguage(languageType: LanguageType) {
+        vmState.update { state ->
+            state.copy(
+                languageType = languageType
+            )
+        }
+    }
+
     private fun saveTheme(theme: DayNightTheme) {
         viewModelScope.launch {
             useCase.saveTheme(theme)
+        }
+    }
+
+    private fun saveLanguage(languageType: LanguageType) {
+        viewModelScope.launch {
+            useCase.saveLanguage(languageType)
         }
     }
 
@@ -91,4 +123,5 @@ class SettingsViewModel @Inject constructor(
             useCase.saveDynamic(enabled)
         }
     }
+
 }

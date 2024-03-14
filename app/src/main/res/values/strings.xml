@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Meowipedia</string>
+    <string name="app_name" translatable="false">Meowipedia</string>
+    <string name="testing">ENGLISH PAR SO</string>
 </resources>
