@@ -23,7 +23,6 @@ class HomeApiRepositoryImpl @Inject constructor(
     private val api: HomeApi,
     private val db: MeowDatabase,
     private val json: Json,
-    @DispatcherModule.IoDispatcher private val io: CoroutineDispatcher
 ) : HomeApiRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -50,12 +49,11 @@ class HomeApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun searchBreeds(keyword: String): DataResult<List<BreedDTO>> =
-        withContext(io) {
-            safeApiCall(
-                json = json,
-                apiCall = { api.searchBreeds(keyword = keyword) }
-            )
-        }
+        safeApiCall(
+            json = json,
+            apiCall = { api.searchBreeds(keyword = keyword) }
+        )
+
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMeows(): Pager<Int, MeowEntity> {

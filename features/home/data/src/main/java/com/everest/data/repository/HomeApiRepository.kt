@@ -8,6 +8,6 @@ import com.everest.util.result.DataResult
 
 interface HomeApiRepository {
     fun getBreeds(): Pager<Int, BreedEntity>
-    suspend fun searchBreeds(keyword: String): DataResult<List<BreedDTO>>
     fun getMeows(): Pager<Int, MeowEntity>
+    suspend fun searchBreeds(keyword: String): DataResult<List<BreedDTO>>
 }

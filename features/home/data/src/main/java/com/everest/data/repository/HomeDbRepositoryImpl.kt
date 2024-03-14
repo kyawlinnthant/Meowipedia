@@ -7,7 +7,6 @@ import javax.inject.Inject
 class HomeDbRepositoryImpl @Inject constructor(
     private val db: MeowDatabase
 ) : HomeDbRepository {
-
     override suspend fun saveMeows(meows: List<MeowEntity>) {
         db.meowDao().insertMeows(meows)
     }
