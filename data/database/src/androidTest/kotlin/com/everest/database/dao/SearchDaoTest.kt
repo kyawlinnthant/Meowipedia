@@ -11,7 +11,6 @@ import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.search.SearchEntity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
@@ -48,7 +47,7 @@ class SearchDaoTest {
 
 
     @Test
-    @DisplayName("Successfully Insert New Entity")
+    @DisplayName("Successfully Insert New Search Entity")
     fun insert() = runTest {
 
         val createdAt = LocalDateTime(
@@ -74,7 +73,7 @@ class SearchDaoTest {
     }
 
     @Test
-    @DisplayName("Successfully delete expected Entity")
+    @DisplayName("Successfully delete Search Entity")
     fun delete() = runTest {
         val createdAt = LocalDateTime(
             year = 1994,
@@ -97,7 +96,7 @@ class SearchDaoTest {
     }
 
     @Test
-    @DisplayName("Add new Entity always emit in flow")
+    @DisplayName("Add new search entity always emit in flow")
     fun listen() = runTest {
         val createdAt1 = LocalDateTime(
             year = 1994,

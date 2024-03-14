@@ -20,10 +20,10 @@ import com.everest.database.entity.meow.MeowKeyEntity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import javax.inject.Inject
 
 @SmallTest
@@ -40,7 +40,7 @@ class MeowDaoTest {
     @Inject
     lateinit var db: MeowDatabase
 
-    @Before
+    @BeforeEach
     fun setup() {
         testRule.inject()
         breedDao = db.breedDao()
@@ -48,7 +48,7 @@ class MeowDaoTest {
         meowKeyDao = db.meowKeyDao()
     }
 
-    @After
+    @AfterEach
     fun teardown() {
         db.clearAllTables()
         db.close()
