@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.Flow
 class SettingDsRepoImpl @Inject constructor(
     private val ds: AppDataStore
 ) : SettingDsRepo {
-    override suspend fun saveThemeStatus(theme: com.everest.type.DayNightTheme) {
+
+    override suspend fun saveThemeStatus(theme: DayNightTheme) {
         ds.putTheme(theme)
     }
 
@@ -16,11 +17,11 @@ class SettingDsRepoImpl @Inject constructor(
         ds.putEnabledDynamic(isEnabled)
     }
 
-    override suspend fun listenThemeStatus(): Flow<com.everest.type.DayNightTheme> {
+    override fun listenThemeStatus(): Flow<DayNightTheme> {
         return ds.pullTheme()
     }
 
-    override suspend fun listenDynamicStatus(): Flow<Boolean> {
+    override fun listenDynamicStatus(): Flow<Boolean> {
         return ds.pullEnabledDynamic()
     }
 }

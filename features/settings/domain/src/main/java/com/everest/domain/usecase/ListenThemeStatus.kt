@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class ListenThemeStatus @Inject constructor(
     private val repo: SettingDsRepo
 ) {
-    suspend operator fun invoke(): Flow<com.everest.type.DayNightTheme> {
+    suspend operator fun invoke(): Flow<DayNightTheme> {
         return repo.listenThemeStatus()
     }
 }

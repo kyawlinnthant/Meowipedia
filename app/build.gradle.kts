@@ -15,6 +15,19 @@ android {
         versionName = "0.0.1" // X.Y.Z ( Major.Minor.Patch)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+
+        resourceConfigurations += arrayOf(
+            "en",
+            "fr"
+        )
     }
 
     buildTypes {
@@ -40,4 +53,7 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.appcompat.resource)
 }

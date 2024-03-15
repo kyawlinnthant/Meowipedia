@@ -3,3 +3,4 @@ package com.everest.extensions
 import android.util.Patterns
 
 fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+fun String.getLocaleFromLanguageTags() = this.substringBefore('-')

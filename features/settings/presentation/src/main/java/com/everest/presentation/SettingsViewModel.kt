@@ -30,6 +30,7 @@ class SettingsViewModel @Inject constructor(
             started = SharingStarted.Eagerly,
             initialValue = vmState.value.asTheme()
         )
+
     val uiDynamic = vmState
         .map(SettingsViewModelState::asDynamic)
         .stateIn(
@@ -42,9 +43,7 @@ class SettingsViewModel @Inject constructor(
         when (action) {
             is SettingsAction.UpdateDynamic -> saveDynamic(action.enabled)
             is SettingsAction.UpdateTheme -> saveTheme(action.theme)
-            SettingsAction.OnBackPress -> {
-                appNavigator.back()
-            }
+            SettingsAction.OnBackPress -> appNavigator.back()
         }
     }
 
