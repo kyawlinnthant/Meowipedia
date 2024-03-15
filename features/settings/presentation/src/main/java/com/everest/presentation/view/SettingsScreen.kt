@@ -1,5 +1,9 @@
 package com.everest.presentation.view
 
+import android.app.LocaleManager
+import android.content.Context
+import android.os.Build
+import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,22 +15,36 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.LocaleListCompat
+import com.everest.extensions.getLocaleFromLanguageTags
 import com.everest.presentation.SettingsAction
 import com.everest.presentation.item.DynamicSectionItem
 import com.everest.presentation.item.LanguageSection
 import com.everest.presentation.item.ThemeSectionItem
 import com.everest.settings.presentation.R
 import com.everest.type.DayNightTheme
-import com.everest.type.LanguageType
+import com.everest.type.toStringLanguageType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    theme: DayNightTheme, language: LanguageType, dynamicEnabled: Boolean, onAction: (SettingsAction) -> Unit, isSupportDynamic: Boolean
+    theme: DayNightTheme,
+    dynamicEnabled: Boolean,
+    onRestart: () -> Unit,
+    onAction: (SettingsAction) -> Unit,
+    isSupportDynamic: Boolean
 ) {
+    val context = LocalContext.current
+    val languageCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        val currentAppLocales: LocaleList = context.getSystemService(LocaleManager::class.java).applicationLocales
+        currentAppLocales.toLanguageTags().getLocaleFromLanguageTags()
+    } else {
+        AppCompatDelegate.getApplicationLocales().toLanguageTags()
+    }
+
     Scaffold(topBar = {
         TopAppBar(title = { Text(text = stringResource(id = R.string.settings)) }, navigationIcon = {
             IconButton(onClick = { onAction(SettingsAction.OnBackPress) }) {
@@ -40,9 +58,10 @@ fun SettingsScreen(
                     onAction(SettingsAction.UpdateTheme(theme))
                 })
 
-                LanguageSection(selected = language, onUpdate = { languageType ->
-                    onAction(SettingsAction.UpdateLanguage(languageType))
-                    changeLanguage(languageType.name)
+                LanguageSection(selected = languageCode.toStringLanguageType(), onUpdate = { languageType ->
+                    changeLanguage(value = languageType.name.lowercase(), context = context, onRestart = {
+                        onRestart()
+                    })
                 })
             }
             if (isSupportDynamic) {
@@ -54,16 +73,14 @@ fun SettingsScreen(
             }
         }
     }
-
 }
 
-
-private fun changeLanguage(value: String) {
-
-    println(">>> $value")
-    AppCompatDelegate.setApplicationLocales(
-        LocaleListCompat.forLanguageTags(
-            value
-        )
-    )
+private fun changeLanguage(value: String, context: Context, onRestart: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        context.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(value)
+    } else {
+        val locales = LocaleListCompat.forLanguageTags(value)
+        AppCompatDelegate.setApplicationLocales(locales)
+        onRestart()
+    }
 }

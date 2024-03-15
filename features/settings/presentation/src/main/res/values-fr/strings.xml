@@ -3,6 +3,7 @@
     <string name="settings">Paramètres</string>
     <string name="theme">Thème</string>
     <string name="language">Langue</string>
+    <string name="select_language">French</string>
     <string name="dynamic">Couleur de</string>
     <string name="light_mode">Mode Lumière</string>
     <string name="dark_mode">Mode sombre</string>

@@ -36,12 +36,6 @@ fun LanguageSection(
     var expanded by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "")
 
-
-    val selectLanguage = when (selected) {
-        LanguageType.en -> stringResource(id = R.string.english)
-        LanguageType.fr -> stringResource(id = R.string.french)
-    }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -72,7 +66,7 @@ fun LanguageSection(
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = selectLanguage,
+                text = stringResource(id = R.string.select_language),
                 style = MaterialTheme.typography.labelSmall
             )
             IconButton(
@@ -101,13 +95,13 @@ fun LanguagePicker(
     ) {
         LanguageSectionItem(
             text = stringResource(id = R.string.english),
-            type = LanguageType.en,
+            type = LanguageType.EN,
             selected = selected,
             onUpdate = onUpdate
         )
         LanguageSectionItem(
             text = stringResource(id = R.string.french),
-            type = LanguageType.fr,
+            type = LanguageType.FR,
             selected = selected,
             onUpdate = onUpdate
         )

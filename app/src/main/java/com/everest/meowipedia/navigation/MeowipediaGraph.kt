@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.everest.meowipedia.MainActivity
 import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
 import com.everest.presentation.UploadScreen
@@ -120,19 +121,20 @@ fun MeowGraph(
         composable(route = Screens.Settings.route) {
             val vm: SettingsViewModel = hiltViewModel()
             val theme = vm.uiTheme.collectAsState()
-            val language = vm.language.collectAsState()
             val dynamic = vm.uiDynamic.collectAsState()
             val isSupportDynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             LaunchedEffect(key1 = true) {
                 vm.listenTheme()
                 vm.listenDynamic()
-                vm.listenLanguage()
             }
             SettingsScreen(
                 theme = theme.value,
                 dynamicEnabled = dynamic.value,
-                language = language.value,
                 onAction = vm::onAction,
+                onRestart = {
+                    (context as MainActivity).recreate()
+                    println("RESTARTING")
+                },
                 isSupportDynamic = isSupportDynamicColor
             )
         }

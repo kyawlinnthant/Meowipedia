@@ -8,18 +8,16 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import com.everest.dispatcher.DispatcherModule
 import com.everest.type.DayNightTheme
-import com.everest.type.LanguageType
 import com.everest.type.toDayNightTheme
-import com.everest.type.toLanguageType
 import com.everest.type.value
+import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import java.io.IOException
-import javax.inject.Inject
 
 class AppDataStoreImpl @Inject constructor(
     private val ds: DataStore<Preferences>,
@@ -29,16 +27,7 @@ class AppDataStoreImpl @Inject constructor(
     companion object {
         const val PREF_NAME = "ds.pref"
         val THEME = intPreferencesKey("com.everest.theme")
-        val LANGUAGE = intPreferencesKey("com.everest.language")
         val DYNAMIC = booleanPreferencesKey("com.everest.dynamic")
-    }
-
-    override suspend fun putLanguage(languageType: LanguageType) {
-        withContext(io) {
-            ds.edit {
-                it[LANGUAGE] = languageType.value()
-            }
-        }
     }
 
     override suspend fun putTheme(theme: DayNightTheme) {
@@ -62,14 +51,6 @@ class AppDataStoreImpl @Inject constructor(
             if (e is IOException) emit(emptyPreferences()) else throw e
         }.map { pref ->
             pref[THEME]?.toDayNightTheme() ?: DayNightTheme.System
-        }.flowOn(io)
-    }
-
-    override fun getLanguage(): Flow<LanguageType> {
-        return ds.data.catch { e ->
-            if (e is IOException) emit(emptyPreferences()) else throw e
-        }.map { pref ->
-            pref[LANGUAGE]?.toLanguageType() ?: LanguageType.en
         }.flowOn(io)
     }
 
