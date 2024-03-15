@@ -1,5 +1,6 @@
 package com.everest.presentation.view
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.core.os.LocaleListCompat
 import com.everest.presentation.SettingsAction
 import com.everest.presentation.item.DynamicSectionItem
 import com.everest.presentation.item.LanguageSection
@@ -34,12 +36,13 @@ fun SettingsScreen(
     }) {
         LazyColumn(modifier = Modifier.padding(it)) {
             item {
-                ThemeSectionItem(selected = theme, onUpdate = {
-                    onAction(SettingsAction.UpdateTheme(it))
+                ThemeSectionItem(selected = theme, onUpdate = { theme ->
+                    onAction(SettingsAction.UpdateTheme(theme))
                 })
 
-                LanguageSection(selected = language, onUpdate = {
-                    onAction(SettingsAction.UpdateLanguage(it))
+                LanguageSection(selected = language, onUpdate = { languageType ->
+                    onAction(SettingsAction.UpdateLanguage(languageType))
+                    changeLanguage(languageType.name)
                 })
             }
             if (isSupportDynamic) {
@@ -51,4 +54,16 @@ fun SettingsScreen(
             }
         }
     }
+
+}
+
+
+private fun changeLanguage(value: String) {
+
+    println(">>> $value")
+    AppCompatDelegate.setApplicationLocales(
+        LocaleListCompat.forLanguageTags(
+            value
+        )
+    )
 }

@@ -50,10 +50,7 @@ class SettingsViewModel @Inject constructor(
         when (action) {
             is SettingsAction.UpdateDynamic -> saveDynamic(action.enabled)
             is SettingsAction.UpdateTheme -> saveTheme(action.theme)
-            SettingsAction.OnBackPress -> {
-                appNavigator.back()
-            }
-
+            SettingsAction.OnBackPress -> appNavigator.back()
             is SettingsAction.UpdateLanguage -> saveLanguage(action.languageType)
         }
     }

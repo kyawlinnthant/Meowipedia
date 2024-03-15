@@ -23,10 +23,6 @@ android {
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
-        resourceConfigurations += arrayOf(
-            "en",
-            "zh"
-        )
     }
 
     buildTypes {

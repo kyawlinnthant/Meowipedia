@@ -14,4 +14,7 @@ dependencies {
     implementation(projects.cores.ui)
     implementation(projects.cores.theme)
     implementation(projects.cores.navigation)
+
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.appcompat.resource)
 }

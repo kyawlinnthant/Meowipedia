@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.everest.domain.usecase.ListenDynamicStatus
 import com.everest.domain.usecase.ListenLanguageStatus
 import com.everest.domain.usecase.ListenThemeStatus
+import com.everest.domain.usecase.SaveLanguage
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.type.DayNightTheme
 import com.everest.type.LanguageType
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getTheme: ListenThemeStatus,
     private val getDynamic: ListenDynamicStatus,
+    private val saveLanguage: SaveLanguage,
     private val listenLanguageStatus: ListenLanguageStatus,
     val navigator: AppNavigator
 ) : ViewModel() {
@@ -89,11 +91,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun setDynamic(enabled: Boolean) {
-        vmState.update { state ->
-            state.copy(
-                dynamic = enabled
-            )
+    fun putLanguage(languageType: LanguageType) {
+        viewModelScope.launch {
+            saveLanguage(languageType)
         }
     }
 
@@ -101,6 +101,14 @@ class MainViewModel @Inject constructor(
         vmState.update { state ->
             state.copy(
                 language = languageType
+            )
+        }
+    }
+
+    private fun setDynamic(enabled: Boolean) {
+        vmState.update { state ->
+            state.copy(
+                dynamic = enabled
             )
         }
     }

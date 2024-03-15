@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Paramètres</string>
+    <string name="theme">Thème</string>
+    <string name="language">Langue</string>
+    <string name="dynamic">Couleur de</string>
+    <string name="light_mode">Mode Lumière</string>
+    <string name="dark_mode">Mode sombre</string>
+    <string name="system_default">Défaut du système</string>
+    <string name="light">Lumière</string>
+    <string name="dark">Sombre</string>
+    <string name="system">Par défaut</string>
+</resources>
