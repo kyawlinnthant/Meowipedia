@@ -6,6 +6,10 @@ plugins {
 
 android {
     namespace = "com.everest.home.data"
+
+    tasks.withType<Test> {
+        useJUnitPlatform() // Make all tests use JUnit 5
+    }
 }
 dependencies {
     api(projects.data.network)

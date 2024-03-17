@@ -12,13 +12,17 @@ room = "2.6.1"
 detekt = "1.23.4"
 ktlint = "11.6.1"
 # test
-jupiter = "5.9.3"
+jupiter = "5.10.2"
+
+appcompact = "1.6.1"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
 serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.0" }
 date-time = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.5.0" }
 # androidx
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompact" }
+androidx-appcompat-resource = { module = "androidx.appcompat:appcompat-resources", version.ref = "appcompact" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
 androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.7.0" }
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }

@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.everest.meowipedia.MainActivity
 import com.everest.navigation.Screens
 import com.everest.presentation.SettingsViewModel
 import com.everest.presentation.UploadScreen
@@ -130,6 +131,10 @@ fun MeowGraph(
                 theme = theme.value,
                 dynamicEnabled = dynamic.value,
                 onAction = vm::onAction,
+                onRestart = {
+                    (context as MainActivity).recreate()
+                    println("RESTARTING")
+                },
                 isSupportDynamic = isSupportDynamicColor
             )
         }

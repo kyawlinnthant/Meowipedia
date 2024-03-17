@@ -23,6 +23,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val vmState = MutableStateFlow(MainViewModelState())
+
     val uiTheme = vmState
         .map(MainViewModelState::asTheme)
         .stateIn(
