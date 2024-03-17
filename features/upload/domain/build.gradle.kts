@@ -6,6 +6,10 @@ plugins {
 
 android {
     namespace = "com.everest.upload.domain"
+
+    tasks.withType<Test> {
+        useJUnitPlatform() // Make all tests use JUnit 5
+    }
 }
 
 dependencies {
