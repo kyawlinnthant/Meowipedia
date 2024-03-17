@@ -20,10 +20,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.LocaleListCompat
 import com.everest.extensions.getLocaleFromLanguageTags
+import com.everest.navigation.Screens
 import com.everest.presentation.SettingsAction
+import com.everest.presentation.item.CollectionSection
 import com.everest.presentation.item.DynamicSectionItem
 import com.everest.presentation.item.LanguageSection
-import com.everest.presentation.item.ThemeSectionItem
+import com.everest.presentation.item.ThemeSection
 import com.everest.settings.presentation.R
 import com.everest.type.DayNightTheme
 import com.everest.type.toStringLanguageType
@@ -54,7 +56,7 @@ fun SettingsScreen(
     }) {
         LazyColumn(modifier = Modifier.padding(it)) {
             item {
-                ThemeSectionItem(selected = theme, onUpdate = { theme ->
+                ThemeSection(selected = theme, onUpdate = { theme ->
                     onAction(SettingsAction.UpdateTheme(theme))
                 })
 
@@ -63,6 +65,9 @@ fun SettingsScreen(
                         onRestart()
                     })
                 })
+                CollectionSection {
+                    onAction(SettingsAction.Navigate(Screens.Collection.route))
+                }
             }
             if (isSupportDynamic) {
                 item {

@@ -1,4 +1,6 @@
 @file:Suppress("UnstableApiUsage")
+
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
@@ -40,19 +42,29 @@ include(
     ":features:auth:domain",
     ":features:auth:presentation",
 )
+
 include(
     ":features:home:data",
     ":features:home:domain",
     ":features:home:presentation",
 )
+
 include(
     ":features:settings:data",
     ":features:settings:domain",
     ":features:settings:presentation",
 )
+
 include(
     ":features:upload:data",
     ":features:upload:domain",
     ":features:upload:presentation",
+)
+
+
+include(
+    ":features:collection:data",
+    ":features:collection:domain",
+    ":features:collection:presentation",
 )
 

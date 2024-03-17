@@ -17,6 +17,8 @@ import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.everest.meowipedia.MainActivity
 import com.everest.navigation.Screens
+import com.everest.presentation.CollectionScreen
+import com.everest.presentation.CollectionViewModel
 import com.everest.presentation.SettingsViewModel
 import com.everest.presentation.UploadScreen
 import com.everest.presentation.UploadViewModel
@@ -133,7 +135,6 @@ fun MeowGraph(
                 onAction = vm::onAction,
                 onRestart = {
                     (context as MainActivity).recreate()
-                    println("RESTARTING")
                 },
                 isSupportDynamic = isSupportDynamicColor
             )
@@ -146,6 +147,15 @@ fun MeowGraph(
             UploadScreen(
                 state = uiState.value,
                 filePickStatus = error.value,
+                onAction = vm::onAction
+            )
+        }
+
+        composable(route = Screens.Collection.route) {
+            val vm: CollectionViewModel = hiltViewModel()
+            val uiState = vm.uiState.collectAsState()
+            CollectionScreen(
+                state = uiState.value,
                 onAction = vm::onAction
             )
         }

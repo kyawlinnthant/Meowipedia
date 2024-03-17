@@ -11,4 +11,5 @@
     <string name="light">Lumière</string>
     <string name="dark">Sombre</string>
     <string name="system">Par défaut</string>
+    <string name="collection">Collection</string>
 </resources>

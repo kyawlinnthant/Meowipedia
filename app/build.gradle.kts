@@ -45,7 +45,10 @@ dependencies {
     implementation(projects.features.home.presentation)
     implementation(projects.features.settings.presentation)
     implementation(projects.features.upload.presentation)
+    implementation(projects.features.collection.presentation)
+
     implementation(projects.features.settings.domain)
+
     implementation(projects.cores.navigation)
     implementation(projects.cores.fileUtils)
     implementation(projects.cores.model)
