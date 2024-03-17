@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.everest.unit.test)
 }
 
-
 android {
     namespace = "com.everest.collection.domain"
 

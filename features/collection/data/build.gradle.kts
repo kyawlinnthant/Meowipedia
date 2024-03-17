@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.everest.unit.test)
 }
 
-
 android {
     namespace = "com.everest.collection.data"
 
@@ -18,4 +17,3 @@ dependencies {
     api(projects.cores.util)
     api(projects.cores.dispatcher)
 }
-

@@ -18,7 +18,7 @@ class GetCollection @Inject constructor(
                     CollectionVO(
                         subId = it.subId,
                         url = it.image.url,
-                        id = it.id,
+                        id = it.id
                     )
                 }.toList()
             )

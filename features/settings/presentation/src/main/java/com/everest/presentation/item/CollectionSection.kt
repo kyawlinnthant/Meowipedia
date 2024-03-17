@@ -19,7 +19,7 @@ import com.everest.theme.dimen
 @Composable
 fun CollectionSection(
     modifier: Modifier = Modifier,
-    onAction: () -> Unit,
+    onAction: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -44,6 +44,4 @@ fun CollectionSection(
         )
         Icon(painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24), contentDescription = "click")
     }
-
 }
-

@@ -1,30 +1,22 @@
-package com.everest.presentation
+package com.everest.presentation.state
 
 import com.everest.domain.CollectionVO
 import com.everest.util.result.NetworkError
 
-data class CollectionViewModelState(
-    val state: CollectionState = CollectionState()
-) {
-    fun asUiState() = state.asUIState()
-}
-
-
-data class CollectionState(
-    val collectionList: List<CollectionVO> = listOf(),
+data class CollectionOwnState(
+    val collectionList: List<CollectionVO> = emptyList(),
     val isError: NetworkError? = null,
     val isLoading: Boolean = false
 ) {
-    fun asUIState() = when {
+    fun asCollectionState() = when {
         isLoading -> CollectionUiState.Loading
         isError != null -> CollectionUiState.Error(isError)
-        else -> CollectionUiState.Success(collectionList)
+        else -> CollectionUiState.HasData(collectionList)
     }
 }
 
 sealed interface CollectionUiState {
-
     data object Loading : CollectionUiState
     data class Error(val error: NetworkError) : CollectionUiState
-    data class Success(val data: List<CollectionVO>) : CollectionUiState
+    data class HasData(val collectionList: List<CollectionVO>) : CollectionUiState
 }

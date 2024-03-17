@@ -8,7 +8,6 @@ android {
     namespace = "com.everest.collection.presentation"
 }
 
-
 dependencies {
     implementation(projects.features.collection.domain)
     implementation(projects.cores.navigation)

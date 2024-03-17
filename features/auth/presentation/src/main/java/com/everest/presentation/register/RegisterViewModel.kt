@@ -63,6 +63,7 @@ class RegisterViewModel @Inject constructor(
                 }
 
                 is DataResult.Success -> {
+                    result.data
                     _vmState.update {
                         it.copy(
                             isLoading = false

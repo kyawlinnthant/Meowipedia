@@ -5,11 +5,11 @@ import com.everest.data.service.CollectionService
 import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall
 import com.everest.util.result.DataResult
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
-import javax.inject.Inject
 
 class CollectionRepoImpl @Inject constructor(
     private val collectionService: CollectionService,
