@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.everest.collection.presentation.R
-import com.everest.domain.CollectionVO
+import com.everest.domain.model.CollectionVO
 import com.everest.presentation.state.CollectionUiState
 import com.everest.presentation.state.CollectionViewModelUiState
 
@@ -66,7 +66,7 @@ fun CollectionScreen(
                         checked = isShow,
                         onCheckedChange = { value ->
                             onAction(CollectionAction.ShowOwnCollection(value))
-                        },
+                        }
                     )
                 }
                 when (state) {

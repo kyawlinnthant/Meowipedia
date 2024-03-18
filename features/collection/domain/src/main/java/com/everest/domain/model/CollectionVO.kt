@@ -1,4 +1,4 @@
-package com.everest.domain
+package com.everest.domain.model
 
 data class CollectionVO(
     val id: Int,

@@ -16,7 +16,6 @@ import com.everest.util.constant.Constant
 import com.everest.util.result.DataResult
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 class HomeApiRepositoryImpl @Inject constructor(
@@ -50,12 +49,10 @@ class HomeApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun searchBreeds(keyword: String): DataResult<List<BreedDTO>> =
-        withContext(io) {
-            safeApiCall(
-                json = json,
-                apiCall = { api.searchBreeds(keyword = keyword) }
-            )
-        }
+        safeApiCall(
+            json = json,
+            apiCall = { api.searchBreeds(keyword = keyword) }
+        )
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMeows(): Pager<Int, MeowEntity> {

@@ -1,6 +1,7 @@
 package com.everest.domain
 
 import com.everest.data.repository.CollectionRepo
+import com.everest.domain.model.CollectionVO
 import com.everest.util.result.DataResult
 import javax.inject.Inject
 

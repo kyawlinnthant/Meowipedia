@@ -1,6 +1,6 @@
 package com.everest.presentation.state
 
-import com.everest.domain.CollectionVO
+import com.everest.domain.model.CollectionVO
 import com.everest.util.result.NetworkError
 
 data class CollectionOwnState(

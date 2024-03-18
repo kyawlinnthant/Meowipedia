@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 class AppDataStoreImpl @Inject constructor(
     private val ds: DataStore<Preferences>,
@@ -31,18 +30,14 @@ class AppDataStoreImpl @Inject constructor(
     }
 
     override suspend fun putTheme(theme: DayNightTheme) {
-        withContext(io) {
-            ds.edit {
-                it[THEME] = theme.value()
-            }
+        ds.edit {
+            it[THEME] = theme.value()
         }
     }
 
     override suspend fun putEnabledDynamic(enabled: Boolean) {
-        withContext(io) {
-            ds.edit {
-                it[DYNAMIC] = enabled
-            }
+        ds.edit {
+            it[DYNAMIC] = enabled
         }
     }
 
