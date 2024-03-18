@@ -47,8 +47,8 @@ class UploadFileTest {
 
         uploadFileRepo?.let {
             val uploadFile = UploadFile(it)
-            val expected = uploadFile.invoke(file)
-            assertThat(expected).isEqualTo(DataResult.Success(true))
+            val actual = uploadFile.invoke(file)
+            assertThat(actual).isEqualTo(DataResult.Success(true))
         }
     }
 
@@ -58,8 +58,8 @@ class UploadFileTest {
         coEvery { uploadFileRepo?.uploadFile(file) } returns DataResult.Failed(NetworkError.SomethingWrong)
         uploadFileRepo?.let {
             val uploadFile = UploadFile(it)
-            val expected = uploadFile.invoke(file)
-            assertThat(expected).isEqualTo(DataResult.Failed(NetworkError.SomethingWrong))
+            val actual = uploadFile.invoke(file)
+            assertThat(actual).isEqualTo(DataResult.Failed(NetworkError.SomethingWrong))
         }
 
     }
