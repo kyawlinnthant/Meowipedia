@@ -8,15 +8,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 
 @Composable
 fun ThemeSectionItem(
     modifier: Modifier = Modifier,
     text: String,
-    type: DayNightTheme,
-    selected: DayNightTheme,
-    onUpdate: (DayNightTheme) -> Unit
+    type: ThemeType,
+    selected: ThemeType,
+    onUpdate: (ThemeType) -> Unit
 ) {
     val isSelected = type == selected
 

@@ -27,13 +27,13 @@ import com.everest.presentation.item.DynamicSectionItem
 import com.everest.presentation.item.LanguageSection
 import com.everest.presentation.item.ThemeSection
 import com.everest.settings.presentation.R
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 import com.everest.type.toStringLanguageType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    theme: DayNightTheme,
+    theme: ThemeType,
     dynamicEnabled: Boolean,
     onRestart: () -> Unit,
     onAction: (SettingsAction) -> Unit,

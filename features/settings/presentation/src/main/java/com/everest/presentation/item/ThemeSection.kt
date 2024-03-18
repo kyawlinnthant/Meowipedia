@@ -25,21 +25,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.everest.settings.presentation.R
 import com.everest.theme.dimen
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 
 @Composable
 fun ThemeSection(
     modifier: Modifier = Modifier,
-    selected: DayNightTheme,
-    onUpdate: (DayNightTheme) -> Unit
+    selected: ThemeType,
+    onUpdate: (ThemeType) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "")
 
     val selectedTheme = when (selected) {
-        DayNightTheme.Day -> stringResource(id = R.string.light)
-        DayNightTheme.Night -> stringResource(id = R.string.dark)
-        DayNightTheme.System -> stringResource(id = R.string.system)
+        ThemeType.DayType -> stringResource(id = R.string.light)
+        ThemeType.NightType -> stringResource(id = R.string.dark)
+        ThemeType.System -> stringResource(id = R.string.system)
     }
 
     Column(
@@ -90,27 +90,27 @@ fun ThemeSection(
 @Composable
 fun ThemePicker(
     modifier: Modifier = Modifier,
-    selected: DayNightTheme,
-    onUpdate: (DayNightTheme) -> Unit
+    selected: ThemeType,
+    onUpdate: (ThemeType) -> Unit
 ) {
     Column(
         modifier = modifier.padding(vertical = MaterialTheme.dimen.base)
     ) {
         ThemeSectionItem(
             text = stringResource(id = R.string.light_mode),
-            type = DayNightTheme.Day,
+            type = ThemeType.DayType,
             selected = selected,
             onUpdate = onUpdate
         )
         ThemeSectionItem(
             text = stringResource(id = R.string.dark_mode),
-            type = DayNightTheme.Night,
+            type = ThemeType.NightType,
             selected = selected,
             onUpdate = onUpdate
         )
         ThemeSectionItem(
             text = stringResource(id = R.string.system_default),
-            type = DayNightTheme.System,
+            type = ThemeType.System,
             selected = selected,
             onUpdate = onUpdate
         )

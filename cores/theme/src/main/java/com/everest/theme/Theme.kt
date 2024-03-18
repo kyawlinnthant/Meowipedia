@@ -13,6 +13,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.everest.type.ThemeType
 
 private val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -80,27 +81,27 @@ private val darkColors = darkColorScheme(
 
 @Composable
 fun MeowipediaTheme(
-    appTheme: com.everest.type.DayNightTheme,
+    appTheme: com.everest.type.ThemeType,
     dynamicColor: Boolean,
     content: @Composable () -> Unit
 ) {
     val supportDark = when (appTheme) {
-        com.everest.type.DayNightTheme.Day -> false
-        com.everest.type.DayNightTheme.Night -> true
-        com.everest.type.DayNightTheme.System -> isSystemInDarkTheme()
+        ThemeType.DayType -> false
+        ThemeType.NightType -> true
+        ThemeType.System -> isSystemInDarkTheme()
     }
     val meowsColor = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val context = LocalContext.current
         when (appTheme) {
-            com.everest.type.DayNightTheme.Day -> dynamicLightColorScheme(context)
-            com.everest.type.DayNightTheme.Night -> dynamicDarkColorScheme(context)
-            com.everest.type.DayNightTheme.System -> if (isSystemInDarkTheme()) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            ThemeType.DayType -> dynamicLightColorScheme(context)
+            ThemeType.NightType -> dynamicDarkColorScheme(context)
+            ThemeType.System -> if (isSystemInDarkTheme()) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
     } else {
         when (appTheme) {
-            com.everest.type.DayNightTheme.Day -> lightColors
-            com.everest.type.DayNightTheme.Night -> darkColors
-            com.everest.type.DayNightTheme.System -> if (isSystemInDarkTheme()) darkColors else lightColors
+            ThemeType.DayType -> lightColors
+            ThemeType.NightType -> darkColors
+            ThemeType.System -> if (isSystemInDarkTheme()) darkColors else lightColors
         }
     }
     val view = LocalView.current

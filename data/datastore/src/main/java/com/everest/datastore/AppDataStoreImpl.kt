@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import com.everest.dispatcher.DispatcherModule
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 import com.everest.type.toDayNightTheme
 import com.everest.type.value
 import java.io.IOException
@@ -29,7 +29,7 @@ class AppDataStoreImpl @Inject constructor(
         val DYNAMIC = booleanPreferencesKey("com.everest.dynamic")
     }
 
-    override suspend fun putTheme(theme: DayNightTheme) {
+    override suspend fun putTheme(theme: ThemeType) {
         ds.edit {
             it[THEME] = theme.value()
         }
@@ -41,11 +41,11 @@ class AppDataStoreImpl @Inject constructor(
         }
     }
 
-    override fun pullTheme(): Flow<DayNightTheme> {
+    override fun pullTheme(): Flow<ThemeType> {
         return ds.data.catch { e ->
             if (e is IOException) emit(emptyPreferences()) else throw e
         }.map { pref ->
-            pref[THEME]?.toDayNightTheme() ?: DayNightTheme.System
+            pref[THEME]?.toDayNightTheme() ?: ThemeType.System
         }.flowOn(io)
     }
 

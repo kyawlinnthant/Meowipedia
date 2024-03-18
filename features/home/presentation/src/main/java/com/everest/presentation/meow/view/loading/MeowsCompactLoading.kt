@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.everest.theme.MeowipediaTheme
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 import com.everest.ui.shimmer.ShimmerView
 
 @Composable
@@ -72,7 +72,7 @@ fun MeowsCompactLoading(
 @Composable
 @Preview
 private fun Preview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
+    MeowipediaTheme(appTheme = ThemeType.NightType, dynamicColor = true) {
         Surface {
             MeowsCompactLoading()
         }
