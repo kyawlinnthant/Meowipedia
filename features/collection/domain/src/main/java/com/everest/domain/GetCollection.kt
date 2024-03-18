@@ -14,15 +14,19 @@ class GetCollection @Inject constructor(
                 DataResult.Failed(response.error)
             }
 
-            is DataResult.Success -> DataResult.Success(
-                response.data.map {
-                    CollectionVO(
-                        subId = it.subId,
-                        url = it.image.url,
-                        id = it.id
-                    )
-                }.toList()
-            )
+            is DataResult.Success -> {
+                DataResult.Success(
+                    response.data.filter {
+                        it.image.url != null
+                    }.map {
+                        CollectionVO(
+                            subId = it.subId,
+                            url = it.image.url ?: "",
+                            id = it.id
+                        )
+                    }
+                )
+            }
         }
     }
 }

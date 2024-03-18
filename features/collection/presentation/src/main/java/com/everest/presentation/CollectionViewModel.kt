@@ -7,7 +7,6 @@ import com.everest.navigation.navigator.AppNavigator
 import com.everest.presentation.state.CollectionViewModelState
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
@@ -32,6 +32,16 @@ class CollectionViewModel @Inject constructor(
     )
 
     fun getCollection() {
+        _vmState.update { state ->
+            state.copy(
+                ownState = state.ownState.copy(
+                    isLoading = true
+                ),
+                listState = state.listState.copy(
+                    isLoading = true
+                )
+            )
+        }
         viewModelScope.launch {
             when (val response = getCollection.invoke()) {
                 is DataResult.Failed -> _vmState.update { state ->
@@ -51,9 +61,11 @@ class CollectionViewModel @Inject constructor(
                     _vmState.update { state ->
                         state.copy(
                             ownState = state.ownState.copy(
-                                collectionList = response.data.filter { it.subId == "23424" }
+                                isLoading = false,
+                                collectionList = response.data.filter { it.subId == "my-user-1234" }
                             ),
                             listState = state.listState.copy(
+                                isLoading = false,
                                 collectionList = response.data
                             )
                         )
@@ -71,6 +83,7 @@ class CollectionViewModel @Inject constructor(
 
             is CollectionAction.Navigate -> appNavigator.to(action.route)
             is CollectionAction.ShowOwnCollection -> showOwnCollection(action.isShow)
+            is CollectionAction.Upload -> TODO()
         }
     }
 

@@ -17,6 +17,6 @@ data class CollectionDTO(
 
 @Serializable
 data class Image(
-    val id: String,
-    val url: String
+    val id: String? = null,
+    val url: String? = null
 )

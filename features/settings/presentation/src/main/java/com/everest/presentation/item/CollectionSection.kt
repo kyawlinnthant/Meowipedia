@@ -39,9 +39,23 @@ fun CollectionSection(
     ) {
         Text(
             text = stringResource(id = R.string.collection),
-            modifier = modifier.weight(1f),
+            modifier = modifier
+                .weight(1f)
+                .padding(
+                    top = MaterialTheme.dimen.base,
+                    bottom = MaterialTheme.dimen.base,
+                    start = MaterialTheme.dimen.base2x,
+                ),
             style = MaterialTheme.typography.titleMedium
         )
-        Icon(painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24), contentDescription = "click")
+        Icon(
+            modifier = modifier.padding(
+                top = MaterialTheme.dimen.base,
+                bottom = MaterialTheme.dimen.base,
+                end = MaterialTheme.dimen.base2x,
+            ),
+            painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
+            contentDescription = "click"
+        )
     }
 }

@@ -10,6 +10,9 @@ android {
 
 dependencies {
     implementation(projects.features.collection.domain)
+
     implementation(projects.cores.navigation)
+    implementation(projects.cores.theme)
+
     implementation(projects.cores.util)
 }
