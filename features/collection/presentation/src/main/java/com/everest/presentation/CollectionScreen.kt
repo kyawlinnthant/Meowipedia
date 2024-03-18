@@ -4,6 +4,10 @@ import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +26,11 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -32,10 +41,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.everest.collection.presentation.R
 import com.everest.domain.model.CollectionVO
-import com.everest.navigation.Screens
+import com.everest.file.utils.FileUtils.getFileFromUri
 import com.everest.presentation.state.CollectionUiState
 import com.everest.presentation.state.CollectionViewModelUiState
 import com.everest.theme.dimen
+import com.everest.ui.dialog.LoadingDialog
 import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,14 +53,43 @@ import java.util.Calendar
 fun CollectionScreen(
     state: CollectionViewModelUiState,
     isShow: Boolean,
+    isUploading: Boolean,
+    filePickStatus: String?,
     onAction: (CollectionAction) -> Unit
 ) {
+    val context = LocalContext.current
+    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
+
+    LaunchedEffect(filePickStatus) {
+        filePickStatus?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    val chooseFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
+        uri?.let {
+            selectedFileUri = it
+            val file = getFileFromUri(context, it)
+            file?.let { f ->
+                onAction(CollectionAction.Upload(f))
+            }
+        }
+    }
+
     Scaffold(topBar = {
         TopAppBar(
             title = { Text(text = stringResource(id = R.string.collection)) },
+            navigationIcon = {
+                IconButton(onClick = { onAction(CollectionAction.Back) }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.back_arrow),
+                        contentDescription = "Back"
+                    )
+                }
+            },
             actions = {
                 IconButton(onClick = {
-                    onAction(CollectionAction.Navigate(Screens.Upload.route))
+                    chooseFileLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.upload),
@@ -87,6 +126,12 @@ fun CollectionScreen(
                     }
                 }
             }
+
+            if (isUploading) {
+                LoadingDialog(onDismiss = {
+                    onAction(CollectionAction.DismissDialog)
+                })
+            }
         }
     }
 }
@@ -112,7 +157,8 @@ fun CollectionView(
 
 @Composable
 fun SuccessState(
-    list: List<CollectionVO>, modifier: Modifier = Modifier
+    list: List<CollectionVO>,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
         items(count = list.size, key = { index -> list[index].id }) { index ->

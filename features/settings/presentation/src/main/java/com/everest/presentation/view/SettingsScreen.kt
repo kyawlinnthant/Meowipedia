@@ -48,11 +48,12 @@ fun SettingsScreen(
     }
 
     Scaffold(topBar = {
-        TopAppBar(title = { Text(text = stringResource(id = R.string.settings)) }, navigationIcon = {
-            IconButton(onClick = { onAction(SettingsAction.OnBackPress) }) {
-                Icon(painter = painterResource(id = R.drawable.baseline_keyboard_arrow_left_24), contentDescription = "Back")
-            }
-        })
+        TopAppBar(title = { Text(text = stringResource(id = R.string.settings)) },
+            navigationIcon = {
+                IconButton(onClick = { onAction(SettingsAction.OnBackPress) }) {
+                    Icon(painter = painterResource(id = R.drawable.baseline_keyboard_arrow_left_24), contentDescription = "Back")
+                }
+            })
     }) {
         LazyColumn(modifier = Modifier.padding(it)) {
             item {

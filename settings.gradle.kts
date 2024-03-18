@@ -58,12 +58,6 @@ include(
 )
 
 include(
-    ":features:upload:data",
-    ":features:upload:domain",
-    ":features:upload:presentation",
-)
-
-include(
     ":features:collection:data",
     ":features:collection:domain",
     ":features:collection:presentation",

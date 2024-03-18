@@ -42,8 +42,8 @@ fun CollectionSection(
             modifier = modifier
                 .weight(1f)
                 .padding(
-                    top = MaterialTheme.dimen.base,
-                    bottom = MaterialTheme.dimen.base,
+                    top = MaterialTheme.dimen.standard,
+                    bottom = MaterialTheme.dimen.standard,
                     start = MaterialTheme.dimen.base2x,
                 ),
             style = MaterialTheme.typography.titleMedium
@@ -52,7 +52,7 @@ fun CollectionSection(
             modifier = modifier.padding(
                 top = MaterialTheme.dimen.base,
                 bottom = MaterialTheme.dimen.base,
-                end = MaterialTheme.dimen.base2x,
+                end = MaterialTheme.dimen.standard * 2,
             ),
             painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
             contentDescription = "click"

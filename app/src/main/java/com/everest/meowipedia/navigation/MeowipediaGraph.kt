@@ -20,8 +20,6 @@ import com.everest.navigation.Screens
 import com.everest.presentation.CollectionScreen
 import com.everest.presentation.CollectionViewModel
 import com.everest.presentation.SettingsViewModel
-import com.everest.presentation.UploadScreen
-import com.everest.presentation.UploadViewModel
 import com.everest.presentation.breeds.view.CategoriesScreen
 import com.everest.presentation.meow.screen.MeowsScreen
 import com.everest.presentation.meow.screen.MeowsViewModel
@@ -140,27 +138,31 @@ fun MeowGraph(
             )
         }
 
-        composable(route = Screens.Upload.route) {
-            val vm: UploadViewModel = hiltViewModel()
-            val uiState = vm.uiState.collectAsState()
-            val error = vm.errorFlow.collectAsState(null)
-            UploadScreen(
-                state = uiState.value,
-                filePickStatus = error.value,
-                onAction = vm::onAction
-            )
-        }
+//        composable(route = Screens.Upload.route) {
+//            val vm: UploadViewModel = hiltViewModel()
+//            val uiState = vm.uiState.collectAsState()
+//            val error = vm.errorFlow.collectAsState(null)
+//            UploadScreen(
+//                state = uiState.value,
+//                filePickStatus = error.value,
+//                onAction = vm::onAction
+//            )
+//        }
 
         composable(route = Screens.Collection.route) {
             val vm: CollectionViewModel = hiltViewModel()
             val uiState = vm.uiState.collectAsState()
             val isShow = vm.isShowOwnCollection.collectAsState()
+            val fileStatus = vm.fileUploadStatus.collectAsState(null)
+            val isUploading = vm.isFileUploading.collectAsState(false)
             LaunchedEffect(key1 = true) {
                 vm.getCollection()
             }
             CollectionScreen(
                 state = uiState.value,
                 isShow = isShow.value,
+                isUploading = isUploading.value,
+                filePickStatus = fileStatus.value,
                 onAction = vm::onAction
             )
         }

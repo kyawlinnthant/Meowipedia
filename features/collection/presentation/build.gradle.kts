@@ -15,4 +15,6 @@ dependencies {
     implementation(projects.cores.theme)
 
     implementation(projects.cores.util)
+    implementation(projects.cores.ui)
+    implementation(projects.cores.fileUtils)
 }

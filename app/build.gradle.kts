@@ -44,7 +44,6 @@ dependencies {
     implementation(projects.features.auth.presentation)
     implementation(projects.features.home.presentation)
     implementation(projects.features.settings.presentation)
-    implementation(projects.features.upload.presentation)
     implementation(projects.features.collection.presentation)
 
     implementation(projects.features.settings.domain)
