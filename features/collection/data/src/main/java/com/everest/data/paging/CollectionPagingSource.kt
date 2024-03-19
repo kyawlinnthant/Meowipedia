@@ -15,13 +15,25 @@ class CollectionPagingSource(
             val response = collectionService.getCollection(page = pageNumber)
             val pageResponse = response.body()
             if (response.isSuccessful) {
-                pageNumber++
+                pageResponse?.let {
+                    if (it.isNotEmpty()) {
+                        pageNumber++
+                    } else {
+                        //End Of Pagination
+                    }
+                }
             }
 
             LoadResult.Page(
                 data = pageResponse.orEmpty(),
                 prevKey = null,
-                nextKey = pageNumber
+                nextKey = pageResponse?.let {
+                    if (it.isEmpty()) {
+                        null
+                    } else {
+                        pageNumber
+                    }
+                }
             )
 
 

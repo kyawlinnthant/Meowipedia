@@ -43,6 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.everest.collection.presentation.R
@@ -151,7 +152,7 @@ fun CollectionScreen(
 
                     else -> {
                         SuccessState(
-                            collectionList = collectionList.itemSnapshotList.items,
+                            collectionList = collectionList,
                             lazyListState = lazyListState
                         )
                     }
@@ -169,6 +170,7 @@ fun CollectionScreen(
 
 @Composable
 fun CollectionView(
+    collectionList: LazyPagingItems<CollectionVO>,
     state: CollectionUiState,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState,
@@ -185,7 +187,7 @@ fun CollectionView(
         }
 
         is CollectionUiState.HasData -> SuccessState(
-            collectionList = state.collectionList,
+            collectionList = collectionList,
             lazyListState = lazyListState
         )
     }
@@ -193,22 +195,36 @@ fun CollectionView(
 
 @Composable
 fun SuccessState(
-    collectionList: List<CollectionVO>,
+    collectionList: LazyPagingItems<CollectionVO>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState
 ) {
+
 
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
-        items(count = collectionList.size,
-            key = { index ->
-                collectionList[index].id
-            }) { index ->
+        items(
+            count = collectionList.itemCount,
+            key = (collectionList.itemKey { it.id })
+        ) { index ->
             val currentVo = collectionList[index]
-            CollectionItem(currentVo, modifier)
+            currentVo?.let {
+                CollectionItem(it, modifier)
+            }
         }
+        if (collectionList.loadState.append == LoadState.Loading)
+            item {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(MaterialTheme.dimen.base2x)
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
     }
 }
 
