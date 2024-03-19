@@ -10,14 +10,14 @@ class CollectionPagingSource(
 ) : PagingSource<Int, CollectionDTO>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CollectionDTO> {
-        println(">>>>> ${params.key}")
-        var pageNumber = params.key ?: 1
+        var pageNumber = params.key ?: 0
         return try {
             val response = collectionService.getCollection(page = pageNumber)
             val pageResponse = response.body()
             if (response.isSuccessful) {
                 pageNumber++
             }
+
             LoadResult.Page(
                 data = pageResponse.orEmpty(),
                 prevKey = null,

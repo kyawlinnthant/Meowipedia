@@ -2,17 +2,14 @@ package com.everest.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.everest.domain.GetCollection
 import com.everest.domain.UploadFile
-import com.everest.domain.model.CollectionVO
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.presentation.state.CollectionViewModelState
 import com.everest.presentation.state.UploadUiState
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -59,6 +56,7 @@ class CollectionViewModel @Inject constructor(
                     _uploadUiState.update { state ->
                         state.copy(
                             showLoading = false,
+                            message = ""
                         )
                     }
                 }
@@ -78,7 +76,7 @@ class CollectionViewModel @Inject constructor(
                     _uploadUiState.update { state ->
                         state.copy(
                             showLoading = false,
-                            message = "File Upload Success",
+                            message = "File Upload Failed",
                         )
                     }
                 }
@@ -87,7 +85,7 @@ class CollectionViewModel @Inject constructor(
                     _uploadUiState.update { state ->
                         state.copy(
                             showLoading = false,
-                            message = "File Upload Failed",
+                            message = "File Upload Success",
                         )
                     }
                 }

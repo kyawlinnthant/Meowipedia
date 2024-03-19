@@ -16,10 +16,10 @@ class GetCollection @Inject constructor(
             pagingData.map {
                 CollectionVO(
                     subId = it.subId ?: "",
-                    url = it.url,
-                    id = it.id,
-                    width = it.width,
-                    height = it.height
+                    url = it.url ?: "",
+                    id = it.id ?: "",
+                    width = it.width ?: 0,
+                    height = it.height ?: 0
                 )
             }
         }

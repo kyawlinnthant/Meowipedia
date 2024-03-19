@@ -72,6 +72,7 @@ fun CollectionScreen(
     dialogUiState.apply {
         if (this.message.isNotEmpty()) {
             Toast.makeText(context, this.message, Toast.LENGTH_LONG).show()
+            onAction(CollectionAction.DismissDialog)
         }
     }
 
@@ -150,24 +151,11 @@ fun CollectionScreen(
 
                     else -> {
                         SuccessState(
-                            list = collectionList.itemSnapshotList.items,
+                            collectionList = collectionList.itemSnapshotList.items,
                             lazyListState = lazyListState
                         )
                     }
                 }
-//                Box(modifier = Modifier.weight(1f)) {
-//                    when (state) {
-//                        is CollectionViewModelUiState.ListState -> CollectionView(
-//                            state = state.state,
-//                            lazyListState = lazyListState
-//                        )
-//
-//                        is CollectionViewModelUiState.OwnCollectionState -> CollectionView(
-//                            state = state.state,
-//                            lazyListState = lazyListState
-//                        )
-//                    }
-//                }
             }
 
             if (dialogUiState.showLoading) {
@@ -197,7 +185,7 @@ fun CollectionView(
         }
 
         is CollectionUiState.HasData -> SuccessState(
-            list = state.collectionList,
+            collectionList = state.collectionList,
             lazyListState = lazyListState
         )
     }
@@ -205,19 +193,20 @@ fun CollectionView(
 
 @Composable
 fun SuccessState(
-    list: List<CollectionVO>,
+    collectionList: List<CollectionVO>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState
 ) {
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
-        items(count = list.size,
+        items(count = collectionList.size,
             key = { index ->
-                list[index].id
+                collectionList[index].id
             }) { index ->
-            val currentVo = list[index]
+            val currentVo = collectionList[index]
             CollectionItem(currentVo, modifier)
         }
     }

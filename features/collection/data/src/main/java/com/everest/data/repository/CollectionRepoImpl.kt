@@ -6,10 +6,8 @@ import androidx.paging.PagingConfig
 import com.everest.data.UploadFileDTO
 import com.everest.data.paging.CollectionPagingSource
 import com.everest.data.service.CollectionService
-import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall
 import com.everest.util.result.DataResult
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -25,14 +23,14 @@ class CollectionRepoImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
-                prefetchDistance = 2
+                prefetchDistance = 2,
+                enablePlaceholders = true,
             ),
             pagingSourceFactory = {
                 CollectionPagingSource(collectionService = collectionService)
             }
         )
     }
-
 
     override suspend fun uploadFile(file: File): DataResult<UploadFileDTO> {
         val requestFile = file.asRequestBody("image/jpeg".toMediaType())
