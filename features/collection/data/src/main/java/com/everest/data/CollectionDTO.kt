@@ -5,18 +5,12 @@ import kotlinx.serialization.Serializable
 data class CollectionDTO(
     @SerialName("created_at")
     val createdAt: String,
-    val id: Int,
-    val image: Image,
-    @SerialName("image_id")
-    val imageID: String,
+    val height: Int,
+    val id: String,
+    @SerialName("original_filename")
+    val originalFilename: String,
     @SerialName("sub_id")
-    val subId: String,
-    @SerialName("user_id")
-    val userId: String
-)
-
-@Serializable
-data class Image(
-    val id: String? = null,
-    val url: String? = null
+    val subId: String? = null,
+    val url: String,
+    val width: Int
 )

@@ -2,13 +2,17 @@ package com.everest.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.everest.domain.GetCollection
 import com.everest.domain.UploadFile
+import com.everest.domain.model.CollectionVO
 import com.everest.navigation.navigator.AppNavigator
-import com.everest.presentation.state.UploadUiState
 import com.everest.presentation.state.CollectionViewModelState
+import com.everest.presentation.state.UploadUiState
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,11 +36,7 @@ class CollectionViewModel @Inject constructor(
     private val _uploadUiState = MutableStateFlow(UploadUiState())
     val uploadUiState = _uploadUiState.asStateFlow()
 
-//    private val _isFileUploading = MutableSharedFlow<Boolean>()
-//    val isFileUploading: SharedFlow<Boolean> = _isFileUploading
-//
-//    private val _fileUploadStatus = MutableSharedFlow<String>()
-//    val fileUploadStatus: SharedFlow<String> = _fileUploadStatus
+    val collectionList = getCollection().cachedIn(viewModelScope)
 
     private val _vmState = MutableStateFlow(CollectionViewModelState())
     val uiState = _vmState.map(CollectionViewModelState::asUiState).stateIn(
@@ -44,50 +44,6 @@ class CollectionViewModel @Inject constructor(
         started = SharingStarted.Eagerly,
         initialValue = _vmState.value.asUiState()
     )
-
-    fun getCollection() {
-        _vmState.update { state ->
-            state.copy(
-                ownState = state.ownState.copy(
-                    isLoading = true
-                ),
-                listState = state.listState.copy(
-                    isLoading = true
-                )
-            )
-        }
-        viewModelScope.launch {
-            when (val response = getCollection.invoke()) {
-                is DataResult.Failed -> _vmState.update { state ->
-                    state.copy(
-                        ownState = state.ownState.copy(
-                            isError = response.error,
-                            isLoading = false
-                        ),
-                        listState = state.listState.copy(
-                            isError = response.error,
-                            isLoading = false
-                        )
-                    )
-                }
-
-                is DataResult.Success -> {
-                    _vmState.update { state ->
-                        state.copy(
-                            ownState = state.ownState.copy(
-                                isLoading = false,
-                                collectionList = response.data.filter { it.subId == "my-user-1234" }
-                            ),
-                            listState = state.listState.copy(
-                                isLoading = false,
-                                collectionList = response.data
-                            )
-                        )
-                    }
-                }
-            }
-        }
-    }
 
     fun onAction(action: CollectionAction) {
         when (action) {

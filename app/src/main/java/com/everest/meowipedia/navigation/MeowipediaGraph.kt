@@ -153,12 +153,11 @@ fun MeowGraph(
             val vm: CollectionViewModel = hiltViewModel()
             val uiState = vm.uiState.collectAsState()
             val isShowOwnCollection = vm.isShowOwnCollection.collectAsState()
+            val collectionList = vm.collectionList.collectAsLazyPagingItems()
             val dialogUiState = vm.uploadUiState.collectAsState()
-            LaunchedEffect(key1 = true) {
-                vm.getCollection()
-            }
             CollectionScreen(
                 state = uiState.value,
+                collectionList = collectionList,
                 dialogUiState = dialogUiState.value,
                 isShowOwnCollection = isShowOwnCollection.value,
                 onAction = vm::onAction

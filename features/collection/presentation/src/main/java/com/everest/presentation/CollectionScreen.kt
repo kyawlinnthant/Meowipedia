@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -34,10 +36,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.everest.collection.presentation.R
@@ -48,11 +53,13 @@ import com.everest.presentation.state.CollectionViewModelUiState
 import com.everest.presentation.state.UploadUiState
 import com.everest.theme.dimen
 import com.everest.ui.dialog.LoadingDialog
+import com.everest.ui.shimmer.ShimmerBrush
 import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollectionScreen(
+    collectionList: LazyPagingItems<CollectionVO>,
     state: CollectionViewModelUiState,
     isShowOwnCollection: Boolean,
     dialogUiState: UploadUiState,
@@ -120,19 +127,47 @@ fun CollectionScreen(
                         onAction(CollectionAction.ShowOwnCollection(value))
                     })
                 }
-                Box(modifier = Modifier.weight(1f)) {
-                    when (state) {
-                        is CollectionViewModelUiState.ListState -> CollectionView(
-                            state = state.state,
-                            lazyListState = lazyListState
-                        )
+                when (collectionList.loadState.refresh) {
+                    LoadState.Loading -> {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator()
+                        }
+                    }
 
-                        is CollectionViewModelUiState.OwnCollectionState -> CollectionView(
-                            state = state.state,
+                    is LoadState.Error -> {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(text = "Error")
+                        }
+                    }
+
+                    else -> {
+                        SuccessState(
+                            list = collectionList.itemSnapshotList.items,
                             lazyListState = lazyListState
                         )
                     }
                 }
+//                Box(modifier = Modifier.weight(1f)) {
+//                    when (state) {
+//                        is CollectionViewModelUiState.ListState -> CollectionView(
+//                            state = state.state,
+//                            lazyListState = lazyListState
+//                        )
+//
+//                        is CollectionViewModelUiState.OwnCollectionState -> CollectionView(
+//                            state = state.state,
+//                            lazyListState = lazyListState
+//                        )
+//                    }
+//                }
             }
 
             if (dialogUiState.showLoading) {
@@ -178,7 +213,10 @@ fun SuccessState(
         modifier = modifier,
         state = lazyListState
     ) {
-        items(count = list.size, key = { index -> list[index].id }) { index ->
+        items(count = list.size,
+            key = { index ->
+                list[index].id
+            }) { index ->
             val currentVo = list[index]
             CollectionItem(currentVo, modifier)
         }
@@ -190,8 +228,22 @@ fun CollectionItem(
     collectionVO: CollectionVO,
     modifier: Modifier
 ) {
-    val context = LocalContext.current;
-    Box {
+    val brush = ShimmerBrush()
+
+    val context = LocalContext.current
+    val ratio = collectionVO.width.toFloat() / collectionVO.height.toFloat()
+    Box(modifier = modifier
+        .fillMaxWidth()
+        .aspectRatio(
+            ratio = ratio,
+            matchHeightConstraintsFirst = true
+        )
+        .drawBehind {
+            drawRect(
+                brush = brush
+            )
+        }
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current).data(collectionVO.url).crossfade(true).build(), contentDescription = "", contentScale = ContentScale.Crop,
             modifier = modifier
