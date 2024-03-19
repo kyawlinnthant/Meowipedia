@@ -13,6 +13,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -29,17 +31,34 @@ class CollectionViewModel @Inject constructor(
     private val _isShowOwnCollection = MutableStateFlow(false)
     val isShowOwnCollection = _isShowOwnCollection.asStateFlow()
 
-
     private val _uploadUiState = MutableStateFlow(UploadUiState())
     val uploadUiState = _uploadUiState.asStateFlow()
 
-    val collectionList = getCollection().cachedIn(viewModelScope)
+    fun getCollection() {
+        viewModelScope.launch {
+            getCollection.invoke().collectLatest { data ->
+                _vmState.update { state ->
+                    state.copy(
+                        collectionList = flow {
+                            emit(data)
+                        }.cachedIn(viewModelScope)
+                    )
+                }
+            }
+        }
+    }
 
     private val _vmState = MutableStateFlow(CollectionViewModelState())
-    val uiState = _vmState.map(CollectionViewModelState::asUiState).stateIn(
+    val uiState = _vmState.map(CollectionViewModelState::asListState).stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
-        initialValue = _vmState.value.asUiState()
+        initialValue = _vmState.value.asListState()
+    )
+
+    val ownCollectionUiState = _vmState.map(CollectionViewModelState::asOwnCollectionState).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = _vmState.value.asOwnCollectionState()
     )
 
     fun onAction(action: CollectionAction) {

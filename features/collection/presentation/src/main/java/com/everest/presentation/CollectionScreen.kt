@@ -50,7 +50,6 @@ import com.everest.collection.presentation.R
 import com.everest.domain.model.CollectionVO
 import com.everest.file.utils.FileUtils.getFileFromUri
 import com.everest.presentation.state.CollectionUiState
-import com.everest.presentation.state.CollectionViewModelUiState
 import com.everest.presentation.state.UploadUiState
 import com.everest.theme.dimen
 import com.everest.ui.dialog.LoadingDialog
@@ -60,8 +59,9 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollectionScreen(
+    ownCollectionList: LazyPagingItems<CollectionVO>,
     collectionList: LazyPagingItems<CollectionVO>,
-    state: CollectionViewModelUiState,
+//    state: CollectionViewModelUiState,
     isShowOwnCollection: Boolean,
     dialogUiState: UploadUiState,
     onAction: (CollectionAction) -> Unit,
@@ -151,10 +151,17 @@ fun CollectionScreen(
                     }
 
                     else -> {
-                        SuccessState(
-                            collectionList = collectionList,
-                            lazyListState = lazyListState
-                        )
+                        if (isShowOwnCollection) {
+                            SuccessState(
+                                collectionList = ownCollectionList,
+                                lazyListState = lazyListState
+                            )
+                        } else {
+                            SuccessState(
+                                collectionList = collectionList,
+                                lazyListState = lazyListState
+                            )
+                        }
                     }
                 }
             }
@@ -199,8 +206,6 @@ fun SuccessState(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState
 ) {
-
-
     LazyColumn(
         modifier = modifier,
         state = lazyListState

@@ -151,13 +151,17 @@ fun MeowGraph(
 
         composable(route = Screens.Collection.route) {
             val vm: CollectionViewModel = hiltViewModel()
-            val uiState = vm.uiState.collectAsState()
             val isShowOwnCollection = vm.isShowOwnCollection.collectAsState()
-            val collectionList = vm.collectionList.collectAsLazyPagingItems()
+            val ownCollectionList = vm.ownCollectionUiState.collectAsState()
+            val collectionList = vm.uiState.collectAsState()
             val dialogUiState = vm.uploadUiState.collectAsState()
+            LaunchedEffect(key1 = true) {
+                vm.getCollection()
+            }
             CollectionScreen(
-                state = uiState.value,
-                collectionList = collectionList,
+//                state = uiState.value,
+                ownCollectionList = ownCollectionList.value.collectAsLazyPagingItems(),
+                collectionList = collectionList.value.collectAsLazyPagingItems(),
                 dialogUiState = dialogUiState.value,
                 isShowOwnCollection = isShowOwnCollection.value,
                 onAction = vm::onAction
