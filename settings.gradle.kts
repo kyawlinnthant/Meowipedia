@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":firebase")
+
+
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {

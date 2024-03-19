@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.everest.android.library)
     alias(libs.plugins.everest.compose.library)
     alias(libs.plugins.everest.hilt)
+    alias(libs.plugins.everest.firebase)
 }
 
 android {
@@ -17,4 +18,6 @@ dependencies {
     implementation(projects.cores.util)
     implementation(projects.cores.ui)
     implementation(projects.cores.fileUtils)
+
+    implementation(projects.firebase)
 }

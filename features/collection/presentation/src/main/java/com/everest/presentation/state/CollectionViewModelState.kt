@@ -9,10 +9,8 @@ import kotlinx.coroutines.flow.map
 
 data class CollectionViewModelState(
     val showOwnCollection: Boolean = false,
-//    val collectionList: List<CollectionVO> = emptyList(),
+    val firebaseUid: String = "",
     val collectionList: Flow<PagingData<CollectionVO>> = emptyFlow(),
-//    val listState: CollectionOwnState = CollectionOwnState(),
-//    val ownState: CollectionOwnState = CollectionOwnState()
 ) {
     fun asOwnCollectionState() = collectionList.map {
         it.filter { item ->

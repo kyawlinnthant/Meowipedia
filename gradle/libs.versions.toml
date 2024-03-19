@@ -15,6 +15,7 @@ ktlint = "11.6.1"
 jupiter = "5.10.2"
 
 appcompact = "1.6.1"
+jetbrains-kotlin-jvm = "1.9.0"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }

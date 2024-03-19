@@ -9,6 +9,7 @@ import com.everest.navigation.navigator.AppNavigator
 import com.everest.presentation.state.CollectionViewModelState
 import com.everest.presentation.state.UploadUiState
 import com.everest.util.result.DataResult
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,6 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
+    private val firebaseAuth: FirebaseAuth,
     private val getCollection: GetCollection,
     private val uploadFile: UploadFile,
     private val appNavigator: AppNavigator
@@ -34,11 +36,13 @@ class CollectionViewModel @Inject constructor(
     private val _uploadUiState = MutableStateFlow(UploadUiState())
     val uploadUiState = _uploadUiState.asStateFlow()
 
+
     fun getCollection() {
         viewModelScope.launch {
             getCollection.invoke().collectLatest { data ->
                 _vmState.update { state ->
                     state.copy(
+                        firebaseUid = firebaseAuth.uid ?: "",
                         collectionList = flow {
                             emit(data)
                         }.cachedIn(viewModelScope)
