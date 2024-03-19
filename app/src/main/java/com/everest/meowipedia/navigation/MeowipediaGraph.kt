@@ -152,17 +152,15 @@ fun MeowGraph(
         composable(route = Screens.Collection.route) {
             val vm: CollectionViewModel = hiltViewModel()
             val uiState = vm.uiState.collectAsState()
-            val isShow = vm.isShowOwnCollection.collectAsState()
-            val fileStatus = vm.fileUploadStatus.collectAsState(null)
-            val isUploading = vm.isFileUploading.collectAsState(false)
+            val isShowOwnCollection = vm.isShowOwnCollection.collectAsState()
+            val dialogUiState = vm.uploadUiState.collectAsState()
             LaunchedEffect(key1 = true) {
                 vm.getCollection()
             }
             CollectionScreen(
                 state = uiState.value,
-                isShow = isShow.value,
-                isUploading = isUploading.value,
-                filePickStatus = fileStatus.value,
+                dialogUiState = dialogUiState.value,
+                isShowOwnCollection = isShowOwnCollection.value,
                 onAction = vm::onAction
             )
         }

@@ -5,12 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.everest.domain.GetCollection
 import com.everest.domain.UploadFile
 import com.everest.navigation.navigator.AppNavigator
+import com.everest.presentation.state.UploadUiState
 import com.everest.presentation.state.CollectionViewModelState
 import com.everest.util.result.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
@@ -29,11 +28,15 @@ class CollectionViewModel @Inject constructor(
     private val _isShowOwnCollection = MutableStateFlow(false)
     val isShowOwnCollection = _isShowOwnCollection.asStateFlow()
 
-    private val _isFileUploading = MutableSharedFlow<Boolean>()
-    val isFileUploading: SharedFlow<Boolean> = _isFileUploading
 
-    private val _fileUploadStatus = MutableSharedFlow<String>()
-    val fileUploadStatus: SharedFlow<String> = _fileUploadStatus
+    private val _uploadUiState = MutableStateFlow(UploadUiState())
+    val uploadUiState = _uploadUiState.asStateFlow()
+
+//    private val _isFileUploading = MutableSharedFlow<Boolean>()
+//    val isFileUploading: SharedFlow<Boolean> = _isFileUploading
+//
+//    private val _fileUploadStatus = MutableSharedFlow<String>()
+//    val fileUploadStatus: SharedFlow<String> = _fileUploadStatus
 
     private val _vmState = MutableStateFlow(CollectionViewModelState())
     val uiState = _vmState.map(CollectionViewModelState::asUiState).stateIn(
@@ -97,7 +100,11 @@ class CollectionViewModel @Inject constructor(
             is CollectionAction.Upload -> fileUpload(action.file)
             CollectionAction.DismissDialog -> {
                 viewModelScope.launch {
-                    _isFileUploading.emit(false)
+                    _uploadUiState.update { state ->
+                        state.copy(
+                            showLoading = false,
+                        )
+                    }
                 }
             }
         }
@@ -105,38 +112,28 @@ class CollectionViewModel @Inject constructor(
 
     private fun fileUpload(file: File) {
         viewModelScope.launch {
-            _isFileUploading.emit(true)
-//            _vmState.update { state ->
-//                state.copy(
-//                    state = state.state.copy(
-//                        isLoading = true
-//                    )
-//                )
-//            }
+            _uploadUiState.update { state ->
+                state.copy(
+                    showLoading = true,
+                )
+            }
             when (val response = uploadFile(file = file)) {
                 is DataResult.Failed -> {
-                    _isFileUploading.emit(false)
-                    _fileUploadStatus.emit("File Upload Failed")
-//                    vmState.update { state ->
-//                        state.copy(
-//                            state = state.state.copy(
-//                                isError = response.error,
-//                                isLoading = false
-//                            )
-//                        )
-//                    }
+                    _uploadUiState.update { state ->
+                        state.copy(
+                            showLoading = false,
+                            message = "File Upload Success",
+                        )
+                    }
                 }
 
                 is DataResult.Success -> {
-                    _isFileUploading.emit(false)
-                    _fileUploadStatus.emit("File Upload Success")
-//                    vmState.update { state ->
-//                        state.copy(
-//                            state = state.state.copy(
-//                                isSuccess = true
-//                            )
-//                        )
-//                    }
+                    _uploadUiState.update { state ->
+                        state.copy(
+                            showLoading = false,
+                            message = "File Upload Failed",
+                        )
+                    }
                 }
             }
         }

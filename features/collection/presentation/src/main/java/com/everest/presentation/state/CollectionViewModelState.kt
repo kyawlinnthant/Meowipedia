@@ -24,3 +24,9 @@ sealed interface CollectionViewModelUiState {
 
     data class ListState(val state: CollectionUiState) : CollectionViewModelUiState
 }
+
+
+data class UploadUiState(
+    val showLoading: Boolean = false,
+    val message: String = "",
+)
