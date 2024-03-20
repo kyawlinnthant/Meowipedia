@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.everest.ui.R
 import com.everest.theme.dimen
+import com.everest.ui.R
 
 @Composable
 fun CollectionSection(
@@ -54,7 +54,7 @@ fun CollectionSection(
                 bottom = MaterialTheme.dimen.base,
                 end = MaterialTheme.dimen.standard * 2
             ),
-            painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
+            painter = painterResource(id = R.drawable.ic_arrow_right),
             contentDescription = "click"
         )
     }

@@ -27,9 +27,9 @@ import com.everest.presentation.item.CollectionSection
 import com.everest.presentation.item.DynamicSectionItem
 import com.everest.presentation.item.LanguageSection
 import com.everest.presentation.item.ThemeSection
-import com.everest.ui.R
 import com.everest.type.ThemeType
 import com.everest.type.toStringLanguageType
+import com.everest.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,7 +54,7 @@ fun SettingsScreen(
             title = { Text(text = stringResource(id = R.string.settings)) },
             navigationIcon = {
                 IconButton(onClick = { onAction(SettingsAction.OnBackPress) }) {
-                    Icon(painter = painterResource(id = R.drawable.baseline_keyboard_arrow_left_24), contentDescription = "Back")
+                    Icon(painter = painterResource(id = R.drawable.ic_arrow_left), contentDescription = "Back")
                 }
             }
         )

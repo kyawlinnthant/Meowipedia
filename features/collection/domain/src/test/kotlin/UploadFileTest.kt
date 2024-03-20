@@ -2,7 +2,6 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.everest.data.UploadFileDTO
 import com.everest.data.repository.CollectionRepo
-import com.everest.data.repository.UploadFileRepo
 import com.everest.domain.UploadFile
 import com.everest.util.result.DataResult
 import com.everest.util.result.NetworkError

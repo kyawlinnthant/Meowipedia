@@ -32,7 +32,4 @@ fun InputErrorItem(title: String, show: Boolean = false) {
             )
         }
     }
-
 }
-
-

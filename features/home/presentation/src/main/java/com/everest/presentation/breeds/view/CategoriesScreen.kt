@@ -39,19 +39,19 @@ fun CategoriesScreen(
                 is CategoriesViewModelUiState.ListState -> TopAppBar(title = {
                     Text(text = stringResource(id = R.string.categories))
                 }, actions = {
-                    IconButton(
-                        onClick = {
-                            onAction(
-                                CategoriesAction.UpdateSearchView(shouldShow = true)
+                        IconButton(
+                            onClick = {
+                                onAction(
+                                    CategoriesAction.UpdateSearchView(shouldShow = true)
+                                )
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_search),
+                                contentDescription = null
                             )
                         }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_search_24),
-                            contentDescription = null
-                        )
-                    }
-                })
+                    })
 
                 is CategoriesViewModelUiState.SearchState -> TopAppBar(
                     title = {
@@ -74,7 +74,7 @@ fun CategoriesScreen(
                             }
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.baseline_keyboard_arrow_left_24),
+                                painter = painterResource(id = R.drawable.ic_arrow_left),
                                 contentDescription = null
                             )
                         }

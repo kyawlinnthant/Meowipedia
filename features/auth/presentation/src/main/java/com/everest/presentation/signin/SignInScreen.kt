@@ -174,7 +174,6 @@ fun SignInTablet(
                 else -> DefaultView(
                     onAction = {
                         onAction(SignInAction.SignIn)
-
                     },
                     title = "Sign In"
                 )

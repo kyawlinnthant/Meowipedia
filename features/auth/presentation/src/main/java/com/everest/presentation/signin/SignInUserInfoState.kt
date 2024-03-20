@@ -5,6 +5,5 @@ data class SignInUserInfoState(
     val mailErrorMessage: String = "",
     val password: String = "",
     val passwordErrorMessage: String = "",
-    val isValid: Boolean = false,
+    val isValid: Boolean = false
 )
-

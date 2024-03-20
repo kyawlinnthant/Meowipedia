@@ -30,7 +30,7 @@ data class Dimen(
     val normalTextSize: Int = 14,
     val largeTextSize: Int = 24,
 
-    val hintTextSize: Int = smallTextSize,
+    val hintTextSize: Int = smallTextSize
 )
 
 val LocalSize = compositionLocalOf { Dimen() }

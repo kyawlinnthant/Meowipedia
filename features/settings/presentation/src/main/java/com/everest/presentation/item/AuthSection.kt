@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.everest.navigation.Screens
 import com.everest.presentation.SettingsAction
-import com.everest.ui.R
 import com.everest.theme.dimen
+import com.everest.ui.R
 
 @Composable
 fun AuthSection(
