@@ -13,4 +13,15 @@ object PasswordValidator {
         }
         return ""
     }
+
+    fun isPasswordMatch(password: String, confirmPassword: String): String {
+        if (password.isNotEmpty() &&
+            confirmPassword.isNotEmpty() &&
+            password != confirmPassword
+        ) {
+            return "Password don't match"
+        }
+        return ""
+    }
+
 }

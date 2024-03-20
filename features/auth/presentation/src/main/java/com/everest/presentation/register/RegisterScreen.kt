@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.text2.input.TextFieldState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,8 +28,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.everest.auth.presentation.R
+import com.everest.ui.item.InputErrorItem
 import com.everest.ui.textfield.CommonSecureTextField
 import com.everest.ui.textfield.CommonTextField
 
@@ -38,8 +41,7 @@ import com.everest.ui.textfield.CommonTextField
 fun RegisterScreen(
     state: RegisterUIState,
     snackbarHostState: SnackbarHostState,
-    mail: TextFieldState,
-    password: TextFieldState,
+    registerUserInfoState: RegisterUserInfoState,
     onAction: (RegisterAction) -> Unit
 ) {
     Scaffold(
@@ -63,10 +65,30 @@ fun RegisterScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                CommonTextField(mail)
+                CommonTextField(
+                    registerUserInfoState.mailTextFieldState,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                )
+                InputErrorItem(
+                    title = registerUserInfoState.mailErrorMessage,
+                    show = registerUserInfoState.mailErrorMessage.isNotEmpty()
+                )
                 Spacer(modifier = Modifier.height(16.dp))
-                CommonSecureTextField(password)
+                CommonSecureTextField(registerUserInfoState.passwordTextFieldState)
+                InputErrorItem(
+                    title = registerUserInfoState.passwordErrorMessage,
+                    show = registerUserInfoState.passwordErrorMessage.isNotEmpty()
+                )
                 Spacer(modifier = Modifier.height(16.dp))
+                CommonSecureTextField(registerUserInfoState.confirmPasswordTextFieldState)
+                InputErrorItem(
+                    title = registerUserInfoState.confirmPasswordErrorMessage,
+                    show = registerUserInfoState.confirmPasswordErrorMessage.isNotEmpty()
+                )
+
                 when (state) {
                     RegisterUIState.Loading -> CircularProgressIndicator(
                         modifier = Modifier

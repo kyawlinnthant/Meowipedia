@@ -10,7 +10,6 @@ import com.everest.util.result.DataResult
 import com.everest.util.validator.InputValidator
 import com.everest.util.validator.PasswordValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
@@ -99,7 +99,9 @@ class SignInViewModel @Inject constructor(
     }
 
     private fun isValidUserInfo() {
-        if (_signUserInfoState.value.passwordErrorMessage == "" || _signUserInfoState.value.mailErrorMessage == "") {
+        if (_signUserInfoState.value.passwordErrorMessage.isEmpty() &&
+            _signUserInfoState.value.mailErrorMessage.isEmpty()
+        ) {
             _signUserInfoState.value = _signUserInfoState.value.copy(
                 isValid = true
             )

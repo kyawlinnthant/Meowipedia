@@ -11,9 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.everest.meowipedia.MainActivity
 import com.everest.navigation.Screens
@@ -33,7 +35,6 @@ import com.everest.presentation.view.SettingsScreen
 import com.everest.theme.WindowSize
 import kotlinx.coroutines.flow.collectLatest
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MeowGraph(
     modifier: Modifier = Modifier,
@@ -47,58 +48,11 @@ fun MeowGraph(
         startDestination = Screens.Meows.route,
         modifier = modifier.fillMaxSize()
     ) {
-        composable(route = Screens.Register.route) {
-            val vm: RegisterViewModel = hiltViewModel()
-            val vmState = vm.uiState.collectAsState()
-            LaunchedEffect(key1 = true) {
-                vm.registerEvent.collectLatest { event ->
-                    when (event) {
-                        RegisterEvent.DefaultView -> println("DEFAULT")
-                        is RegisterEvent.ShowSnack -> {
-                            snackbarHostState.showSnackbar(
-                                message = "Invalid Credential"
-                            )
-                        }
-                    }
-                }
-            }
 
-            RegisterScreen(
-                state = vmState.value,
-                snackbarHostState = snackbarHostState,
-                mail = vm.mail,
-                password = vm.password,
-                onAction = vm::onAction
-            )
-        }
-
-        composable(route = Screens.Login.route) {
-            val vm: SignInViewModel = hiltViewModel()
-            val vmState = vm.uiState.collectAsState()
-            val signUserInfoState = vm.signUserInfoState.collectAsState()
-            LaunchedEffect(key1 = true) {
-                vm.signInEvent.collectLatest { event ->
-                    when (event) {
-                        SignInEvent.DefaultView -> println("DEFAULT")
-                        is SignInEvent.ShowSnack -> {
-                            snackbarHostState.showSnackbar(
-                                message = "Invalid Credential"
-                            )
-                        }
-                    }
-                }
-            }
-            SignInScreen(
-                windowSize = window,
-                signUserInfoState = signUserInfoState.value,
-                state = vmState.value,
-                snackbarHostState = snackbarHostState,
-                mail = vm.mail,
-                password = vm.password,
-                onAction = vm::onAction
-            )
-        }
-
+        authGraph(
+            window = window,
+            snackbarHostState = snackbarHostState
+        )
         composable(route = Screens.Meows.route) {
             val vm: MeowsViewModel = hiltViewModel()
             val galleries = vm.meows.collectAsLazyPagingItems()
@@ -142,17 +96,6 @@ fun MeowGraph(
             )
         }
 
-//        composable(route = Screens.Upload.route) {
-//            val vm: UploadViewModel = hiltViewModel()
-//            val uiState = vm.uiState.collectAsState()
-//            val error = vm.errorFlow.collectAsState(null)
-//            UploadScreen(
-//                state = uiState.value,
-//                filePickStatus = error.value,
-//                onAction = vm::onAction
-//            )
-//        }
-
         composable(route = Screens.Collection.route) {
             val vm: CollectionViewModel = hiltViewModel()
             val isShowOwnCollection = vm.isShowOwnCollection.collectAsState()
@@ -163,11 +106,73 @@ fun MeowGraph(
                 vm.getCollection()
             }
             CollectionScreen(
-//                state = uiState.value,
                 ownCollectionList = ownCollectionList.value.collectAsLazyPagingItems(),
                 collectionList = collectionList.value.collectAsLazyPagingItems(),
                 dialogUiState = dialogUiState.value,
                 isShowOwnCollection = isShowOwnCollection.value,
+                onAction = vm::onAction
+            )
+        }
+    }
+
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+fun NavGraphBuilder.authGraph(
+    window: WindowSize,
+    snackbarHostState: SnackbarHostState
+) {
+    navigation(
+        startDestination = Screens.Login.route, route = Screens.AuthGraph.route
+    ) {
+        composable(route = Screens.Register.route) {
+            val vm: RegisterViewModel = hiltViewModel()
+            val vmState = vm.uiState.collectAsState()
+            val registerUserInfoState = vm.registerUserInfoState.collectAsState()
+            LaunchedEffect(key1 = true) {
+                vm.registerEvent.collectLatest { event ->
+                    when (event) {
+                        RegisterEvent.DefaultView -> println("DEFAULT")
+                        is RegisterEvent.ShowSnack -> {
+                            snackbarHostState.showSnackbar(
+                                message = "Invalid Credential"
+                            )
+                        }
+                    }
+                }
+            }
+
+            RegisterScreen(
+                state = vmState.value,
+                snackbarHostState = snackbarHostState,
+                registerUserInfoState = registerUserInfoState.value,
+                onAction = vm::onAction
+            )
+        }
+
+        composable(route = Screens.Login.route) {
+            val vm: SignInViewModel = hiltViewModel()
+            val vmState = vm.uiState.collectAsState()
+            val signUserInfoState = vm.signUserInfoState.collectAsState()
+            LaunchedEffect(key1 = true) {
+                vm.signInEvent.collectLatest { event ->
+                    when (event) {
+                        SignInEvent.DefaultView -> println("DEFAULT")
+                        is SignInEvent.ShowSnack -> {
+                            snackbarHostState.showSnackbar(
+                                message = "Invalid Credential"
+                            )
+                        }
+                    }
+                }
+            }
+            SignInScreen(
+                windowSize = window,
+                signUserInfoState = signUserInfoState.value,
+                state = vmState.value,
+                snackbarHostState = snackbarHostState,
+                mail = vm.mail,
+                password = vm.password,
                 onAction = vm::onAction
             )
         }
