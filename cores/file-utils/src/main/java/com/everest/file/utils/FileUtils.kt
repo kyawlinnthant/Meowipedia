@@ -4,23 +4,24 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.core.database.getStringOrNull
+import com.everest.extensions.log
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 
 object FileUtils {
-
+    private val bufferSize = 4028
     private fun writeFile(inputStream: InputStream, file: File) {
         val outputStream = FileOutputStream(file)
-        val buffer = ByteArray(4028) // Adjust the buffer size as per your requirements
+        val buffer = ByteArray(bufferSize) // Adjust the buffer size as per your requirements
         var bytesRead: Int
         try {
             while (inputStream.read(buffer).also { bytesRead = it } != -1) {
                 outputStream.write(buffer, 0, bytesRead)
             }
         } catch (e: IOException) {
-            e.printStackTrace()
+            e.log("${e.printStackTrace()}")
         } finally {
             inputStream.close()
             outputStream.close()

@@ -29,7 +29,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
             }
             val cores = libs.findBundle("androidx-cores").get()
             dependencies {
-                add("implementation",cores)
+                add("implementation", cores)
             }
         }
     }
