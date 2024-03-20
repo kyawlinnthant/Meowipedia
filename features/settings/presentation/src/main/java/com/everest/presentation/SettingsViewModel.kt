@@ -103,7 +103,6 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun setLogin(isLogin: Boolean) {
-        println(">>> UPDATE $isLogin")
         vmState.update { state ->
             state.copy(
                 isLogin = isLogin

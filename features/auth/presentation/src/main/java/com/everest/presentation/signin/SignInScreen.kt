@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.text2.BasicSecureTextField
 import androidx.compose.foundation.text2.input.TextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -31,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,6 +39,7 @@ import com.everest.navigation.Screens
 import com.everest.presentation.register.DefaultView
 import com.everest.theme.WindowSize
 import com.everest.theme.WindowType
+import com.everest.ui.item.InputErrorItem
 import com.everest.ui.textfield.CommonSecureTextField
 import com.everest.ui.textfield.CommonTextField
 
@@ -47,6 +48,7 @@ import com.everest.ui.textfield.CommonTextField
 fun SignInScreen(
     windowSize: WindowSize,
     state: SignInUIState,
+    signUserInfoState: SignInUserInfoState,
     snackbarHostState: SnackbarHostState,
     mail: TextFieldState,
     password: TextFieldState,
@@ -59,6 +61,7 @@ fun SignInScreen(
             when (windowSize.width) {
                 WindowType.Compact -> SignInCompact(
                     state = state,
+                    signUserInfoState = signUserInfoState,
                     mail = mail,
                     password = password,
                     onAction = onAction
@@ -66,6 +69,7 @@ fun SignInScreen(
 
                 else -> SignInTablet(
                     state = state,
+                    signUserInfoState = signUserInfoState,
                     mail = mail,
                     password = password,
                     onAction = onAction
@@ -79,6 +83,7 @@ fun SignInScreen(
 @Composable
 fun SignInCompact(
     state: SignInUIState,
+    signUserInfoState: SignInUserInfoState,
     mail: TextFieldState,
     password: TextFieldState,
     onAction: (SignInAction) -> Unit
@@ -97,9 +102,17 @@ fun SignInCompact(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CommonTextField(mail)
+            CommonTextField(mail, stringResource(id = R.string.mail))
+            InputErrorItem(
+                title = signUserInfoState.mailErrorMessage,
+                show = signUserInfoState.mailErrorMessage.isNotEmpty()
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            CommonSecureTextField(password)
+            CommonSecureTextField(password, stringResource(id = R.string.password))
+            InputErrorItem(
+                title = signUserInfoState.passwordErrorMessage,
+                show = signUserInfoState.passwordErrorMessage.isNotEmpty()
+            )
             Spacer(modifier = Modifier.height(16.dp))
             when (state) {
                 SignInUIState.Loading -> CircularProgressIndicator(
@@ -134,6 +147,7 @@ fun SignInCompact(
 @Composable
 fun SignInTablet(
     state: SignInUIState,
+    signUserInfoState: SignInUserInfoState,
     mail: TextFieldState,
     password: TextFieldState,
     onAction: (SignInAction) -> Unit
@@ -148,7 +162,7 @@ fun SignInTablet(
         ) {
             CommonTextField(mail)
             Spacer(modifier = Modifier.height(16.dp))
-            BasicSecureTextField(password)
+            CommonSecureTextField(password)
             Spacer(modifier = Modifier.height(16.dp))
             when (state) {
                 SignInUIState.Loading -> CircularProgressIndicator(
@@ -160,6 +174,7 @@ fun SignInTablet(
                 else -> DefaultView(
                     onAction = {
                         onAction(SignInAction.SignIn)
+
                     },
                     title = "Sign In"
                 )
@@ -194,6 +209,7 @@ fun PreviewSignCompact() {
     SignInScreen(
         windowSize = WindowSize(WindowType.Compact, WindowType.Compact),
         state = SignInUIState.DefaultView,
+        signUserInfoState = SignInUserInfoState(),
         snackbarHostState = SnackbarHostState(),
         mail = TextFieldState(),
         password = TextFieldState()
@@ -209,6 +225,7 @@ fun PreviewSignMedium() {
         windowSize = WindowSize(WindowType.Medium, WindowType.Medium),
         state = SignInUIState.DefaultView,
         snackbarHostState = SnackbarHostState(),
+        signUserInfoState = SignInUserInfoState(),
         mail = TextFieldState(),
         password = TextFieldState()
     ) {
