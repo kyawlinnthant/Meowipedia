@@ -9,6 +9,10 @@ plugins {
 android {
     namespace = "com.everest.meowipedia"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.everest.meowipedia"
         versionCode = 1
@@ -58,4 +62,6 @@ dependencies {
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.appcompat.resource)
+
+    implementation(libs.timber)
 }

@@ -9,4 +9,6 @@ android {
 
 dependencies {
     implementation(projects.cores.dispatcher)
+    implementation(projects.cores.util)
+    implementation(libs.timber)
 }
