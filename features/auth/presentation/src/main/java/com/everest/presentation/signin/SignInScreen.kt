@@ -103,12 +103,16 @@ fun SignInCompact(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CommonTextField(mail, stringResource(id = R.string.mail))
-            if (signUserInfoState.mailErrorMessage.isNotEmpty())
-                InputErrorItem(signUserInfoState.mailErrorMessage)
+            InputErrorItem(
+                title = signUserInfoState.mailErrorMessage,
+                show = signUserInfoState.mailErrorMessage.isNotEmpty()
+            )
             Spacer(modifier = Modifier.height(16.dp))
             CommonSecureTextField(password, stringResource(id = R.string.password))
-            if (signUserInfoState.passwordErrorMessage.isNotEmpty())
-                InputErrorItem(signUserInfoState.passwordErrorMessage)
+            InputErrorItem(
+                title = signUserInfoState.passwordErrorMessage,
+                show = signUserInfoState.passwordErrorMessage.isNotEmpty()
+            )
             Spacer(modifier = Modifier.height(16.dp))
             when (state) {
                 SignInUIState.Loading -> CircularProgressIndicator(

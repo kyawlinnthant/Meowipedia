@@ -1,5 +1,6 @@
 package com.everest.ui.item
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,20 +15,24 @@ import com.everest.theme.dimen
 import com.everest.ui.text.CommonText
 
 @Composable
-fun InputErrorItem(title: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                horizontal = MaterialTheme.dimen.base2x
+fun InputErrorItem(title: String, show: Boolean = false) {
+    AnimatedVisibility(visible = show) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = MaterialTheme.dimen.base2x
+                )
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
+            CommonText(
+                title,
+                textColor = Color.Gray,
+                fontSize = MaterialTheme.dimen.hintTextSize
             )
-    ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        CommonText(
-            title,
-            textColor = Color.Gray
-        )
+        }
     }
+
 }
 
 

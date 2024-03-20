@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 data class Dimen(
+    val extraSmall: Dp = 4.dp,
     val small: Dp = 4.dp,
     val base: Dp = 8.dp,
     val standard: Dp = 12.dp,
@@ -25,8 +26,11 @@ data class Dimen(
     val descriptionIcon: Dp = 120.dp,
     val bottomAppBarHeight: Dp = 80.dp,
 
+    val smallTextSize: Int = 12,
     val normalTextSize: Int = 14,
-    val largeTextSize: Int = 24
+    val largeTextSize: Int = 24,
+
+    val hintTextSize: Int = smallTextSize,
 )
 
 val LocalSize = compositionLocalOf { Dimen() }

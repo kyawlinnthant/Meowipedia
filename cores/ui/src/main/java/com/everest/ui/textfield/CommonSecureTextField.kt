@@ -49,7 +49,7 @@ fun CommonSecureTextField(
                 if (state.text.isEmpty()) {
                     Text(
                         text = hint,
-                        color = Color.Gray.copy(alpha = 0.5f)
+                        color = Color.Black.copy(alpha = 0.5f)
                     )
                 }
                 innerTextField()
