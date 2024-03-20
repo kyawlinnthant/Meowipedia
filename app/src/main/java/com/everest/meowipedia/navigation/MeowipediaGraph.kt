@@ -75,6 +75,7 @@ fun MeowGraph(
         composable(route = Screens.Login.route) {
             val vm: SignInViewModel = hiltViewModel()
             val vmState = vm.uiState.collectAsState()
+            val signUserInfoState = vm.signUserInfoState.collectAsState()
             LaunchedEffect(key1 = true) {
                 vm.signInEvent.collectLatest { event ->
                     when (event) {
@@ -89,6 +90,7 @@ fun MeowGraph(
             }
             SignInScreen(
                 windowSize = window,
+                signUserInfoState = signUserInfoState.value,
                 state = vmState.value,
                 snackbarHostState = snackbarHostState,
                 mail = vm.mail,

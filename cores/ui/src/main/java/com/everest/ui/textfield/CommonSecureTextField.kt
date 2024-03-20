@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CommonSecureTextField(
     state: TextFieldState,
-    hint: String = "Hint"
+    hint: String = ""
 ) {
     BasicSecureTextField(
         state = state,
