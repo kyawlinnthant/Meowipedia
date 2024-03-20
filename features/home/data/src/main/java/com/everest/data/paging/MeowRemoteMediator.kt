@@ -10,9 +10,9 @@ import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.meow.MeowEntity
 import com.everest.database.entity.meow.MeowKeyEntity
 import com.everest.util.constant.Constant
-import javax.inject.Inject
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class MeowRemoteMediator @Inject constructor(
@@ -45,7 +45,10 @@ class MeowRemoteMediator @Inject constructor(
         }
 
         return try {
-            val response = api.meows(page = currentPage, limit = state.config.pageSize)
+            val response = api.meows(
+                page = currentPage,
+                limit = state.config.pageSize
+            )
             val isEndOfList = response.isEmpty()
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {

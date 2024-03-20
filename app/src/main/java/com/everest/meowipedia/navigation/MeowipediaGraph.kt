@@ -20,8 +20,6 @@ import com.everest.navigation.Screens
 import com.everest.presentation.CollectionScreen
 import com.everest.presentation.CollectionViewModel
 import com.everest.presentation.SettingsViewModel
-import com.everest.presentation.UploadScreen
-import com.everest.presentation.UploadViewModel
 import com.everest.presentation.breeds.view.CategoriesScreen
 import com.everest.presentation.meow.screen.MeowsScreen
 import com.everest.presentation.meow.screen.MeowsViewModel
@@ -140,27 +138,32 @@ fun MeowGraph(
             )
         }
 
-        composable(route = Screens.Upload.route) {
-            val vm: UploadViewModel = hiltViewModel()
-            val uiState = vm.uiState.collectAsState()
-            val error = vm.errorFlow.collectAsState(null)
-            UploadScreen(
-                state = uiState.value,
-                filePickStatus = error.value,
-                onAction = vm::onAction
-            )
-        }
+//        composable(route = Screens.Upload.route) {
+//            val vm: UploadViewModel = hiltViewModel()
+//            val uiState = vm.uiState.collectAsState()
+//            val error = vm.errorFlow.collectAsState(null)
+//            UploadScreen(
+//                state = uiState.value,
+//                filePickStatus = error.value,
+//                onAction = vm::onAction
+//            )
+//        }
 
         composable(route = Screens.Collection.route) {
             val vm: CollectionViewModel = hiltViewModel()
-            val uiState = vm.uiState.collectAsState()
-            val isShow = vm.isShowOwnCollection.collectAsState()
+            val isShowOwnCollection = vm.isShowOwnCollection.collectAsState()
+            val ownCollectionList = vm.ownCollectionUiState.collectAsState()
+            val collectionList = vm.uiState.collectAsState()
+            val dialogUiState = vm.uploadUiState.collectAsState()
             LaunchedEffect(key1 = true) {
                 vm.getCollection()
             }
             CollectionScreen(
-                state = uiState.value,
-                isShow = isShow.value,
+//                state = uiState.value,
+                ownCollectionList = ownCollectionList.value.collectAsLazyPagingItems(),
+                collectionList = collectionList.value.collectAsLazyPagingItems(),
+                dialogUiState = dialogUiState.value,
+                isShowOwnCollection = isShowOwnCollection.value,
                 onAction = vm::onAction
             )
         }

@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":firebase")
+
+
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
@@ -55,12 +58,6 @@ include(
     ":features:settings:data",
     ":features:settings:domain",
     ":features:settings:presentation",
-)
-
-include(
-    ":features:upload:data",
-    ":features:upload:domain",
-    ":features:upload:presentation",
 )
 
 include(

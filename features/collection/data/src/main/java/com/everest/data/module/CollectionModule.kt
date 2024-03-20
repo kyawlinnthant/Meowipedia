@@ -14,5 +14,6 @@ interface CollectionModule {
 
     @Binds
     @Singleton
-    fun bindUploadFileRepo(repo: CollectionRepoImpl): CollectionRepo
+    fun bindCollectionRepoImpl(repo: CollectionRepoImpl): CollectionRepo
+
 }
