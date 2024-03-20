@@ -17,4 +17,8 @@
     <string name="dark">Sombre</string>
     <string name="system">Par défaut</string>
     <string name="collection">Collection</string>
+
+    <string name="gallery">Galerie</string>
+    <string name="categories">Catégories</string>
+    <string name="logout">Logout</string>
 </resources>

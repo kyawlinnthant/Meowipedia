@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="english" translatable="false">English</string>
+    <string name="french" translatable="false">French</string>
+
     <string name="no_internet">No Internet! Please connect wifi or mobile data!</string>
     <string name="something_wrong">Something\'s wrong! Please Try Again!</string>
     <string name="retry">Retry</string>
-
     <string name="settings">Paramètres</string>
     <string name="theme">Thème</string>
     <string name="login">Connexion</string>
@@ -18,4 +21,7 @@
     <string name="dark">Sombre</string>
     <string name="system">Par défaut</string>
     <string name="collection">Collection</string>
+    <string name="gallery">Gallery</string>
+    <string name="categories">Categories</string>
+    <string name="logout">Logout</string>
 </resources>

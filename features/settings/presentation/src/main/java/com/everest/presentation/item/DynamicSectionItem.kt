@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.everest.settings.presentation.R
+import com.everest.ui.R
 import com.everest.theme.dimen
 
 @Composable

@@ -27,7 +27,7 @@ import com.everest.presentation.item.CollectionSection
 import com.everest.presentation.item.DynamicSectionItem
 import com.everest.presentation.item.LanguageSection
 import com.everest.presentation.item.ThemeSection
-import com.everest.settings.presentation.R
+import com.everest.ui.R
 import com.everest.type.ThemeType
 import com.everest.type.toStringLanguageType
 

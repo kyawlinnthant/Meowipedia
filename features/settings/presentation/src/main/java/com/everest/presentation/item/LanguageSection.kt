@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.everest.settings.presentation.R
+import com.everest.ui.R
 import com.everest.theme.dimen
 import com.everest.type.LanguageType
 
