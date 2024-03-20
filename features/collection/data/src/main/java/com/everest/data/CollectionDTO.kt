@@ -12,5 +12,5 @@ data class CollectionDTO(
     @SerialName("sub_id")
     val subId: String? = null,
     val url: String? = null,
-    val width: Int? = null,
+    val width: Int? = null
 )

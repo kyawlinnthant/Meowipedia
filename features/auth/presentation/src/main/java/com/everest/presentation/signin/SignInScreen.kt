@@ -2,6 +2,7 @@ package com.everest.presentation.signin
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -81,11 +83,11 @@ fun SignInCompact(
     password: TextFieldState,
     onAction: (SignInAction) -> Unit
 ) {
-    Box {
+    Box(modifier = Modifier.background(color = Color.Red)) {
         Image(
             painterResource(R.drawable.cat),
             contentDescription = "",
-            contentScale = ContentScale.Fit,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .fillMaxSize()
         )

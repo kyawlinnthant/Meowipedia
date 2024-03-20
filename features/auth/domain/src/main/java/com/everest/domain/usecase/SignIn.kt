@@ -25,7 +25,6 @@ class SignIn @Inject constructor(private val signInRepo: AuthRepo) {
                             errorMessage = null
                         )
                     )
-
                 } ?: run {
                     DataResult.Failed(NetworkError.SomethingWrong)
                 }

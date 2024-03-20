@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 data class CollectionViewModelState(
     val showOwnCollection: Boolean = false,
     val firebaseUid: String = "",
-    val collectionList: Flow<PagingData<CollectionVO>> = emptyFlow(),
+    val collectionList: Flow<PagingData<CollectionVO>> = emptyFlow()
 ) {
     fun asOwnCollectionState() = collectionList.map {
         it.filter { item ->
@@ -21,15 +21,7 @@ data class CollectionViewModelState(
     fun asListState() = collectionList
 }
 
-sealed interface CollectionViewModelUiState {
-    data class OwnCollectionState(val state: CollectionUiState) :
-        CollectionViewModelUiState
-
-    data class ListState(val state: CollectionUiState) : CollectionViewModelUiState
-}
-
-
 data class UploadUiState(
     val showLoading: Boolean = false,
-    val message: String = "",
+    val message: String = ""
 )

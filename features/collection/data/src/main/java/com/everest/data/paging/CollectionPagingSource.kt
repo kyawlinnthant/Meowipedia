@@ -19,7 +19,7 @@ class CollectionPagingSource(
                     if (it.isNotEmpty()) {
                         pageNumber++
                     } else {
-                        //End Of Pagination
+                        // End Of Pagination
                     }
                 }
             }
@@ -35,16 +35,12 @@ class CollectionPagingSource(
                     }
                 }
             )
-
-
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
-
     }
 
     override fun getRefreshKey(state: PagingState<Int, CollectionDTO>): Int =
         ((state.anchorPosition ?: 0) - state.config.initialLoadSize / 2)
             .coerceAtLeast(0)
-
 }

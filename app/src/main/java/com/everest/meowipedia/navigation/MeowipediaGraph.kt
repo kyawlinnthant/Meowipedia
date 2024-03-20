@@ -122,6 +122,7 @@ fun MeowGraph(
             val vm: SettingsViewModel = hiltViewModel()
             val theme = vm.uiTheme.collectAsState()
             val dynamic = vm.uiDynamic.collectAsState()
+            val loginState = vm.uiLogin.collectAsState()
             val isSupportDynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             LaunchedEffect(key1 = true) {
                 vm.listenTheme()
@@ -130,6 +131,7 @@ fun MeowGraph(
             SettingsScreen(
                 theme = theme.value,
                 dynamicEnabled = dynamic.value,
+                isLogin = loginState.value,
                 onAction = vm::onAction,
                 onRestart = {
                     (context as MainActivity).recreate()

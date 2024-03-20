@@ -20,7 +20,7 @@ interface CollectionService {
     suspend fun getCollection(
         @Query("limit") limit: Int = 10,
         @Query("page") page: Int = 0,
-        @Query("order") order: String = "DESC", //DESC, ASC
+        @Query("order") order: String = "DESC" // DESC, ASC
     ): Response<List<CollectionDTO>>
 
     @Multipart

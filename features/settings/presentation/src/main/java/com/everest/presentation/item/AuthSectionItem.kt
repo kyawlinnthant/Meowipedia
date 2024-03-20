@@ -12,22 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import com.everest.settings.presentation.R
 import com.everest.theme.dimen
 
 @Composable
-fun CollectionSection(
+fun AuthSectionItem(
     modifier: Modifier = Modifier,
+    title: String,
     onAction: () -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(
-                horizontal = MaterialTheme.dimen.base2x,
-                vertical = MaterialTheme.dimen.base
-            )
             .background(
                 color = MaterialTheme.colorScheme.surfaceContainer,
                 shape = MaterialTheme.shapes.medium
@@ -38,7 +34,7 @@ fun CollectionSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(id = R.string.collection),
+            text = title,
             modifier = modifier
                 .weight(1f)
                 .padding(
@@ -55,7 +51,7 @@ fun CollectionSection(
                 end = MaterialTheme.dimen.standard * 2
             ),
             painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
-            contentDescription = "click"
+            contentDescription = null
         )
     }
 }

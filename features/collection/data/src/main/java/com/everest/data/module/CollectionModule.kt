@@ -15,5 +15,4 @@ interface CollectionModule {
     @Binds
     @Singleton
     fun bindCollectionRepoImpl(repo: CollectionRepoImpl): CollectionRepo
-
 }

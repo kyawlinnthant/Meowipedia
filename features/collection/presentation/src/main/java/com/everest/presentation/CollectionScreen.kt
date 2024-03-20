@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -49,7 +50,6 @@ import coil.request.ImageRequest
 import com.everest.collection.presentation.R
 import com.everest.domain.model.CollectionVO
 import com.everest.file.utils.FileUtils.getFileFromUri
-import com.everest.presentation.state.CollectionUiState
 import com.everest.presentation.state.UploadUiState
 import com.everest.theme.dimen
 import com.everest.ui.dialog.LoadingDialog
@@ -61,10 +61,9 @@ import java.util.Calendar
 fun CollectionScreen(
     ownCollectionList: LazyPagingItems<CollectionVO>,
     collectionList: LazyPagingItems<CollectionVO>,
-//    state: CollectionViewModelUiState,
     isShowOwnCollection: Boolean,
     dialogUiState: UploadUiState,
-    onAction: (CollectionAction) -> Unit,
+    onAction: (CollectionAction) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val context = LocalContext.current
@@ -113,7 +112,7 @@ fun CollectionScreen(
         Box(
             modifier = Modifier
                 .padding(it)
-                .fillMaxSize(),
+                .fillMaxSize()
         ) {
             Column {
                 Row(
@@ -123,42 +122,45 @@ fun CollectionScreen(
                     )
                 ) {
                     Text(
-                        text = stringResource(id = R.string.own_collection), modifier = Modifier.weight(1f)
+                        text = stringResource(id = R.string.own_collection),
+                        modifier = Modifier.weight(1f)
                     )
                     Switch(checked = isShowOwnCollection, onCheckedChange = { value ->
                         onAction(CollectionAction.ShowOwnCollection(value))
                     })
                 }
-                when (collectionList.loadState.refresh) {
-                    LoadState.Loading -> {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    }
 
-                    is LoadState.Error -> {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(text = "Error")
+                collectionList.apply {
+                    when (collectionList.loadState.refresh) {
+                        LoadState.Loading -> {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                CircularProgressIndicator()
+                            }
                         }
-                    }
 
-                    else -> {
-                        if (isShowOwnCollection) {
+                        is LoadState.Error -> {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Button(onClick = { retry() }) {
+                                    Text(text = "Error")
+                                }
+                            }
+                        }
+
+                        else -> {
                             SuccessState(
-                                collectionList = ownCollectionList,
-                                lazyListState = lazyListState
-                            )
-                        } else {
-                            SuccessState(
-                                collectionList = collectionList,
+                                collectionList = if (isShowOwnCollection) {
+                                    ownCollectionList
+                                } else {
+                                    collectionList
+                                },
                                 lazyListState = lazyListState
                             )
                         }
@@ -172,31 +174,6 @@ fun CollectionScreen(
                 })
             }
         }
-    }
-}
-
-@Composable
-fun CollectionView(
-    collectionList: LazyPagingItems<CollectionVO>,
-    state: CollectionUiState,
-    modifier: Modifier = Modifier,
-    lazyListState: LazyListState,
-) {
-    when (state) {
-        is CollectionUiState.Error -> Text("Error")
-
-        CollectionUiState.Loading -> Box(
-            contentAlignment = Alignment.Center,
-            modifier = modifier.fillMaxSize()
-        ) {
-
-            CircularProgressIndicator()
-        }
-
-        is CollectionUiState.HasData -> SuccessState(
-            collectionList = collectionList,
-            lazyListState = lazyListState
-        )
     }
 }
 
@@ -219,7 +196,7 @@ fun SuccessState(
                 CollectionItem(it, modifier)
             }
         }
-        if (collectionList.loadState.append == LoadState.Loading)
+        if (collectionList.loadState.append == LoadState.Loading) {
             item {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -230,6 +207,7 @@ fun SuccessState(
                     CircularProgressIndicator()
                 }
             }
+        }
     }
 }
 
@@ -242,20 +220,23 @@ fun CollectionItem(
 
     val context = LocalContext.current
     val ratio = collectionVO.width.toFloat() / collectionVO.height.toFloat()
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .aspectRatio(
-            ratio = ratio,
-            matchHeightConstraintsFirst = true
-        )
-        .drawBehind {
-            drawRect(
-                brush = brush
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .aspectRatio(
+                ratio = ratio,
+                matchHeightConstraintsFirst = true
             )
-        }
+            .drawBehind {
+                drawRect(
+                    brush = brush
+                )
+            }
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current).data(collectionVO.url).crossfade(true).build(), contentDescription = "", contentScale = ContentScale.Crop,
+            model = ImageRequest.Builder(LocalContext.current).data(collectionVO.url).crossfade(true).build(),
+            contentDescription = "",
+            contentScale = ContentScale.Crop,
             modifier = modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -276,7 +257,6 @@ fun CollectionItem(
         }
     }
 }
-
 
 fun downloadImage(context: Context, imageUrl: String) {
     val request = DownloadManager.Request(Uri.parse(imageUrl))

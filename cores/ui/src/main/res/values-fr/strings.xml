@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="no_internet">Pas d"'"Internet ! Veuillez connecter le Wi-Fi ou les données mobiles !</string>
+    <string name="something_wrong">Quelque chose ne va pas ! Veuillez réessayer !</string>
+    <string name="retry">Réessayer</string>
     <string name="settings">Paramètres</string>
     <string name="theme">Thème</string>
     <string name="login">Connexion</string>
@@ -14,5 +17,4 @@
     <string name="dark">Sombre</string>
     <string name="system">Par défaut</string>
     <string name="collection">Collection</string>
-    <string name="logout">Déconnexion</string>
 </resources>

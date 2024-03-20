@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.everest.domain.usecase.Register
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.util.result.DataResult
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +22,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val register: Register,
-    private val appNavigator: AppNavigator
+    private val appNavigator: AppNavigator,
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
     @OptIn(ExperimentalFoundationApi::class)
     val mail = TextFieldState()
@@ -59,6 +61,7 @@ class RegisterViewModel @Inject constructor(
                             isLoading = false
                         )
                     }
+                    firebaseAuth.signOut()
                     _registerEvent.emit(RegisterEvent.ShowSnack(result.error))
                 }
 

@@ -1,7 +1,10 @@
 package com.everest.presentation.register
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +25,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.everest.auth.presentation.R
 import com.everest.ui.textfield.CommonSecureTextField
 import com.everest.ui.textfield.CommonTextField
 
@@ -41,30 +48,39 @@ fun RegisterScreen(
             TopAppBar(title = { Text(text = "Register") })
         }
     ) {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            CommonTextField(mail)
-            Spacer(modifier = Modifier.height(16.dp))
-            CommonSecureTextField(password)
-            Spacer(modifier = Modifier.height(16.dp))
-            when (state) {
-                RegisterUIState.Loading -> CircularProgressIndicator(
-                    modifier = Modifier
-                        .width(32.dp)
-                        .height(32.dp)
-                )
+        Box(modifier = Modifier.background(color = Color.Red)) {
+            Image(
+                painterResource(R.drawable.cat),
+                contentDescription = "",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+            Column(
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CommonTextField(mail)
+                Spacer(modifier = Modifier.height(16.dp))
+                CommonSecureTextField(password)
+                Spacer(modifier = Modifier.height(16.dp))
+                when (state) {
+                    RegisterUIState.Loading -> CircularProgressIndicator(
+                        modifier = Modifier
+                            .width(32.dp)
+                            .height(32.dp)
+                    )
 
-                else -> DefaultView(
-                    onAction = {
-                        onAction(RegisterAction.Register)
-                    },
-                    title = "Register"
-                )
+                    else -> DefaultView(
+                        onAction = {
+                            onAction(RegisterAction.Register)
+                        },
+                        title = "Register"
+                    )
+                }
             }
         }
     }

@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
-
 @Composable
 fun LoadingDialog(
     onDismiss: () -> Unit,
@@ -27,9 +26,10 @@ fun LoadingDialog(
                 .size(100.dp)
         ) {
             CircularProgressIndicator()
-            if (!isEnableOnBackPress)
+            if (!isEnableOnBackPress) {
                 BackHandler {
                 }
+            }
         }
     }
 }

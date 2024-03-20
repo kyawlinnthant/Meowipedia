@@ -6,6 +6,7 @@ import com.everest.domain.usecase.SettingsViewModelUseCase
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.presentation.state.SettingsViewModelState
 import com.everest.type.ThemeType
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val useCase: SettingsViewModelUseCase,
-    private val appNavigator: AppNavigator
+    private val appNavigator: AppNavigator,
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
     private val vmState = MutableStateFlow(SettingsViewModelState())
@@ -39,13 +41,33 @@ class SettingsViewModel @Inject constructor(
             initialValue = vmState.value.asDynamic()
         )
 
+    val uiLogin = vmState
+        .map(SettingsViewModelState::asLogin)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = vmState.value.asLogin()
+        )
+
+    init {
+
+        firebaseAuth.addAuthStateListener {
+            setLogin(it.currentUser != null)
+        }
+    }
+
     fun onAction(action: SettingsAction) {
         when (action) {
             is SettingsAction.UpdateDynamic -> saveDynamic(action.enabled)
             is SettingsAction.UpdateTheme -> saveTheme(action.theme)
             SettingsAction.OnBackPress -> appNavigator.back()
             is SettingsAction.Navigate -> appNavigator.to(action.route)
+            SettingsAction.Logout -> logoutUser()
         }
+    }
+
+    private fun logoutUser() {
+        firebaseAuth.signOut()
     }
 
     fun listenTheme() {
@@ -76,6 +98,15 @@ class SettingsViewModel @Inject constructor(
         vmState.update { state ->
             state.copy(
                 isDynamicEnabled = enabled
+            )
+        }
+    }
+
+    private fun setLogin(isLogin: Boolean) {
+        println(">>> UPDATE $isLogin")
+        vmState.update { state ->
+            state.copy(
+                isLogin = isLogin
             )
         }
     }

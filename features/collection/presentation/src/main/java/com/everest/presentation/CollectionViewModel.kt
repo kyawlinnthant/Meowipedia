@@ -11,6 +11,8 @@ import com.everest.presentation.state.UploadUiState
 import com.everest.util.result.DataResult
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.File
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,8 +22,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.File
-import javax.inject.Inject
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
@@ -35,7 +35,6 @@ class CollectionViewModel @Inject constructor(
 
     private val _uploadUiState = MutableStateFlow(UploadUiState())
     val uploadUiState = _uploadUiState.asStateFlow()
-
 
     fun getCollection() {
         viewModelScope.launch {
@@ -91,7 +90,7 @@ class CollectionViewModel @Inject constructor(
         viewModelScope.launch {
             _uploadUiState.update { state ->
                 state.copy(
-                    showLoading = true,
+                    showLoading = true
                 )
             }
             when (val response = uploadFile(file = file)) {
@@ -99,7 +98,7 @@ class CollectionViewModel @Inject constructor(
                     _uploadUiState.update { state ->
                         state.copy(
                             showLoading = false,
-                            message = "File Upload Failed",
+                            message = "File Upload Failed"
                         )
                     }
                 }
@@ -108,7 +107,7 @@ class CollectionViewModel @Inject constructor(
                     _uploadUiState.update { state ->
                         state.copy(
                             showLoading = false,
-                            message = "File Upload Success",
+                            message = "File Upload Success"
                         )
                     }
                 }

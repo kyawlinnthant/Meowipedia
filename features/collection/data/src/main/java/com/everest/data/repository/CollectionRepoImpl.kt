@@ -8,23 +8,23 @@ import com.everest.data.paging.CollectionPagingSource
 import com.everest.data.service.CollectionService
 import com.everest.network.safeApiCall
 import com.everest.util.result.DataResult
+import java.io.File
+import javax.inject.Inject
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
-import javax.inject.Inject
 
 class CollectionRepoImpl @Inject constructor(
     private val collectionService: CollectionService,
-    private val json: Json,
+    private val json: Json
 ) : CollectionRepo {
     override fun getCollection(): Pager<Int, CollectionDTO> {
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
                 prefetchDistance = 2,
-                enablePlaceholders = true,
+                enablePlaceholders = true
             ),
             pagingSourceFactory = {
                 CollectionPagingSource(collectionService = collectionService)
