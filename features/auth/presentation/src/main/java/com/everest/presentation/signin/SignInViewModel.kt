@@ -75,6 +75,13 @@ class SignInViewModel @Inject constructor(
 
     @OptIn(ExperimentalFoundationApi::class)
     private fun doSign() {
+        _vmState.update { state ->
+            state.copy(
+                isLoading = true,
+                email = mail.text.toString().trim(),
+                password = password.text.toString().trim()
+            )
+        }
         viewModelScope.launch {
             when (val result = signIn.invoke(mail.text.toString(), password.text.toString())) {
                 is DataResult.Failed -> {
@@ -99,7 +106,9 @@ class SignInViewModel @Inject constructor(
     }
 
     private fun isValidUserInfo() {
-        if (_signUserInfoState.value.passwordErrorMessage == "" || _signUserInfoState.value.mailErrorMessage == "") {
+        if (_signUserInfoState.value.passwordErrorMessage.isEmpty() &&
+            _signUserInfoState.value.mailErrorMessage.isEmpty()
+        ) {
             _signUserInfoState.value = _signUserInfoState.value.copy(
                 isValid = true
             )

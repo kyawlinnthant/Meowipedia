@@ -22,7 +22,7 @@ import com.everest.type.ThemeType
 @Composable
 fun EndItem(
     modifier: Modifier = Modifier,
-    endCount: Int = 5,
+    endCount: Int = 5
 ) {
     val startCount = 1
     Box(

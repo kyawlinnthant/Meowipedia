@@ -33,7 +33,7 @@ fun AuthSection(
     ) {
         if (!isLogin) {
             AuthSectionItem(title = stringResource(id = R.string.login)) {
-                onAction(SettingsAction.Navigate(Screens.Login.route))
+                onAction(SettingsAction.Navigate(Screens.AuthGraph.route))
             }
         } else {
             AuthSectionItem(title = stringResource(id = R.string.logout)) {

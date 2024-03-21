@@ -17,8 +17,10 @@
     <string name="dark">Sombre</string>
     <string name="system">Par défaut</string>
     <string name="collection">Collection</string>
-
     <string name="gallery">Galerie</string>
     <string name="categories">Catégories</string>
     <string name="logout">Logout</string>
+    <string name="mail">Courrier</string>
+    <string name="password">Mot de passe</string>
+    <string name="sign_in">Se connecter</string>
 </resources>
