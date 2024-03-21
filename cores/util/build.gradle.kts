@@ -4,3 +4,7 @@ plugins {
 android {
     namespace = "com.everest.util"
 }
+
+dependencies {
+    implementation(libs.timber)
+}

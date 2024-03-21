@@ -81,6 +81,8 @@ class CategoriesViewModel @Inject constructor(
     }
 
     private fun updateSearchQuery(query: String) {
+        if (query.isEmpty()) return
+
         _vmState.update { state ->
             state.copy(
                 searchState = state.searchState.copy(
@@ -88,7 +90,6 @@ class CategoriesViewModel @Inject constructor(
                 )
             )
         }
-        if (query.isEmpty()) return
         search(query)
     }
 

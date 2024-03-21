@@ -20,18 +20,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.LocaleListCompat
 import com.everest.extensions.getLocaleFromLanguageTags
+import com.everest.navigation.Screens
 import com.everest.presentation.SettingsAction
+import com.everest.presentation.item.AuthSection
+import com.everest.presentation.item.CollectionSection
 import com.everest.presentation.item.DynamicSectionItem
 import com.everest.presentation.item.LanguageSection
-import com.everest.presentation.item.ThemeSectionItem
-import com.everest.settings.presentation.R
-import com.everest.type.DayNightTheme
+import com.everest.presentation.item.ThemeSection
+import com.everest.type.ThemeType
 import com.everest.type.toStringLanguageType
+import com.everest.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    theme: DayNightTheme,
+    theme: ThemeType,
+    isLogin: Boolean,
     dynamicEnabled: Boolean,
     onRestart: () -> Unit,
     onAction: (SettingsAction) -> Unit,
@@ -46,15 +50,18 @@ fun SettingsScreen(
     }
 
     Scaffold(topBar = {
-        TopAppBar(title = { Text(text = stringResource(id = R.string.settings)) }, navigationIcon = {
-            IconButton(onClick = { onAction(SettingsAction.OnBackPress) }) {
-                Icon(painter = painterResource(id = R.drawable.baseline_keyboard_arrow_left_24), contentDescription = "Back")
+        TopAppBar(
+            title = { Text(text = stringResource(id = R.string.settings)) },
+            navigationIcon = {
+                IconButton(onClick = { onAction(SettingsAction.OnBackPress) }) {
+                    Icon(painter = painterResource(id = R.drawable.ic_arrow_left), contentDescription = "Back")
+                }
             }
-        })
+        )
     }) {
         LazyColumn(modifier = Modifier.padding(it)) {
             item {
-                ThemeSectionItem(selected = theme, onUpdate = { theme ->
+                ThemeSection(selected = theme, onUpdate = { theme ->
                     onAction(SettingsAction.UpdateTheme(theme))
                 })
 
@@ -63,6 +70,9 @@ fun SettingsScreen(
                         onRestart()
                     })
                 })
+                CollectionSection {
+                    onAction(SettingsAction.Navigate(Screens.Collection.route))
+                }
             }
             if (isSupportDynamic) {
                 item {
@@ -70,6 +80,9 @@ fun SettingsScreen(
                         onAction(SettingsAction.UpdateDynamic(enabled))
                     })
                 }
+            }
+            item {
+                AuthSection(isLogin = isLogin, onAction = onAction)
             }
         }
     }

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.everest.domain.usecase.ListenDynamicStatus
 import com.everest.domain.usecase.ListenThemeStatus
 import com.everest.navigation.navigator.AppNavigator
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,7 +60,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun setTheme(theme: DayNightTheme) {
+    private fun setTheme(theme: ThemeType) {
         vmState.update { state ->
             state.copy(
                 theme = theme

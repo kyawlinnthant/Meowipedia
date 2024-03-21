@@ -1,7 +1,7 @@
 package com.everest.data.repository
 
 import com.everest.datastore.AppDataStore
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
@@ -9,7 +9,7 @@ class SettingDsRepoImpl @Inject constructor(
     private val ds: AppDataStore
 ) : SettingDsRepo {
 
-    override suspend fun saveThemeStatus(theme: DayNightTheme) {
+    override suspend fun saveThemeStatus(theme: ThemeType) {
         ds.putTheme(theme)
     }
 
@@ -17,7 +17,7 @@ class SettingDsRepoImpl @Inject constructor(
         ds.putEnabledDynamic(isEnabled)
     }
 
-    override fun listenThemeStatus(): Flow<DayNightTheme> {
+    override fun listenThemeStatus(): Flow<ThemeType> {
         return ds.pullTheme()
     }
 

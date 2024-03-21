@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.everest.settings.presentation.R
 import com.everest.theme.dimen
 import com.everest.type.LanguageType
+import com.everest.ui.R
 
 @Composable
 fun LanguageSection(
@@ -75,7 +75,7 @@ fun LanguageSection(
                 },
                 modifier = modifier.rotate(rotationState)
             ) {
-                Icon(painter = painterResource(id = R.drawable.baseline_keyboard_arrow_down_24), contentDescription = "click")
+                Icon(painter = painterResource(id = R.drawable.ic_arrow_down), contentDescription = "click")
             }
         }
         if (expanded) {

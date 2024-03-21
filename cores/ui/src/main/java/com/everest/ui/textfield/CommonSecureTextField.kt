@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CommonSecureTextField(
     state: TextFieldState,
-    hint: String = "Hint"
+    hint: String = ""
 ) {
     BasicSecureTextField(
         state = state,
@@ -49,7 +49,7 @@ fun CommonSecureTextField(
                 if (state.text.isEmpty()) {
                     Text(
                         text = hint,
-                        color = Color.Gray.copy(alpha = 0.5f)
+                        color = Color.Black.copy(alpha = 0.5f)
                     )
                 }
                 innerTextField()

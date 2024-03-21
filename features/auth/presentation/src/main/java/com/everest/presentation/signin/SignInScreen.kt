@@ -13,10 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.text2.BasicSecureTextField
 import androidx.compose.foundation.text2.input.TextFieldState
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -25,45 +22,71 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.everest.auth.presentation.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.everest.extensions.log
 import com.everest.navigation.Screens
-import com.everest.presentation.register.DefaultView
 import com.everest.theme.WindowSize
 import com.everest.theme.WindowType
+import com.everest.ui.R
+import com.everest.ui.text.CommonButton
+import com.everest.ui.text.nonComposable
 import com.everest.ui.textfield.CommonSecureTextField
 import com.everest.ui.textfield.CommonTextField
+import com.everest.ui.textfield.InputSecureTextFieldWithMessage
+import com.everest.ui.textfield.InputTextFieldWithMessage
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(
     windowSize: WindowSize,
-    state: SignInUIState,
+    signInUiState: SignInUIState,
+    signUserInfoState: SignInUserInfoState,
     snackbarHostState: SnackbarHostState,
     mail: TextFieldState,
     password: TextFieldState,
     onAction: (SignInAction) -> Unit
 ) {
+    val signInViewModel: SignInViewModel = hiltViewModel()
+    val context = LocalContext.current
+    LaunchedEffect(key1 = true) {
+        signInViewModel.signInEvent.collectLatest { event ->
+            when (event) {
+                SignInEvent.DefaultView -> log("Default View")
+                is SignInEvent.ShowSnack -> {
+                    snackbarHostState.showSnackbar(
+                        message = context.nonComposable(event.error)
+                    )
+                }
+            }
+        }
+    }
     Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }, topBar = {
         TopAppBar(title = { Text(text = "Sign In") })
     }) {
         Box(modifier = Modifier.padding(it)) {
             when (windowSize.width) {
                 WindowType.Compact -> SignInCompact(
-                    state = state,
+                    signInUiState = signInUiState,
+                    signUserInfoState = signUserInfoState,
                     mail = mail,
                     password = password,
                     onAction = onAction
                 )
 
                 else -> SignInTablet(
-                    state = state,
+                    signInUiState = signInUiState,
+                    signUserInfoState = signUserInfoState,
                     mail = mail,
                     password = password,
                     onAction = onAction
@@ -76,7 +99,8 @@ fun SignInScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SignInCompact(
-    state: SignInUIState,
+    signInUiState: SignInUIState,
+    signUserInfoState: SignInUserInfoState,
     mail: TextFieldState,
     password: TextFieldState,
     onAction: (SignInAction) -> Unit
@@ -85,7 +109,7 @@ fun SignInCompact(
         Image(
             painterResource(R.drawable.cat),
             contentDescription = "",
-            contentScale = ContentScale.Fit,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .fillMaxSize()
         )
@@ -95,43 +119,63 @@ fun SignInCompact(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CommonTextField(mail)
+            InputTextFieldWithMessage(
+                hint = stringResource(id = R.string.mail),
+                state = mail,
+                errorMessage = signUserInfoState.mailErrorMessage
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            CommonSecureTextField(password)
+            InputSecureTextFieldWithMessage(
+                hint = stringResource(id = R.string.password),
+                state = password,
+                errorMessage = signUserInfoState.passwordErrorMessage
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            when (state) {
+            when (signInUiState) {
                 SignInUIState.Loading -> CircularProgressIndicator(
                     modifier = Modifier
                         .width(32.dp)
                         .height(32.dp)
                 )
 
-                else -> DefaultView(
-                    onAction = {
-                        onAction(SignInAction.SignIn)
-                    },
-                    title = "Sign In"
+                else -> DefaultSignInView(
+                    onAction = onAction,
                 )
             }
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                onClick = {
-                    onAction(SignInAction.Navigate(Screens.Register.route))
-                },
-                shape = CutCornerShape(10)
-            ) {
-                Text(text = "Register")
-            }
+
         }
+    }
+}
+
+@Composable
+fun DefaultSignInView(onAction: (SignInAction) -> Unit) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        CommonButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            title = stringResource(id = R.string.sign_in),
+            onClick = {
+                onAction(SignInAction.SignIn)
+            }
+        )
+        CommonButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            title = stringResource(id = R.string.register),
+            onClick = {
+                onAction(SignInAction.Navigate(Screens.Register.route))
+            }
+        )
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SignInTablet(
-    state: SignInUIState,
+    signInUiState: SignInUIState,
+    signUserInfoState: SignInUserInfoState,
     mail: TextFieldState,
     password: TextFieldState,
     onAction: (SignInAction) -> Unit
@@ -146,32 +190,20 @@ fun SignInTablet(
         ) {
             CommonTextField(mail)
             Spacer(modifier = Modifier.height(16.dp))
-            BasicSecureTextField(password)
+            CommonSecureTextField(password)
             Spacer(modifier = Modifier.height(16.dp))
-            when (state) {
+            when (signInUiState) {
                 SignInUIState.Loading -> CircularProgressIndicator(
                     modifier = Modifier
                         .width(32.dp)
                         .height(32.dp)
                 )
 
-                else -> DefaultView(
+                else -> DefaultSignInView(
                     onAction = {
                         onAction(SignInAction.SignIn)
                     },
-                    title = "Sign In"
                 )
-            }
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                onClick = {
-                    onAction(SignInAction.Navigate(Screens.Register.route))
-                },
-                shape = CutCornerShape(10)
-            ) {
-                Text(text = "Register")
             }
         }
         Image(
@@ -185,13 +217,15 @@ fun SignInTablet(
     }
 }
 
+
 @OptIn(ExperimentalFoundationApi::class)
 @Preview(device = Devices.PIXEL_5)
 @Composable
 fun PreviewSignCompact() {
     SignInScreen(
         windowSize = WindowSize(WindowType.Compact, WindowType.Compact),
-        state = SignInUIState.DefaultView,
+        signInUiState = SignInUIState.DefaultView,
+        signUserInfoState = SignInUserInfoState(),
         snackbarHostState = SnackbarHostState(),
         mail = TextFieldState(),
         password = TextFieldState()
@@ -205,8 +239,9 @@ fun PreviewSignCompact() {
 fun PreviewSignMedium() {
     SignInScreen(
         windowSize = WindowSize(WindowType.Medium, WindowType.Medium),
-        state = SignInUIState.DefaultView,
+        signInUiState = SignInUIState.DefaultView,
         snackbarHostState = SnackbarHostState(),
+        signUserInfoState = SignInUserInfoState(),
         mail = TextFieldState(),
         password = TextFieldState()
     ) {

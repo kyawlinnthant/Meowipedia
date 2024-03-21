@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CommonTextField(
     state: TextFieldState,
-    hint: String = "Hint"
+    hint: String = ""
 ) {
     BasicTextField2(
         state = state,
@@ -47,7 +47,7 @@ fun CommonTextField(
                 if (state.text.isEmpty()) {
                     Text(
                         text = hint,
-                        color = Color.Gray.copy(alpha = 0.5f)
+                        color = Color.Black.copy(alpha = 0.5f)
                     )
                 }
                 innerTextField()

@@ -15,6 +15,7 @@ ktlint = "11.6.1"
 jupiter = "5.10.2"
 
 appcompact = "1.6.1"
+jetbrains-kotlin-jvm = "1.9.0"
 
 [libraries]
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
@@ -32,11 +33,11 @@ androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }
 
 # compose
-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.02.01" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.02.02" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version = "1.8.2" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.0" }
-compose-coil = { group = "io.coil-kt", name = "coil-compose", version = "2.5.0" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.1" }
+compose-coil = { group = "io.coil-kt", name = "coil-compose", version = "2.6.0" }
 compose-paging = { group = "androidx.paging", name = "paging-compose", version = "3.2.1" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -86,6 +87,9 @@ jupiter-param = { module = "org.junit.jupiter:junit-jupiter-params", version.ref
 assertk = { module = "com.willowtreeapps.assertk:assertk", version = "0.28.0" }
 mockk = { module = "io.mockk:mockk", version = "1.13.9" }
 turbine = { module = "app.cash.turbine:turbine", version = "1.1.0" }
+
+#log
+timber = { module = "com.jakewharton.timber:timber", version = "4.7.1" }
 
 
 [bundles]

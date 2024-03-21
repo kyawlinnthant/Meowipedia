@@ -1,8 +1,5 @@
 package com.everest.network
 
-import assertk.assertThat
-import assertk.assertions.isEqualTo
-import assertk.assertions.isInstanceOf
 import com.everest.util.result.DataResult
 import com.everest.util.result.NetworkError
 import io.mockk.coEvery

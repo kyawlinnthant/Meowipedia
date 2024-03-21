@@ -6,12 +6,10 @@ import app.cash.turbine.test
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.everest.testrule.CoroutinesTestRule
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -51,10 +49,10 @@ class AppDataStoreTest {
     @Test
     fun setDayTheme() = runTest {
         pref?.let {
-            it.putTheme(DayNightTheme.Day)
+            it.putTheme(ThemeType.DayType)
 
             it.pullTheme().test {
-                assertThat(awaitItem()).isEqualTo(DayNightTheme.Day)
+                assertThat(awaitItem()).isEqualTo(ThemeType.DayType)
             }
         }
     }
@@ -62,10 +60,10 @@ class AppDataStoreTest {
     @Test
     fun setNightTheme() = runTest {
         pref?.let {
-            it.putTheme(DayNightTheme.Night)
+            it.putTheme(ThemeType.NightType)
 
             it.pullTheme().test {
-                assertThat(awaitItem()).isEqualTo(DayNightTheme.Night)
+                assertThat(awaitItem()).isEqualTo(ThemeType.NightType)
             }
         }
     }

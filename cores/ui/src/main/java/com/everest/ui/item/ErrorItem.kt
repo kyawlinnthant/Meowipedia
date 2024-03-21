@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.everest.theme.MeowipediaTheme
 import com.everest.theme.dimen
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 import com.everest.ui.R
 
 @Composable
@@ -94,7 +94,7 @@ fun ErrorItem(
 @Composable
 @Preview
 private fun ListPreview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
+    MeowipediaTheme(appTheme = ThemeType.NightType, dynamicColor = true) {
         Surface {
             ErrorItem(message = "No Internet! Please connect wifi or mobile data!") {
             }
@@ -105,7 +105,7 @@ private fun ListPreview() {
 @Composable
 @Preview
 private fun GridPreview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
+    MeowipediaTheme(appTheme = ThemeType.NightType, dynamicColor = true) {
         Surface {
             ErrorItem(message = "No Internet! Please connect wifi or mobile data!", isGrid = true) {
             }

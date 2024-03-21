@@ -19,12 +19,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.everest.domain.model.categories.breed.BreedVo
-import com.everest.home.presentation.R
-import com.everest.navigation.Screens
 import com.everest.presentation.breeds.CategoriesAction
 import com.everest.presentation.breeds.state.CategoriesViewModelUiState
 import com.everest.presentation.breeds.view.list.CategoriesListView
 import com.everest.presentation.breeds.view.search.CategoriesSearchView
+import com.everest.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,19 +47,7 @@ fun CategoriesScreen(
                             }
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.baseline_search_24),
-                                contentDescription = null
-                            )
-                        }
-                        IconButton(
-                            onClick = {
-                                onAction(
-                                    CategoriesAction.Navigate(route = Screens.Settings.route)
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_ac_unit_24),
+                                painter = painterResource(id = R.drawable.ic_search),
                                 contentDescription = null
                             )
                         }
@@ -87,7 +74,7 @@ fun CategoriesScreen(
                             }
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.baseline_arrow_back_24),
+                                painter = painterResource(id = R.drawable.ic_arrow_left),
                                 contentDescription = null
                             )
                         }

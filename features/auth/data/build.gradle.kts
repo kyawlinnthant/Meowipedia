@@ -11,4 +11,6 @@ android {
 dependencies {
     implementation(projects.cores.util)
     implementation(projects.cores.dispatcher)
+
+    implementation(projects.firebase)
 }

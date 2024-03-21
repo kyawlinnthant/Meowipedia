@@ -8,8 +8,6 @@ import com.everest.util.result.DataResult
 import java.io.File
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -28,16 +26,13 @@ class UploadFileRepoImpl @Inject constructor(
             requestFile
         )
 
-        return withContext(io) {
-            delay(5000L)
-            safeApiCall(
-                apiCall = {
-                    uploadService.uploadFile(
-                        file = body
-                    )
-                },
-                json = json
-            )
-        }
+        return safeApiCall(
+            apiCall = {
+                uploadService.uploadFile(
+                    file = body
+                )
+            },
+            json = json
+        )
     }
 }

@@ -45,7 +45,10 @@ class MeowRemoteMediator @Inject constructor(
         }
 
         return try {
-            val response = api.meows(page = currentPage, limit = state.config.pageSize)
+            val response = api.meows(
+                page = currentPage,
+                limit = state.config.pageSize
+            )
             val isEndOfList = response.isEmpty()
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {

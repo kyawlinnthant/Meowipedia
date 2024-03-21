@@ -10,7 +10,6 @@ class UploadFile @Inject constructor(
 ) {
     suspend operator fun invoke(file: File): DataResult<Boolean> {
         val response = uploadFileRepo.uploadFile(file = file)
-        println(">>>> FAILED _______ $response")
         return when (response) {
             is DataResult.Failed -> {
                 DataResult.Failed(response.error)

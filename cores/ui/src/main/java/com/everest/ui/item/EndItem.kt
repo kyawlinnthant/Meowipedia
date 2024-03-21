@@ -17,12 +17,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import com.everest.theme.MeowipediaTheme
 import com.everest.theme.dimen
-import com.everest.type.DayNightTheme
+import com.everest.type.ThemeType
 
 @Composable
 fun EndItem(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    endCount: Int = 5
 ) {
+    val startCount = 1
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -33,7 +35,7 @@ fun EndItem(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimen.base),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            repeat((1..5).count()) {
+            repeat((startCount..endCount).count()) {
                 Box(
                     modifier = modifier
                         .size(MaterialTheme.dimen.base)
@@ -48,7 +50,7 @@ fun EndItem(
 @Composable
 @Preview
 private fun Preview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
+    MeowipediaTheme(appTheme = ThemeType.NightType, dynamicColor = true) {
         Surface {
             EndItem()
         }

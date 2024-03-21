@@ -6,6 +6,9 @@ sealed class Screens(val route: String) {
         const val EMAIL = "email"
     }
 
+    data object AuthGraph : Screens("authGraph")
+    data object SettingGraph : Screens("settingGraph")
+    data object HomeGraph : Screens("homeGraph")
     data object Login : Screens("login")
     data object Register : Screens("register")
     data object ForgotPassword : Screens("forgotPassword") {
@@ -16,7 +19,7 @@ sealed class Screens(val route: String) {
     data object Meows : Screens("meows")
     data object Categories : Screens("categories")
     data object Settings : Screens("settings")
-    data object Favourites : Screens("favourites")
+    data object Collection : Screens("collection")
     data object Upload : Screens("upload")
     data object Detail : Screens("detail") {
         fun passId(id: String, name: String) = this.route + "/$id/$name"

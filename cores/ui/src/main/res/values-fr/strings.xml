@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_internet">Pas d"'"Internet ! Veuillez connecter le Wi-Fi ou les données mobiles !</string>
+    <string name="something_wrong">Quelque chose ne va pas ! Veuillez réessayer !</string>
+    <string name="retry">Réessayer</string>
+    <string name="settings">Paramètres</string>
+    <string name="theme">Thème</string>
+    <string name="login">Connexion</string>
+    <string name="register">S"'"inscrire</string>
+    <string name="language">Langue</string>
+    <string name="select_language">French</string>
+    <string name="dynamic">Couleur de</string>
+    <string name="light_mode">Mode Lumière</string>
+    <string name="dark_mode">Mode sombre</string>
+    <string name="system_default">Défaut du système</string>
+    <string name="light">Lumière</string>
+    <string name="dark">Sombre</string>
+    <string name="system">Par défaut</string>
+    <string name="news_feed">Fil d"'"actualité</string>
+    <string name="own_collection">Propre collection</string>
+    <string name="gallery">Galerie</string>
+    <string name="categories">Catégories</string>
+    <string name="logout">Logout</string>
+    <string name="mail">Courrier</string>
+    <string name="password">Mot de passe</string>
+    <string name="sign_in">Se connecter</string>
+</resources>

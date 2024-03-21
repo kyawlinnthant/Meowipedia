@@ -1,4 +1,9 @@
 @file:Suppress("UnstableApiUsage")
+
+include(":firebase")
+
+
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
@@ -15,6 +20,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))
 
 rootProject.name = "Meowipedia"
 include(":app")
@@ -40,19 +47,22 @@ include(
     ":features:auth:domain",
     ":features:auth:presentation",
 )
+
 include(
     ":features:home:data",
     ":features:home:domain",
     ":features:home:presentation",
 )
+
 include(
     ":features:settings:data",
     ":features:settings:domain",
     ":features:settings:presentation",
 )
+
 include(
-    ":features:upload:data",
-    ":features:upload:domain",
-    ":features:upload:presentation",
+    ":features:collection:data",
+    ":features:collection:domain",
+    ":features:collection:presentation",
 )
 
