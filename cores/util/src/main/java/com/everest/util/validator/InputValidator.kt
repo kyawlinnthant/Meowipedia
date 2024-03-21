@@ -4,13 +4,10 @@ import com.everest.extensions.isEmailValid
 
 object InputValidator {
     fun emailValidator(value: String): String {
-        if (value.isEmpty()) {
-            return "Enter Value"
+        return when {
+            value.isEmpty() -> "Enter Value"
+            !value.isEmailValid() -> "Enter Valid Email"
+            else -> ""
         }
-
-        if (!value.isEmailValid()) {
-            return "Enter Valid Email"
-        }
-        return ""
     }
 }

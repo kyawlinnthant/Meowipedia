@@ -13,5 +13,3 @@ fun asErrorMessage(error: NetworkError): String {
         NetworkError.SomethingWrong -> stringResource(id = R.string.something_wrong)
     }
 }
-
-

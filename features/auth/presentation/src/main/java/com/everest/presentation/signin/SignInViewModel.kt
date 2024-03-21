@@ -10,6 +10,7 @@ import com.everest.util.result.DataResult
 import com.everest.util.validator.InputValidator
 import com.everest.util.validator.PasswordValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
@@ -75,6 +75,13 @@ class SignInViewModel @Inject constructor(
 
     @OptIn(ExperimentalFoundationApi::class)
     private fun doSign() {
+        _vmState.update { state ->
+            state.copy(
+                isLoading = true,
+                email = mail.text.toString().trim(),
+                password = password.text.toString().trim()
+            )
+        }
         viewModelScope.launch {
             when (val result = signIn.invoke(mail.text.toString(), password.text.toString())) {
                 is DataResult.Failed -> {

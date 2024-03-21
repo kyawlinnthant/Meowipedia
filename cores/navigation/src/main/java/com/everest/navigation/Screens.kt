@@ -6,7 +6,9 @@ sealed class Screens(val route: String) {
         const val EMAIL = "email"
     }
 
-    data object AuthGraph : Screens("auth")
+    data object AuthGraph : Screens("authGraph")
+    data object SettingGraph : Screens("settingGraph")
+    data object HomeGraph : Screens("homeGraph")
     data object Login : Screens("login")
     data object Register : Screens("register")
     data object ForgotPassword : Screens("forgotPassword") {

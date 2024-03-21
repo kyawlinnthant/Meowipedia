@@ -6,11 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.everest.domain.usecase.Register
 import com.everest.navigation.navigator.AppNavigator
 import com.everest.util.result.DataResult
-import com.everest.util.result.NetworkError
 import com.everest.util.validator.InputValidator
 import com.everest.util.validator.PasswordValidator
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
@@ -55,10 +54,12 @@ class RegisterViewModel @Inject constructor(
                     isLoading = true
                 )
             }
-            when (val result = register.invoke(
-                registerUserInfoState.value.mail,
-                registerUserInfoState.value.password,
-            )) {
+            when (
+                val result = register.invoke(
+                    registerUserInfoState.value.mail,
+                    registerUserInfoState.value.password
+                )
+            ) {
                 is DataResult.Failed -> {
                     _vmState.update { state ->
                         state.copy(
@@ -88,7 +89,7 @@ class RegisterViewModel @Inject constructor(
             it.copy(
                 mail = registerUserInfoState.value.mailTextFieldState.text.toString().trim(),
                 password = registerUserInfoState.value.passwordTextFieldState.text.toString().trim(),
-                confirmPassword = registerUserInfoState.value.confirmPasswordTextFieldState.text.toString().trim(),
+                confirmPassword = registerUserInfoState.value.confirmPasswordTextFieldState.text.toString().trim()
             )
         }
         val mailMessage = InputValidator.emailValidator(_registerUserInfoState.value.mail)

@@ -9,5 +9,4 @@ android {
 }
 dependencies {
     implementation(libs.hilt.navigation)
-
 }
