@@ -263,7 +263,7 @@ fun downloadImage(context: Context, imageUrl: String) {
         .setTitle("Image Download")
         .setDescription("Downloading")
         .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Meow-${Calendar.getInstance()}.jpg")
+        .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Meow-${System.currentTimeMillis()}.jpg")
 
     val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     downloadManager.enqueue(request)
