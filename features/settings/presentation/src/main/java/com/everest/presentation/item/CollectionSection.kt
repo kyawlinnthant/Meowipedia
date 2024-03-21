@@ -38,7 +38,7 @@ fun CollectionSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(id = R.string.collection),
+            text = stringResource(id = R.string.news_feed),
             modifier = modifier
                 .weight(1f)
                 .padding(

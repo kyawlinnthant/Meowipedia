@@ -47,11 +47,11 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.everest.collection.presentation.R
 import com.everest.domain.model.CollectionVO
 import com.everest.file.utils.FileUtils.getFileFromUri
 import com.everest.presentation.state.UploadUiState
 import com.everest.theme.dimen
+import com.everest.ui.R
 import com.everest.ui.dialog.LoadingDialog
 import com.everest.ui.shimmer.ShimmerBrush
 import java.util.Calendar
@@ -88,11 +88,11 @@ fun CollectionScreen(
 
     Scaffold(topBar = {
         TopAppBar(
-            title = { Text(text = stringResource(id = R.string.collection)) },
+            title = { Text(text = stringResource(id = R.string.news_feed)) },
             navigationIcon = {
                 IconButton(onClick = { onAction(CollectionAction.Back) }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.back_arrow),
+                        painter = painterResource(id = R.drawable.ic_arrow_left),
                         contentDescription = "Back"
                     )
                 }

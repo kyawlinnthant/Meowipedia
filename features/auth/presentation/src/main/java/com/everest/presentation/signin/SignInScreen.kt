@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everest.extensions.log
 import com.everest.navigation.Screens
-import com.everest.presentation.register.DefaultView
 import com.everest.theme.WindowSize
 import com.everest.theme.WindowType
 import com.everest.ui.R
@@ -139,23 +138,36 @@ fun SignInCompact(
                         .height(32.dp)
                 )
 
-                else -> DefaultView(
-                    onAction = {
-                        onAction(SignInAction.SignIn)
-                    },
-                    title = stringResource(id = R.string.sign_in)
+                else -> DefaultSignInView(
+                    onAction = onAction,
                 )
             }
-            CommonButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                title = stringResource(id = R.string.register),
-                onClick = {
-                    onAction(SignInAction.Navigate(Screens.Register.route))
-                }
-            )
+
         }
+    }
+}
+
+@Composable
+fun DefaultSignInView(onAction: (SignInAction) -> Unit) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        CommonButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            title = stringResource(id = R.string.sign_in),
+            onClick = {
+                onAction(SignInAction.SignIn)
+            }
+        )
+        CommonButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            title = stringResource(id = R.string.register),
+            onClick = {
+                onAction(SignInAction.Navigate(Screens.Register.route))
+            }
+        )
     }
 }
 
@@ -187,22 +199,12 @@ fun SignInTablet(
                         .height(32.dp)
                 )
 
-                else -> DefaultView(
+                else -> DefaultSignInView(
                     onAction = {
                         onAction(SignInAction.SignIn)
                     },
-                    title = stringResource(id = R.string.sign_in)
                 )
             }
-            CommonButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                title = stringResource(id = R.string.register),
-                onClick = {
-                    onAction(SignInAction.Navigate(Screens.Register.route))
-                }
-            )
         }
         Image(
             painterResource(R.drawable.cat),
@@ -214,6 +216,7 @@ fun SignInTablet(
         )
     }
 }
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Preview(device = Devices.PIXEL_5)

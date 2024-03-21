@@ -150,7 +150,7 @@ fun RegisterButtonState(
                 .height(32.dp)
         )
 
-        else -> DefaultView(
+        else -> DefaultRegisterView(
             onAction = {
                 onAction(RegisterAction.Register)
             },
@@ -160,7 +160,7 @@ fun RegisterButtonState(
 }
 
 @Composable
-fun DefaultView(onAction: (RegisterAction) -> Unit, title: String) {
+fun DefaultRegisterView(onAction: (RegisterAction) -> Unit, title: String) {
     Column(modifier = Modifier.fillMaxWidth()) {
         CommonButton(
             modifier = Modifier

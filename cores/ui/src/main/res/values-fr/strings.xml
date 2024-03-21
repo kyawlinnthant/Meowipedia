@@ -16,7 +16,8 @@
     <string name="light">Lumière</string>
     <string name="dark">Sombre</string>
     <string name="system">Par défaut</string>
-    <string name="collection">Collection</string>
+    <string name="news_feed">Fil d"'"actualité</string>
+    <string name="own_collection">Propre collection</string>
     <string name="gallery">Galerie</string>
     <string name="categories">Catégories</string>
     <string name="logout">Logout</string>
