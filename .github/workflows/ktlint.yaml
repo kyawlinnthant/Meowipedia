@@ -1,0 +1,41 @@
+name: Ktlint
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4.1.1
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4.0.0
+
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Gradle Build Action
+        uses: gradle/gradle-build-action@v3.0.0
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4.1.1
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4.0.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Format with KtLint
+        run: ./gradlew ktlintFormat
