@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.everest.android.library)
 }
 android {
-    namespace = "com.everest.testrule"
+    namespace = libs.versions.cores.test.rule.get()
 }
 
 dependencies {

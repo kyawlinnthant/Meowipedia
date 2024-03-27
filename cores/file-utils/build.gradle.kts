@@ -4,7 +4,7 @@ plugins {
     id("kotlin-parcelize")
 }
 android {
-    namespace = "com.everest.file.utils"
+    namespace = libs.versions.cores.file.utils.get()
 }
 
 dependencies {

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.navigation"
+    namespace = libs.versions.cores.navigation.get()
 }
 dependencies {
     implementation(libs.hilt.navigation)

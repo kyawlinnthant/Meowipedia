@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import com.everest.theme.MeowipediaTheme
 import com.everest.theme.dimen
 import com.everest.type.DayNightTheme
+import com.everest.ui.preview.DynamicLightModePreview
+import com.everest.ui.preview.DynamicNightModePreview
 import kotlinx.coroutines.delay
 
 @Composable
@@ -86,10 +88,15 @@ fun LoadingItem(
 
 @Composable
 @Preview
-private fun Preview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
-        Surface {
-            LoadingItem()
-        }
+private fun LightPreview() {
+    DynamicLightModePreview {
+        LoadingItem()
+    }
+}
+@Composable
+@Preview
+private fun NightPreview() {
+    DynamicNightModePreview {
+        LoadingItem()
     }
 }

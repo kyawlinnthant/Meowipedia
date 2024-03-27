@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.home.presentation"
+    namespace = libs.versions.features.home.presentation.get()
 }
 dependencies {
     implementation(projects.features.home.domain)

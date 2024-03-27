@@ -19,7 +19,6 @@ import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,17 +28,19 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.everest.theme.MeowipediaTheme
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.everest.theme.dimen
-import com.everest.type.DayNightTheme
 import com.everest.ui.R
+import com.everest.ui.preview.LightModePreview
+import com.everest.ui.preview.NetworkErrorPreviewParameter
+import com.everest.ui.preview.NightModePreview
 import com.everest.util.result.NetworkError
 
 @Composable
 fun FullScreenErrorView(
     modifier: Modifier = Modifier,
     type: NetworkError,
-    onRetry: () -> Unit
+    onRetry: () -> Unit = {}
 ) {
     val description = when (type) {
         is NetworkError.Dynamic -> type.message
@@ -94,11 +95,20 @@ fun FullScreenErrorView(
 
 @Composable
 @Preview
-private fun Preview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
-        Surface {
-            FullScreenErrorView(type = NetworkError.NoInternet) {
-            }
-        }
+private fun LightPreview(
+    @PreviewParameter(NetworkErrorPreviewParameter::class) error: NetworkError
+) {
+    LightModePreview {
+        FullScreenErrorView(type = error)
+    }
+}
+
+@Composable
+@Preview
+private fun NightPreview(
+    @PreviewParameter(NetworkErrorPreviewParameter::class) error: NetworkError
+) {
+    NightModePreview {
+        FullScreenErrorView(type = error)
     }
 }

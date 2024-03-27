@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.datastore"
+    namespace = libs.versions.data.datastore.get()
     defaultConfig {
         testInstrumentationRunner = "com.everest.datastore.DataStoreTestRunner"
     }

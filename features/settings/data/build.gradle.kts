@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.settings.data"
+    namespace = libs.versions.features.settings.data.get()
 }
 
 dependencies {

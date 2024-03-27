@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.auth.presentation"
+    namespace = libs.versions.features.auth.presentation.get()
 }
 dependencies {
     implementation(projects.features.auth.domain)

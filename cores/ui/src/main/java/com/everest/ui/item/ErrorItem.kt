@@ -24,13 +24,15 @@ import com.everest.theme.MeowipediaTheme
 import com.everest.theme.dimen
 import com.everest.type.DayNightTheme
 import com.everest.ui.R
+import com.everest.ui.preview.DynamicLightModePreview
+import com.everest.ui.preview.DynamicNightModePreview
 
 @Composable
 fun ErrorItem(
     modifier: Modifier = Modifier,
     message: String,
     isGrid: Boolean = false,
-    onRetry: () -> Unit
+    onRetry: () -> Unit = {}
 ) {
     Box(
         modifier = modifier
@@ -93,22 +95,16 @@ fun ErrorItem(
 
 @Composable
 @Preview
-private fun ListPreview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
-        Surface {
-            ErrorItem(message = "No Internet! Please connect wifi or mobile data!") {
-            }
-        }
+private fun ListLightPreview() {
+    DynamicLightModePreview {
+        ErrorItem(message = "No Internet! Please connect wifi or mobile data!")
     }
 }
 
 @Composable
 @Preview
-private fun GridPreview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
-        Surface {
-            ErrorItem(message = "No Internet! Please connect wifi or mobile data!", isGrid = true) {
-            }
-        }
+private fun GridNightPreview() {
+    DynamicNightModePreview {
+        ErrorItem(message = "No Internet! Please connect wifi or mobile data!", isGrid = true)
     }
 }

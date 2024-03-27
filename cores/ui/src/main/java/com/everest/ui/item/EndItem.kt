@@ -18,6 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.everest.theme.MeowipediaTheme
 import com.everest.theme.dimen
 import com.everest.type.DayNightTheme
+import com.everest.ui.preview.DynamicLightModePreview
+import com.everest.ui.preview.DynamicNightModePreview
 
 @Composable
 fun EndItem(
@@ -47,10 +49,16 @@ fun EndItem(
 
 @Composable
 @Preview
-private fun Preview() {
-    MeowipediaTheme(appTheme = DayNightTheme.Night, dynamicColor = true) {
-        Surface {
-            EndItem()
-        }
+private fun LightPreview() {
+    DynamicLightModePreview {
+        EndItem()
+    }
+}
+
+@Composable
+@Preview
+private fun NightPreview() {
+    DynamicNightModePreview {
+        EndItem()
     }
 }

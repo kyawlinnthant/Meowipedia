@@ -106,7 +106,7 @@ fun MeowGraph(
             )
         }
 
-        composable(route = Screens.Categories.route) {
+        composable(route = Screens.Breeds.route) {
             val vm: com.everest.presentation.breeds.CategoriesViewModel = hiltViewModel()
             val state = vm.uiState.collectAsState()
             val categories = vm.categories.collectAsLazyPagingItems()
@@ -143,6 +143,10 @@ fun MeowGraph(
                 filePickStatus = error.value,
                 onAction = vm::onAction
             )
+        }
+
+        composable(route = Screens.Detail.getAbsolutePath()){
+            it.savedStateHandle.get<String>(key = Screens.DETAIL_ID)
         }
     }
 }

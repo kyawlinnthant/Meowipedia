@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.home.data"
+    namespace = libs.versions.features.home.data.get()
 }
 dependencies {
     api(projects.data.network)

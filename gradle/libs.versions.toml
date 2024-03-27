@@ -1,5 +1,29 @@
 [versions]
+# packages
 cores-dispatchers = "com.everest.dispatchers"
+cores-file-utils = "com.everest.file.utils"
+cores-model = "com.everest.model"
+cores-navigation = "com.everest.navigation"
+cores-test-rule = "com.everest.testrule"
+cores-theme = "com.everest.theme"
+cores-ui = "com.everest.ui"
+cores-util = "com.everest.util"
+data-database = "com.everest.database"
+data-datastore = "com.everest.datastore"
+data-network = "com.everest.network"
+features-auth-data = "com.everest.auth.data"
+features-auth-domain = "com.everest.auth.domain"
+features-auth-presentation = "com.everest.auth.presentation"
+features-home-data = "com.everest.home.data"
+features-home-domain = "com.everest.home.domain"
+features-home-presentation = "com.everest.home.presentation"
+features-settings-data = "com.everest.settings.data"
+features-settings-domain = "com.everest.settings.domain"
+features-settings-presentation = "com.everest.settings.presentation"
+features-upload-data = "com.everest.upload.data"
+features-upload-domain = "com.everest.upload.domain"
+features-upload-presentation = "com.everest.upload.presentation"
+# versions
 kotlin = "1.9.22"
 gradle = "8.2.2"
 compose-compiler = "1.5.8"
@@ -28,10 +52,10 @@ androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }
 
 # compose
-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.02.01" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.03.00" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version = "1.8.2" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.0" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.1" }
 compose-coil = { group = "io.coil-kt", name = "coil-compose", version = "2.5.0" }
 compose-paging = { group = "androidx.paging", name = "paging-compose", version = "3.2.1" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -63,7 +87,7 @@ android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", ve
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # firebase
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.7.4" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.8.0" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version = "22.3.1" }
 play-service-auth = { module = "com.google.android.gms:play-services-auth", version = "21.0.0" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }

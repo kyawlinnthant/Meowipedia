@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.database"
+    namespace = libs.versions.data.database.get()
     defaultConfig {
         testInstrumentationRunner = "com.everest.database.DatabaseTestRunner"
     }

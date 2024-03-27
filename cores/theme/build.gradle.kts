@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.everest.compose.library)
 }
 android {
-    namespace = "com.everest.theme"
+    namespace = libs.versions.cores.theme.get()
 }
 dependencies {
     implementation(projects.cores.model)

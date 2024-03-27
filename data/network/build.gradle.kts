@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.network"
+    namespace = libs.versions.data.network.get()
 
     buildFeatures {
         buildConfig = true

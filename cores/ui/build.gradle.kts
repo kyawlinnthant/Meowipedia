@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.everest.compose.library)
 }
 android {
-    namespace = "com.everest.ui"
+    namespace = libs.versions.cores.ui.get()
 }
 dependencies {
     implementation(projects.cores.util)

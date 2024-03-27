@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.everest.upload.data"
+    namespace = libs.versions.features.upload.data.get()
 }
 
 dependencies {

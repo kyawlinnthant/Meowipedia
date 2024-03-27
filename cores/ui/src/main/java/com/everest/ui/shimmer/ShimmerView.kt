@@ -15,11 +15,11 @@ import androidx.compose.ui.graphics.Brush
 fun ShimmerView(
     content: @Composable (brush: Brush) -> Unit
 ) {
-    content(ShimmerBrush())
+    content(shimmerBrush())
 }
 
 @Composable
-fun ShimmerBrush(): Brush {
+fun shimmerBrush(): Brush {
     val shimmerColors = listOf(
         MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
         MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
