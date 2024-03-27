@@ -10,18 +10,18 @@ class TestAndroidPlugin : Plugin<Project> {
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             val coroutinesTest = libs.findLibrary("coroutines-test").get()
-            val coroutinesCore = libs.findLibrary("coroutines-core").get()
             val jupiterApi = libs.findLibrary("jupiter-api").get()
             val jupiterEngine = libs.findLibrary("jupiter-engine").get()
             val jupiterParams = libs.findLibrary("jupiter-param").get()
             val assertk = libs.findLibrary("assertk").get()
             val mockk = libs.findLibrary("mockk").get()
             val turbine = libs.findLibrary("turbine").get()
+            val testRunner = libs.findLibrary("androidx-runner").get()
 
             dependencies {
+                add("implementation", testRunner)
                 add("androidTestRuntimeOnly", jupiterEngine)
                 add("androidTestImplementation", coroutinesTest)
-                add("androidTestImplementation", coroutinesCore)
                 add("androidTestImplementation", jupiterApi)
                 add("androidTestImplementation", jupiterParams)
                 add("androidTestImplementation", assertk)

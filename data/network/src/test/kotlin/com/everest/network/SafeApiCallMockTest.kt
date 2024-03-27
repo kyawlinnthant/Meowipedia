@@ -1,15 +1,11 @@
 package com.everest.network
 
-import assertk.assertThat
-import assertk.assertions.isEqualTo
-import assertk.assertions.isInstanceOf
 import com.everest.util.result.DataResult
 import com.everest.util.result.NetworkError
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -19,11 +15,11 @@ import retrofit2.Response
 import java.net.SocketTimeoutException
 
 class SafeApiCallMockTest {
-    private val json = mockk<Json>(relaxed = true)
     private val failResponse: Response<ServerError> = mockk(relaxed = true)
     private val successResponse = mockk<Response<Boolean>>(relaxed = true)
 
     @Test
+    @DisplayName("Successful API call decodes Success")
     fun `test safeApiCall with Success Case`() {
         successResponse.apply {
             every { code() } returns 200
@@ -83,6 +79,7 @@ class SafeApiCallMockTest {
 
 
     @Test
+    @DisplayName("SocketTimeOutException returns No Internet")
     fun `test safeApiCall with SocketTimeoutException`() {
         coEvery {
             safeApiCall {
@@ -97,6 +94,7 @@ class SafeApiCallMockTest {
     }
 
     @Test
+    @DisplayName("Any Other Exception returns Something Wrong")
     fun `test safeApiCall with Exception`() {
         coEvery {
             safeApiCall {
@@ -111,6 +109,3 @@ class SafeApiCallMockTest {
     }
 
 }
-
-
-//inline fun <reified T : Any> mock(): T = mockk()

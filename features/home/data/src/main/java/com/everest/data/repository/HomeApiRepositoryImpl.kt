@@ -10,14 +10,11 @@ import com.everest.data.service.HomeApi
 import com.everest.database.db.MeowDatabase
 import com.everest.database.entity.breed.BreedEntity
 import com.everest.database.entity.meow.MeowEntity
-import com.everest.dispatcher.DispatcherModule
 import com.everest.network.safeApiCall
 import com.everest.util.constant.Constant
 import com.everest.util.result.DataResult
-import javax.inject.Inject
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
 class HomeApiRepositoryImpl @Inject constructor(
     private val api: HomeApi,
@@ -48,18 +45,19 @@ class HomeApiRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun searchBreeds(keyword: String): DataResult<List<BreedDTO>> =
-        safeApiCall(
+    override suspend fun searchBreeds(keyword: String): DataResult<List<BreedDTO>> {
+        return safeApiCall(
             json = json,
             apiCall = { api.searchBreeds(keyword = keyword) }
         )
+    }
 
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMeows(): Pager<Int, MeowEntity> {
         val dbSource = { db.meowDao().getPagingSource(isForPaging = true) }
         val config = PagingConfig(
-            initialLoadSize = Constant.PAGE_SIZE,
+            initialLoadSize = PagingConfig.MAX_SIZE_UNBOUNDED,
             pageSize = Constant.PAGE_SIZE,
             maxSize = PagingConfig.MAX_SIZE_UNBOUNDED,
             jumpThreshold = 1,

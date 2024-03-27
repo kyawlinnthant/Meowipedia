@@ -77,10 +77,6 @@ class SafeApiCallFakeTest {
         assertThat(outputMessage).isEqualTo(errorMessage)
     }
 
-    @Test
-    @DisplayName("Every Throwable returns error message")
-    fun `throw exceptions`() = runTest {
-
-    }
+    // with fake, we can't test to throw exception that's why we need mock
 
 }

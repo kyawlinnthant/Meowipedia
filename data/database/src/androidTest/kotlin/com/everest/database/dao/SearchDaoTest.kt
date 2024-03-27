@@ -18,7 +18,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.DisplayName
 import javax.inject.Inject
 
 @SmallTest
@@ -47,7 +46,6 @@ class SearchDaoTest {
 
 
     @Test
-    @DisplayName("Successfully Insert New Search Entity")
     fun insert() = runTest {
 
         val createdAt = LocalDateTime(
@@ -73,7 +71,6 @@ class SearchDaoTest {
     }
 
     @Test
-    @DisplayName("Successfully delete Search Entity")
     fun delete() = runTest {
         val createdAt = LocalDateTime(
             year = 1994,
@@ -96,7 +93,6 @@ class SearchDaoTest {
     }
 
     @Test
-    @DisplayName("Add new search entity always emit in flow")
     fun listen() = runTest {
         val createdAt1 = LocalDateTime(
             year = 1994,

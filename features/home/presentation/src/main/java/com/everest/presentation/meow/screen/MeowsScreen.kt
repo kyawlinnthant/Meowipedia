@@ -106,7 +106,6 @@ fun MeowsScreen(
     ) {
         meows.apply {
             if (
-
                 loadState.refresh is LoadState.Loading &&
                 loadState.source.refresh is LoadState.Loading &&
                 loadState.mediator?.refresh is LoadState.Loading &&
