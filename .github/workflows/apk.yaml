@@ -1,10 +1,9 @@
 name: APK
-
 on:
   push:
-    branches: [ master ]
+    branches: [ development_v2 ]
   pull_request:
-    branches: [ master ]
+    branches: [ development_v2 ]
 
 jobs:
 
